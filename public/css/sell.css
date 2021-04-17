@@ -1,0 +1,211 @@
+body {
+  color: white;
+}
+
+.container-fluid {
+  background-color: black;
+  width: 100%;
+  height: 100vh;
+}
+
+#sell h1 {
+  font-size: 4rem;
+}
+
+#sell .text-gray {
+  color: #4a4848 !important;
+}
+
+#sell .sell-card {
+  height: 220px;
+  background-color: #232323;
+  cursor: pointer;
+}
+
+#sell .sell-card i {
+  font-size: 6rem;
+  margin-top: -2rem;
+}
+
+#sell .sell-card img {
+  filter: brightness(30%);
+}
+
+#sell .sell-card img:hover {
+  filter: brightness(80%);
+}
+
+#sell .cate-text {
+  position: absolute;
+  top: 0;
+}
+
+#sell .header {
+  width: 100%;
+  height: 120px;
+}
+
+#sell .header h2 {
+  line-height: 120px;
+}
+
+#sell .header a {
+  font-size: 1.8rem;
+  color: white;
+}
+
+#sell .header a.active,
+#sell .header a:hover {
+  text-decoration: none;
+  /*padding-bottom: 10px;*/
+  border-bottom: 2px solid white;
+}
+
+#sell .product {
+  width: 50%;
+  height: 100vh;
+  opacity: 0;
+  z-index: 10;
+  position: absolute;
+  right: 0;
+  top: 0;
+  overflow: hidden;
+  padding-right: 4rem !important;
+}
+
+#sell .banner {
+  height: 100vh;
+}
+
+#sell .banner table {
+  border-collapse: separate !important;
+  border-spacing: 0 0.5rem;
+}
+
+#sell .banner .table td,
+#sell .banner .table th {
+  vertical-align: inherit;
+}
+
+#sell .banner a {
+  color: white;
+  font-weight: normal;
+}
+
+#sell .banner th {
+  background-color: black;
+  font-weight: normal;
+}
+
+#sell .banner tr {
+  background-color: #232323;
+  margin-bottom: 5rem;
+}
+
+#sell .banner td {
+  border-top: none !important;
+}
+
+#sell .banner .card {
+  background-color: black;
+  margin-top: -0.5rem;
+}
+
+#sell .banner .card-body.p-0 .table tbody > tr > td:last-of-type,
+#sell .banner .card-body.p-0 .table tbody > tr > th:last-of-type,
+#sell .banner .card-body.p-0 .table thead > tr > td:last-of-type,
+#sell .banner .card-body.p-0 .table thead > tr > th:last-of-type {
+  padding-right: 12px;
+}
+
+#sell .banner .testbutton {
+  color: #FFFFFF !important;
+  font-size: 20px;
+  padding: 5px 12px;
+  border-radius: 9px;
+  border: 0px solid #3866A3;
+  background: #4a4848;
+}
+
+#sell .banner .testbutton:hover {
+  color: #14396A !important;
+  background: #6C757D;
+}
+
+#sell .banner .product-info {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#sell .banner .btn {
+  font-size: 2rem;
+}
+
+#sell .pay {
+  background-color: #232323;
+  padding: 12px;
+}
+
+/* On screens that are 768px or less, set for col-sm */
+
+@media screen and (max-width: 768px) {
+  #sell .sell-card {
+    opacity: 0.5;
+    height: 50px;
+  }
+}
+
+/* On screens that are 992px or less, set for col-md */
+
+@media screen and (max-width: 992px) {
+  .col-md-8 {
+    flex: 0 0 58.333333%;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+  }
+
+  #sell h1 {
+    font-size: 3rem;
+  }
+
+  #sell .sell-card {
+    height: 124.8px;
+  }
+
+  #sell .sell-card i {
+    font-size: 4rem;
+  }
+
+  #sell .text-nowrap {
+    white-space: normal !important;
+  }
+
+  #sell .banner {
+    padding-right: 0.5rem;
+  }
+
+  #sell .banner table {
+    border-collapse: separate !important;
+    border-spacing: 0 0.3rem;
+  }
+
+  #sell .banner .card {
+    margin-top: -0.2rem;
+  }
+
+  #sell .banner .product-info {
+    white-space: nowrap;
+    max-width: 104px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* On screens that are 1200px or less, set for col-lg */
+
+/* On screens that are 1200px or more, set for col-xl */
+
+
