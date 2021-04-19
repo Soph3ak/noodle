@@ -9,11 +9,22 @@ body{
 
 }
 #sell{
+    user-select: none;
     h1{
-        font-size: 4rem;
+        font-size: 5rem;
+        color: yellow;
+
     }
     .text-gray{
         color: #4a4848 !important;
+    }
+    #sell-category{
+        img{
+            filter: brightness(30%);
+        }
+        img:hover{
+            filter: brightness(80%);
+        }
     }
     .sell-card{
         height: 220px;
@@ -23,14 +34,10 @@ body{
             font-size: 6rem;
             margin-top: -2rem;
         }
-        img{
-            filter: brightness(30%);
-        }
-        img:hover{
-            filter: brightness(80%);
-        }
+
     }
     .cate-text{
+        height: 100%;
         position: absolute;
         top: 0;
     }

@@ -8,12 +8,28 @@ body {
   height: 100vh;
 }
 
+#sell {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
 #sell h1 {
-  font-size: 4rem;
+  font-size: 5rem;
+  color: yellow;
 }
 
 #sell .text-gray {
   color: #4a4848 !important;
+}
+
+#sell #sell-category img {
+  filter: brightness(30%);
+}
+
+#sell #sell-category img:hover {
+  filter: brightness(80%);
 }
 
 #sell .sell-card {
@@ -27,15 +43,8 @@ body {
   margin-top: -2rem;
 }
 
-#sell .sell-card img {
-  filter: brightness(30%);
-}
-
-#sell .sell-card img:hover {
-  filter: brightness(80%);
-}
-
 #sell .cate-text {
+  height: 100%;
   position: absolute;
   top: 0;
 }

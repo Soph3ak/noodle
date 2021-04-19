@@ -45,7 +45,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "JeroenNoten\\LaravelAdminLte\\": "src/"
+            "JeroenNoten\\LaravelAdminLte\\": "src"
         }
     },
     "autoload-dev": {
@@ -53,8 +53,7 @@
             "Tests\\": "tests/"
         },
         "classmap": [
-            "tests/TestCase.php",
-            "tests/Console/CommandTestCase.php"
+            "tests/TestCase.php"
         ]
     },
     "minimum-stability": "dev",
