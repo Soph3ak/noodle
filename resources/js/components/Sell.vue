@@ -29,7 +29,7 @@
                                     <a href="#" class="mr-4">Tables</a>
                                     <a href="#" class="mr-4">Customers</a>
                                 </div>
-                                <div v-for="(product,index ) in products" :key="product.id" @click="increase(index, product.id)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3" id="sell-product">
+                                <div v-for="(product,index ) in products" :key="product.id" @click="operation(index, product.id, 'increase', 0)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3" id="sell-product">
                                     <div class="rounded shadow-sm sell-card">
                                         <img :src="'/files/'+product.photo" alt="Product Image" class="rounded" style="width: 100%; height: 100%">
                                         <div class="cate-text position-absolute d-flex align-items-start flex-column">
@@ -63,10 +63,10 @@
                                         <span class="product-description">{{ order.name }}</span>
                                     </div>
                                 </td>
-                                <td class="px-md-0">
-                                    <a type="button" class="testbutton"><i class="ion-minus"></i></a>
+                                <td class="px-md-0 editQty">
+                                    <a type="button" @click="operation(order.index, order.id, 'decrease', index)" class="testbutton"><i class="ion-minus"></i></a>
                                     <span class="m-lg-2 m-md-1">{{ order.qty }}</span>
-                                    <a type="button" @click="increase(order.index, order.id)" class="testbutton"><i class="ion-plus"></i></a>
+                                    <a type="button" @click="operation(order.index, order.id, 'increase', index)" class="testbutton"><i class="ion-plus"></i></a>
                                 </td>
                                 <td class="text-right">
                                     {{ order.amount }}៛
@@ -156,50 +156,83 @@
 
             },
 
-            increase(index, proID){
-                this.qtys[index].qty++
+            operation(index, proID, oper, orderIndex){
                 let qty = this.qtys[index].qty
-                let selector = $("h1.qty:eq("+index+")");
-                if (qty > 0){
-                    selector.removeClass('text-gray');
+                if (oper === 'increase')
+                    qty+=1
+                else {
+                    if (qty > 1)
+                        qty-=1
+                    else{
+                        qty-=1
+                        this.removeOrder(orderIndex)
+                        }
                 }
-                this.addOrder(index,proID)
+                this.qtys[index].qty = qty
+
+                let selector = $("h1.qty:eq("+index+")");
+                if (qty > 0)
+                    selector.removeClass('text-gray');
+                else
+                    selector.addClass('text-gray');
+                this.addOrder(index,proID, oper, orderIndex)
             },
 
-            addOrder (i, proID) {
-                if(this.orders.length > 0){
-                    for(let j=0; j<this.orders.length; j++){
+            addOrder (i, proID, oper, orderIndex) {
+                let ordersLength = this.orders.length
+                if( ordersLength > 0){
+                    for(let j=0; j<ordersLength; j++){
                         if(proID === this.orders[j].id){
-                            let qty = (this.orders[j].qty += 1);
+                            let qty = this.orders[j].qty;
+                            if (oper === 'increase')
+                                qty += 1;
+                            else {
+                                    if (qty === 2) {
+                                        console.log('order Index: '+orderIndex)
+                                        /*let selector = $("tr:eq(" + orderIndex + ") i:eq(0)");/!*ion-android-delete*!/
+                                        /!*selector.removeClass('ion-minus').addClass('ion-android-delete')*!/
+                                        $(selector).hide()*/
+
+                                    }
+                                    qty -= 1;
+                            }
+                            this.orders[j].qty = qty
                             this.orders[j].amount = this.orders[j].price * qty
                             return 0
                         }
                     }
-
-                    this.orders.push({
-                        'id':this.products[i].id,
-                        'index': i,
-                        'name_kh':this.products[i].name_kh,
-                        'name':this.products[i].name,
-                        'price': this.products[i].price,
-                        'qty':1,
-                        'amount': this.products[i].price,
-                        'image':this.products[i].photo,
-                    })
+                    if (oper === 'increase') {
+                        this.orders.push({
+                            'id': this.products[i].id,
+                            'index': i,
+                            'name_kh': this.products[i].name_kh,
+                            'name': this.products[i].name,
+                            'price': this.products[i].price,
+                            'qty': 1,
+                            'amount': this.products[i].price,
+                            'image': this.products[i].photo,
+                        })
+                    }
                 }
                 else {
-                    this.orders.push({
-                        'id':this.products[i].id,
-                        'index': i,
-                        'name_kh':this.products[i].name_kh,
-                        'name':this.products[i].name,
-                        'price': this.products[i].price,
-                        'qty':1,
-                        'amount': this.products[i].price,
-                        'image':this.products[i].photo,
-                    });
+                    if (oper === 'increase') {
+                        this.orders.push({
+                            'id': this.products[i].id,
+                            'index': i,
+                            'name_kh': this.products[i].name_kh,
+                            'name': this.products[i].name,
+                            'price': this.products[i].price,
+                            'qty': 1,
+                            'amount': this.products[i].price,
+                            'image': this.products[i].photo,
+                        });
+                    }
                 }
 
+            },
+
+            removeOrder (index) {
+                this.orders.splice(index, 1);
             },
 
             calSubTotal(){
@@ -231,6 +264,45 @@
             console.log('mounted')
            this.loadCategoriesSell()
 
+            let table = $("table tbody");
+            let leave = true;
+            function setTimer() {
+                setTimeout('', 3000);
+            }
+            function clearTimer() {
+                setTimeout(function(){ alert("Hello"); }, 3000);
+            }
+
+            table.on("mouseenter","td.editQty a",function (){
+               let qty = $(this).next().text();
+                let notOver = $(this).has("i.ion-minus");
+                notOver.hover(function (){
+                    console.log(notOver)
+                    $(this).html("<i class=\"ion-android-delete\"></i>")
+                    console.log("Overed!")
+                    console.log($(this).html())
+                })
+                /*if(qty === '1'){
+                    $(this).html("<i class=\"ion-android-delete\"></i>")
+                        console.log('over!')
+                }
+*/
+            })
+
+            table.on("mouseleave","td.editQty a",function (){
+                let qty = $(this).next().text();
+                let overed = $(this).has("i.ion-android-delete");
+                overed.mouseleave(function (){
+                    console.log($(this).html("<i class=\"ion-minus\"></i>"))
+                    console.log("Leave!")
+                    console.log($(this).html())
+                })
+                /*if(qty === '1'){
+                    $(this).has("i.ion-android-delete").html("<i class=\"ion-minus\"></i>")
+                    console.log('leave!')
+                }*/
+
+            })
         }
     }
 </script>
