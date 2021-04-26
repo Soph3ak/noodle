@@ -25,7 +25,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="row">
                                 <div class="header pl-3 d-flex align-items-center">
-                                    <a href="#" class="mr-auto active">Desserts</a>
+                                    <a href="#" @click="loadAllProducts" class="mr-auto active">All Products</a>
                                     <a href="#" class="mr-4">Tables</a>
                                     <a href="#" class="mr-4">Customers</a>
                                 </div>
@@ -33,7 +33,7 @@
                                     <div class="rounded shadow-sm sell-card">
                                         <img :src="'/files/'+product.photo" alt="Product Image" class="rounded" style="width: 100%; height: 100%">
                                         <div class="cate-text position-absolute d-flex align-items-start flex-column">
-                                            <h1 class="p-lg-4 p-md-3 text-gray mb-auto qty">{{ qtys[index].qty }}</h1>
+                                            <h1 class="p-lg-4 p-md-3 text-gray mb-auto qty">{{ product.qty }}</h1>
                                             <h5 class="p-lg-3 pl-lg-4 p-md-2 pl-md-3">{{product.price}}៛</h5>
                                         </div>
                                     </div>
@@ -119,7 +119,6 @@
             return{
                 categories:{},
                 products:[],
-                qtys: [],
                 tmp:0,
                 orders: [],
 
@@ -129,25 +128,51 @@
             }
         },
         methods:{
+
             loadCategoriesSell(){
                 axios.get('api/loadCategoriesSell')
                     .then(response => {
                         this.categories = response.data;
+                        this.ifOrdersExist()
                     });
             },
 
+            loadAllProducts(){
+                axios.get('api/loadAllProducts')
+                    .then(response => {
+                        this.products = response.data;
+                        console.log('LOAD Product Length: '+this.products.length)
+                        this.ifOrdersExist()
+                        this.tmp = 0
+                    });
+            },
+
+            ifOrdersExist(){
+                /*GET QTY FROM ORDERS IF EXIST, TO PREVENT USER MAKE ORDER THEN GO TO ANOTHER CATEGORY THEN QTY CHANGE TO 0*/
+                    let orderLength = this.orders.length
+                    let proLength = this.products.length
+                    console.log('Product Length: '+proLength)
+                    if (orderLength > 0){
+                        for(let i=0; i < orderLength; i++){
+                            let orderProID = this.orders[i].id
+                            let orderProQty = this.orders[i].qty
+                            for(let j=0; j < proLength; j++){
+                                if(this.products[j].id === orderProID){
+                                    this.products[j].qty = orderProQty
+                                    setTimeout(() => this.changeColorQty(j,orderProQty), 0.1); /*COZ PRODUCTS LOAD TO PAGE WAS DELAY LATE THEN CODE*/
+                                    break
+                                }
+                            }
+                        }
+                    }
+            },
+
             loadProductsByCategory(cateID){
-                console.log('category_id: '+cateID)
                 if(cateID !== this.tmp){
                     axios.get('api/loadProductsByCategory/'+cateID)
                         .then(response => {
-                            this.products = response.data;
-                            this.qtys = []
-                            for (let pro in this.products){
-                                this.qtys.push({
-                                    'qty': 0,
-                                });
-                            }
+                            this.products = response.data
+                            this.ifOrdersExist()
                         })
                         .catch(error => console.log(error))
                         .finally(() => this.loading = false)
@@ -157,7 +182,8 @@
             },
 
             operation(index, proID, oper, orderIndex){
-                let qty = this.qtys[index].qty
+                /*TO HANDLE USER INCREASE OR DECREASE QTY*/
+                let qty = this.products[index].qty
                 if (oper === 'increase')
                     qty+=1
                 else {
@@ -168,17 +194,23 @@
                         this.removeOrder(orderIndex)
                         }
                 }
-                this.qtys[index].qty = qty
+                this.products[index].qty = qty
+                this.addOrder(index,proID, oper)
+                this.changeColorQty(index, qty)
+            },
 
+            changeColorQty(index, qty){
+                /*THE PROBLEM WAS HAPPENED COZ PRODUCTS LOAD TO PAGE WAS DELAY LATE THEN CODE*/
+                /*SO WE NEED TO USE setTimeout TO SOLVE WHEN CALL THIS METHOD*/
                 let selector = $("h1.qty:eq("+index+")");
                 if (qty > 0)
                     selector.removeClass('text-gray');
                 else
                     selector.addClass('text-gray');
-                this.addOrder(index,proID, oper, orderIndex)
             },
 
-            addOrder (i, proID, oper, orderIndex) {
+            addOrder (i, proID, oper) {
+                /**/
                 let ordersLength = this.orders.length
                 if( ordersLength > 0){
                     for(let j=0; j<ordersLength; j++){
@@ -186,16 +218,8 @@
                             let qty = this.orders[j].qty;
                             if (oper === 'increase')
                                 qty += 1;
-                            else {
-                                    if (qty === 2) {
-                                        console.log('order Index: '+orderIndex)
-                                        /*let selector = $("tr:eq(" + orderIndex + ") i:eq(0)");/!*ion-android-delete*!/
-                                        /!*selector.removeClass('ion-minus').addClass('ion-android-delete')*!/
-                                        $(selector).hide()*/
-
-                                    }
-                                    qty -= 1;
-                            }
+                            else
+                                qty -= 1;
                             this.orders[j].qty = qty
                             this.orders[j].amount = this.orders[j].price * qty
                             return 0
@@ -208,7 +232,7 @@
                             'name_kh': this.products[i].name_kh,
                             'name': this.products[i].name,
                             'price': this.products[i].price,
-                            'qty': 1,
+                            'qty': this.products[i].qty,
                             'amount': this.products[i].price,
                             'image': this.products[i].photo,
                         })
@@ -222,7 +246,7 @@
                             'name_kh': this.products[i].name_kh,
                             'name': this.products[i].name,
                             'price': this.products[i].price,
-                            'qty': 1,
+                            'qty': this.products[i].qty,
                             'amount': this.products[i].price,
                             'image': this.products[i].photo,
                         });
@@ -232,6 +256,7 @@
             },
 
             removeOrder (index) {
+                /*TO REMOVE ORDER ITEM FROM CURRENT ORDER*/
                 this.orders.splice(index, 1);
             },
 
@@ -241,10 +266,6 @@
                     total.push(val.amount) // the value of the current key.
                 });
                 return this.subTotal = total.reduce(function(total, num){ return total + num }, 0);
-            },
-
-            myTest(){
-
             },
 
         },
@@ -261,48 +282,8 @@
         },
 
         mounted() {
-            console.log('mounted')
-           this.loadCategoriesSell()
-
-            let table = $("table tbody");
-            let leave = true;
-            function setTimer() {
-                setTimeout('', 3000);
-            }
-            function clearTimer() {
-                setTimeout(function(){ alert("Hello"); }, 3000);
-            }
-
-            table.on("mouseenter","td.editQty a",function (){
-               let qty = $(this).next().text();
-                let notOver = $(this).has("i.ion-minus");
-                notOver.hover(function (){
-                    console.log(notOver)
-                    $(this).html("<i class=\"ion-android-delete\"></i>")
-                    console.log("Overed!")
-                    console.log($(this).html())
-                })
-                /*if(qty === '1'){
-                    $(this).html("<i class=\"ion-android-delete\"></i>")
-                        console.log('over!')
-                }
-*/
-            })
-
-            table.on("mouseleave","td.editQty a",function (){
-                let qty = $(this).next().text();
-                let overed = $(this).has("i.ion-android-delete");
-                overed.mouseleave(function (){
-                    console.log($(this).html("<i class=\"ion-minus\"></i>"))
-                    console.log("Leave!")
-                    console.log($(this).html())
-                })
-                /*if(qty === '1'){
-                    $(this).has("i.ion-android-delete").html("<i class=\"ion-minus\"></i>")
-                    console.log('leave!')
-                }*/
-
-            })
+            this.loadCategoriesSell()
+            this.loadAllProducts()
         }
     }
 </script>

@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('name_kh');
             $table->unsignedBigInteger('price');
             $table->string('photo')->nullable();
+            $table->tinyInteger('qty')->nullable()->default(0);
             $table->text('description')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->timestamps();

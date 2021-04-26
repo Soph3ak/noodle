@@ -13,14 +13,13 @@ class SellController extends Controller
         return $categories = Category::all();
     }
 
+    public function loadAllProducts(){
+        return $products = Product::all();
+    }
+
     public function loadProductsByCategory($id){
         $products = Category::find($id)->products;
-        $cols = collect($products);
-        /*$cols = $cols->each(function ($item, $key) {
-            $item->id+=1;
-        });*/
-        return $cols;
-
-
+        return $cols = collect($products);
     }
+
 }

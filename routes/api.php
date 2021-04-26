@@ -28,7 +28,9 @@ Route::apiResource('category',CategoryController::class);
 Route::get('/getCategoriesSelect2',[CategoryController::class,'getCategoriesSelect2'])->name('category.getCategoriesSelect2');
 
 Route::get('/loadCategoriesSell',[SellController::class,'loadCategoriesSell']);
+Route::get('/loadAllProducts',[SellController::class,'loadAllProducts']);
 Route::get('/loadProductsByCategory/{cate}',[SellController::class,'loadProductsByCategory']);
+
 
 
 
