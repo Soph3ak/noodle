@@ -82,6 +82,10 @@ body {
   padding-right: 4rem !important;
 }
 
+#sell .product-description {
+  width: 100%;
+}
+
 #sell .banner {
   height: 100vh;
 }

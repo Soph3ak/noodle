@@ -1,0 +1,2 @@
+- added "qty" to "products" => check if have something to do with Modal
+- added "available" to "tables" => check if have something to do with Modal

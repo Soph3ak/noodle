@@ -34,7 +34,11 @@
                                         <img :src="'/files/'+product.photo" alt="Product Image" class="rounded" style="width: 100%; height: 100%">
                                         <div class="cate-text position-absolute d-flex align-items-start flex-column">
                                             <h1 class="p-lg-4 p-md-3 text-gray mb-auto qty">{{ product.qty }}</h1>
-                                            <h5 class="p-lg-3 pl-lg-4 p-md-2 pl-md-3">{{product.price}}៛</h5>
+                                            <span class="product-description bg-success p-lg-3 pl-lg-4 p-md-2 pl-md-3">
+                                                <h6>{{product.name_kh}}</h6>
+                                                <p class="">{{convertToCurrency(product.price)}}៛</p>
+                                            </span>
+
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +73,7 @@
                                     <a type="button" @click="operation(order.index, order.id, 'increase', index)" class="testbutton"><i class="ion-plus"></i></a>
                                 </td>
                                 <td class="text-right">
-                                    {{ order.amount }}៛
+                                    {{ convertToCurrency(order.amount) }}៛
                                 </td>
                             </tr>
 
@@ -81,15 +85,15 @@
                 <div class="pay mt-auto d-flex flex-column">
                     <div class="subtotal d-flex">
                         <h5>Subtotal</h5>
-                        <h4 class="ml-auto">{{ subTotal }}.00៛</h4>
+                        <h4 class="ml-auto">{{ convertToCurrency(subTotal) }}៛</h4>
                     </div>
                     <div class="discount d-flex">
                         <h5>Discount</h5>
-                        <h4 class="ml-auto">{{ discount }}.00៛</h4>
+                        <h4 class="ml-auto">{{ convertToCurrency(discount) }}៛</h4>
                     </div>
                     <div class="total d-flex">
                         <h5>Total</h5>
-                        <h4 class="ml-auto">{{total}}.00៛</h4>
+                        <h4 class="ml-auto">{{convertToCurrency(total)}}៛</h4>
                     </div>
                     <button class="btn btn-block btn-success mb-3 mt-2">Pay</button>
                     <div class="small-icon d-flex justify-content-between mt-auto">
@@ -106,15 +110,9 @@
 </template>
 
 <script>
-    import {getValue} from "vue-currency-input";
 
     export default {
-        /*props: {
-            colours: {
-                type: Array,
-                required: true,
-            },
-        },*/
+
         data () {
             return{
                 categories:{},
@@ -129,6 +127,17 @@
         },
         methods:{
 
+            convertToCurrency(price){
+                /*https://flaviocopes.com/how-to-format-number-as-currency-javascript/*/
+                let converted
+                const formatter = new Intl.NumberFormat('en-US', {
+                    /*style: 'currency',
+                    currency: 'USD',*/
+                    minimumFractionDigits: 0
+                })
+                return converted = formatter.format(price)
+            },
+
             loadCategoriesSell(){
                 axios.get('api/loadCategoriesSell')
                     .then(response => {
@@ -141,7 +150,6 @@
                 axios.get('api/loadAllProducts')
                     .then(response => {
                         this.products = response.data;
-                        console.log('LOAD Product Length: '+this.products.length)
                         this.ifOrdersExist()
                         this.tmp = 0
                     });
@@ -271,7 +279,7 @@
         },
         watch: {
             subTotal(){
-                return this.total =  this.subTotal - this.discount
+                return this.total =  parseInt(this.subTotal) - parseInt(this.discount)
             },
 
             orders: {
