@@ -43,10 +43,26 @@ body {
   margin-top: -2rem;
 }
 
-#sell .cate-text {
-  height: 100%;
+#sell .cate-text,
+#sell .pro-text {
   position: absolute;
   top: 0;
+}
+
+#sell .cate-text {
+  pointer-events: none;
+}
+
+#sell .pro-text {
+  width: 100%;
+}
+
+#sell .pro-text p {
+  margin-bottom: 0 !important;
+}
+
+#sell .bg-black-overlay {
+  background-color: #00000080 !important;
 }
 
 #sell .header {
@@ -80,10 +96,6 @@ body {
   top: 0;
   overflow: hidden;
   padding-right: 4rem !important;
-}
-
-#sell .product-description {
-  width: 100%;
 }
 
 #sell .banner {
@@ -122,6 +134,8 @@ body {
 #sell .banner .card {
   background-color: black;
   margin-top: -0.5rem;
+  height: 57%;
+  position: relative;
 }
 
 #sell .banner .card-body.p-0 .table tbody > tr > td:last-of-type,
@@ -155,9 +169,23 @@ body {
   font-size: 2rem;
 }
 
+#sell .card-footer {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 200px;
+  z-index: 100;
+  background: black;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.9136029412) 100%);
+}
+
 #sell .pay {
-  background-color: #232323;
-  padding: 12px;
+  padding: 20px 12px 12px 12px;
+  position: absolute;
+  bottom: 0;
+  width: 88%;
+  background: #232323;
 }
 
 /* On screens that are 768px or less, set for col-sm */

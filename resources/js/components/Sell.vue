@@ -32,9 +32,9 @@
                                 <div v-for="(product,index ) in products" :key="product.id" @click="operation(index, product.id, 'increase', 0)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3" id="sell-product">
                                     <div class="rounded shadow-sm sell-card">
                                         <img :src="'/files/'+product.photo" alt="Product Image" class="rounded" style="width: 100%; height: 100%">
-                                        <div class="cate-text position-absolute d-flex align-items-start flex-column">
+                                        <div class="pro-text position-absolute d-flex align-items-start flex-column">
                                             <h1 class="p-lg-4 p-md-3 text-gray mb-auto qty">{{ product.qty }}</h1>
-                                            <span class="product-description bg-success p-lg-3 pl-lg-4 p-md-2 pl-md-3">
+                                            <span class="product-description bg-black-overlay p-lg-2 px-lg-3 p-md-2 pl-md-3 ml-2">
                                                 <h6>{{product.name_kh}}</h6>
                                                 <p class="">{{convertToCurrency(product.price)}}៛</p>
                                             </span>
@@ -82,6 +82,7 @@
                     </div>
                     <div class="card-footer"></div>
                 </div>
+
                 <div class="pay mt-auto d-flex flex-column">
                     <div class="subtotal d-flex">
                         <h5>Subtotal</h5>
@@ -260,9 +261,13 @@
                         });
                     }
                 }
-
+this.test()
             },
-
+            test(){
+                if ($(".card").prop('scrollHeight') > $(".card").height() ) {
+                    alert('overflow!!!fk')
+                }
+            },
             removeOrder (index) {
                 /*TO REMOVE ORDER ITEM FROM CURRENT ORDER*/
                 this.orders.splice(index, 1);
