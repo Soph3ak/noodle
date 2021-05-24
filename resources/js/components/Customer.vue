@@ -166,15 +166,6 @@ export default {
                 });
         },
 
-        /*loadCustomers(paginate){
-            this.form.get('getCustomer/'+paginate)
-                /!*.then(response => {
-                    this.customers = response.data;
-                })
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)*!/
-        },*/
-
         saveCustomer(name){
             this.form.post('customer')
             .then(response => {

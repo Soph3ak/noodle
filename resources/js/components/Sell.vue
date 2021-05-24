@@ -146,6 +146,12 @@
                 this.discount = 0
                 this.total = 0
                 this.form = new Form()
+                for(let i=0; i<this.products.length; i++){
+                    this.products[i].qty = 0
+                    this.changeColorQty(i,this.products[i].qty)
+                }
+
+
             },
 
             convertToCurrency(price){
@@ -286,26 +292,29 @@
             },
 
             saveOrder(){
-                this.form = new Form({
-                    id:"",
-                    user_id: "1",
-                    customer_id: "2",
-                    table_id: "1",
-                    shop_id: "1",
-                    payment_id: "1",
-                    order: this.order,
-                    subTotal: this.subTotal,
-                    discount: this.discount,
-                    total: this.total,
+                if(this.order.length > 0){
+                    this.form = new Form({
+                        id:"",
+                        user_id: "1",
+                        customer_id: "2",
+                        table_id: "1",
+                        shop_id: "1",
+                        payment_id: "1",
+                        order: this.order,
+                        subTotal: this.subTotal,
+                        discount: this.discount,
+                        total: this.total,
 
-                })
-
-                this.form.post('api/save-order')
-                    .then(response => {
-                        this.clear()
                     })
-                    .catch(err => console.log(err))
-                    .finally(() => this.loading = false)
+
+                    this.form.post('api/save-order')
+                        .then(response => {
+                            this.clear()
+                        })
+                        .catch(err => console.log(err))
+                        .finally(() => this.loading = false)
+                }
+                else alert('Please make order!')
             },
 
             removeOrder (index) {
