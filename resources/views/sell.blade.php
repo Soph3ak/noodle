@@ -20,15 +20,6 @@
 <script src="{{ asset('vendor/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 <script src="{{asset('js/app.js')}}" ></script>
 <script>
-    if ($(".card").prop('scrollHeight') > $(".card").height() ) {
-        alert('overflow!!!fk')
-    }
-    if ($(".card").prop('scrollWidth') > $(".card").width() ) {
-        alert('overflow ')
-    }
-    $(".card").on('overflow',function (){
-        alert('ok')
-    })
 
     $(document).ready(function(){
         $('.card-body').overlayScrollbars({  });

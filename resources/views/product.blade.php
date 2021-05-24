@@ -23,8 +23,8 @@
 
 @section('js')
     <script>
-        $(document).ready(function(){
+        /*$(document).ready(function(){
             $('body').overlayScrollbars({ });
-        });
+        });*/
     </script>
 @stop

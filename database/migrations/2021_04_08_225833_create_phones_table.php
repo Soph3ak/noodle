@@ -17,8 +17,8 @@ class CreatePhonesTable extends Migration
             $table->bigIncrements('id');
             $table->string('phone_number');
             $table->foreignId('shop_id')
-                ->references('id')
-                ->on('users')->onCascade('delete');
+                ->constrained('shops')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

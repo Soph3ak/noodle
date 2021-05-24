@@ -15,6 +15,7 @@ class Order extends Model
         'table_id',
         'shop_id',
         'payment_id',
+        'total',
     ];
 
     public function products()

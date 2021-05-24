@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\OrderController;
 
 use App\Http\Controllers\SellController;
 /*
@@ -30,6 +31,8 @@ Route::get('/getCategoriesSelect2',[CategoryController::class,'getCategoriesSele
 Route::get('/loadCategoriesSell',[SellController::class,'loadCategoriesSell']);
 Route::get('/loadAllProducts',[SellController::class,'loadAllProducts']);
 Route::get('/loadProductsByCategory/{cate}',[SellController::class,'loadProductsByCategory']);
+
+Route::post('/save-order', [OrderController::class,'saveOrder']);
 
 
 

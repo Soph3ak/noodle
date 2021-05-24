@@ -10,7 +10,15 @@
                                     <h2>Categories</h2>
                                 </div>
                                 <!-- Gallery item -->
-                                <div v-for="category in categories" :key="category.id" @click="loadProductsByCategory(category.id)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3" id="sell-category">
+                                <div @click="loadAllProducts" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3">
+                                    <div class="bg-gradient-danger rounded shadow-sm sell-card d-flex flex-column">
+                                        <div class="cate-text p-lg-4 p-md-2">
+                                            <h4>ទំនិញគ្រប់មុខ</h4>
+                                            <span>All Products</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-for="category in categories" :key="category.id" @click="loadProductsByCategory(category.id, category.name_kh)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3" id="sell-category">
                                     <div class="bg-success rounded shadow-sm sell-card d-flex flex-column">
                                         <img :src="'/icons/'+category.name+'.jpg'" class="rounded">
                                         <div class="cate-text p-lg-4 p-md-2">
@@ -25,9 +33,9 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="row">
                                 <div class="header pl-3 d-flex align-items-center">
-                                    <a href="#" @click="loadAllProducts" class="mr-auto active">All Products</a>
-                                    <a href="#" class="mr-4">Tables</a>
-                                    <a href="#" class="mr-4">Customers</a>
+                                    <a class="mr-auto">{{currentCate}}</a>
+                                    <a class="mr-4">Tables</a>
+                                    <a class="mr-4">Customers</a>
                                 </div>
                                 <div v-for="(product,index ) in products" :key="product.id" @click="operation(index, product.id, 'increase', 0)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3" id="sell-product">
                                     <div class="rounded shadow-sm sell-card">
@@ -49,31 +57,32 @@
 
             </div>
             <div class="col-lg-3 col-md-5 col-sm-5 banner pr-lg-5 d-flex flex-column">
-                <div class="header">
-                    <h2>Current Orders</h2>
+                <div class="header d-flex">
+                    <h2 style="width: 100%">Current Orders</h2>
+                    <p class="">Sopheak</p>
                 </div>
                 <div class="card">
                     <div class="card-body table-responsive p-0">
                         <table class="table table-head-fixed text-nowrap">
                             <tbody>
-                            <tr v-for="(order, index) in orders" :key="index">
+                            <tr v-for="(ord, index) in order" :key="index">
                                 <td class="products-list" style="padding-left: 12px">
                                     <div class="product-img">
-                                        <img :src="'/files/'+order.image" alt="Product Image" class="img-size-50 rounded">
+                                        <img :src="'/files/'+ord.image" alt="Product Image" class="img-size-50 rounded">
 
                                     </div>
                                     <div class="product-info">
-                                        <a href="javascript:void(0)" class="product-title">{{ order.name_kh }}</a>
-                                        <span class="product-description">{{ order.name }}</span>
+                                        <a href="javascript:void(0)" class="product-title">{{ ord.name_kh }}</a>
+                                        <span class="product-description">{{ ord.name }}</span>
                                     </div>
                                 </td>
                                 <td class="px-md-0 editQty">
-                                    <a type="button" @click="operation(order.index, order.id, 'decrease', index)" class="testbutton"><i class="ion-minus"></i></a>
-                                    <span class="m-lg-2 m-md-1">{{ order.qty }}</span>
-                                    <a type="button" @click="operation(order.index, order.id, 'increase', index)" class="testbutton"><i class="ion-plus"></i></a>
+                                    <a type="button" @click="operation(ord.index, ord.id, 'decrease', index)" class="testbutton"><i class="ion-minus"></i></a>
+                                    <span class="m-lg-2 m-md-1">{{ ord.qty }}</span>
+                                    <a type="button" @click="operation(ord.index, ord.id, 'increase', index)" class="testbutton"><i class="ion-plus"></i></a>
                                 </td>
                                 <td class="text-right">
-                                    {{ convertToCurrency(order.amount) }}៛
+                                    {{ convertToCurrency(ord.amount) }}៛
                                 </td>
                             </tr>
 
@@ -96,7 +105,7 @@
                         <h5>Total</h5>
                         <h4 class="ml-auto">{{convertToCurrency(total)}}៛</h4>
                     </div>
-                    <button class="btn btn-block btn-success mb-3 mt-2">Pay</button>
+                    <button class="btn btn-block btn-success mb-3 mt-2" @click="saveOrder">Charge {{convertToCurrency(total)}}៛</button>
                     <div class="small-icon d-flex justify-content-between mt-auto">
                         <a href="#" class="btn btn-outline-warning"><i class="fas fa-percent"></i></a>
                         <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
@@ -119,14 +128,25 @@
                 categories:{},
                 products:[],
                 tmp:0,
-                orders: [],
+                order: [],
 
                 subTotal:0,
                 discount:0,
                 total:0,
+                currentCate:'ទំនិញគ្រប់មុខ',
+                form : new Form(),
             }
         },
         methods:{
+
+            clear(){
+                this.tmp = 0
+                this.order = []
+                this.subTotal = 0
+                this.discount = 0
+                this.total = 0
+                this.form = new Form()
+            },
 
             convertToCurrency(price){
                 /*https://flaviocopes.com/how-to-format-number-as-currency-javascript/*/
@@ -148,6 +168,7 @@
             },
 
             loadAllProducts(){
+                this.currentCate = 'ទំនិញគ្រប់មុខ'
                 axios.get('api/loadAllProducts')
                     .then(response => {
                         this.products = response.data;
@@ -158,13 +179,13 @@
 
             ifOrdersExist(){
                 /*GET QTY FROM ORDERS IF EXIST, TO PREVENT USER MAKE ORDER THEN GO TO ANOTHER CATEGORY THEN QTY CHANGE TO 0*/
-                    let orderLength = this.orders.length
+                    let orderLength = this.order.length
                     let proLength = this.products.length
                     console.log('Product Length: '+proLength)
                     if (orderLength > 0){
                         for(let i=0; i < orderLength; i++){
-                            let orderProID = this.orders[i].id
-                            let orderProQty = this.orders[i].qty
+                            let orderProID = this.order[i].id
+                            let orderProQty = this.order[i].qty
                             for(let j=0; j < proLength; j++){
                                 if(this.products[j].id === orderProID){
                                     this.products[j].qty = orderProQty
@@ -176,7 +197,8 @@
                     }
             },
 
-            loadProductsByCategory(cateID){
+            loadProductsByCategory(cateID, cateName){
+                this.currentCate = cateName
                 if(cateID !== this.tmp){
                     axios.get('api/loadProductsByCategory/'+cateID)
                         .then(response => {
@@ -220,22 +242,22 @@
 
             addOrder (i, proID, oper) {
                 /**/
-                let ordersLength = this.orders.length
+                let ordersLength = this.order.length
                 if( ordersLength > 0){
                     for(let j=0; j<ordersLength; j++){
-                        if(proID === this.orders[j].id){
-                            let qty = this.orders[j].qty;
+                        if(proID === this.order[j].id){
+                            let qty = this.order[j].qty;
                             if (oper === 'increase')
                                 qty += 1;
                             else
                                 qty -= 1;
-                            this.orders[j].qty = qty
-                            this.orders[j].amount = this.orders[j].price * qty
+                            this.order[j].qty = qty
+                            this.order[j].amount = this.order[j].price * qty
                             return 0
                         }
                     }
                     if (oper === 'increase') {
-                        this.orders.push({
+                        this.order.push({
                             'id': this.products[i].id,
                             'index': i,
                             'name_kh': this.products[i].name_kh,
@@ -249,7 +271,7 @@
                 }
                 else {
                     if (oper === 'increase') {
-                        this.orders.push({
+                        this.order.push({
                             'id': this.products[i].id,
                             'index': i,
                             'name_kh': this.products[i].name_kh,
@@ -261,21 +283,39 @@
                         });
                     }
                 }
-this.test()
             },
-            test(){
-                if ($(".card").prop('scrollHeight') > $(".card").height() ) {
-                    alert('overflow!!!fk')
-                }
+
+            saveOrder(){
+                this.form = new Form({
+                    id:"",
+                    user_id: "1",
+                    customer_id: "2",
+                    table_id: "1",
+                    shop_id: "1",
+                    payment_id: "1",
+                    order: this.order,
+                    subTotal: this.subTotal,
+                    discount: this.discount,
+                    total: this.total,
+
+                })
+
+                this.form.post('api/save-order')
+                    .then(response => {
+                        this.clear()
+                    })
+                    .catch(err => console.log(err))
+                    .finally(() => this.loading = false)
             },
+
             removeOrder (index) {
                 /*TO REMOVE ORDER ITEM FROM CURRENT ORDER*/
-                this.orders.splice(index, 1);
+                this.order.splice(index, 1);
             },
 
             calSubTotal(){
                 let total = [];
-                Object.entries(this.orders).forEach(([key, val]) => {
+                Object.entries(this.order).forEach(([key, val]) => {
                     total.push(val.amount) // the value of the current key.
                 });
                 return this.subTotal = total.reduce(function(total, num){ return total + num }, 0);
@@ -287,7 +327,7 @@ this.test()
                 return this.total =  parseInt(this.subTotal) - parseInt(this.discount)
             },
 
-            orders: {
+            order: {
                 handler: function (val, oldVal) { this.calSubTotal() },
                 deep: true
             },

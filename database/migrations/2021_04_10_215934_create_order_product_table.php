@@ -14,21 +14,19 @@ class CreateOrderProductTable extends Migration
     public function up()
     {
         Schema::create('order_product', function (Blueprint $table) {
-            $table->bigIncrements('id');
 
             $table->foreignId('order_id')
                 ->constrained('orders')
                 ->onDelete('cascade');
 
             $table->foreignId('product_id')
-                ->constrained('orders')
+                ->constrained('products')
                 ->onDelete('cascade');
 
             $table->integer('quantity');
             $table->bigInteger('unit_price');
             $table->bigInteger('amount');
-            $table->bigInteger('total');
-            $table->timestamps();
+
         });
     }
 

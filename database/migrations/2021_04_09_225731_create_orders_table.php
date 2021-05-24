@@ -32,9 +32,12 @@ class CreateOrdersTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
 
+            $table->bigInteger('total');
+
             $table->foreignId('payment_id')
                 ->constrained()
                 ->onDelete('cascade');
+
             $table->timestamps();
         });
     }
