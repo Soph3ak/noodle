@@ -37,14 +37,13 @@ class CategoryController extends Controller
         /*return ['message'=>'getCategories for select2 successfully'];*/
     }
 
-    public function getCategoriesSell()
+    /*public function getCategoriesSell()
     {
         return $categories = Category::select('id', 'name_kh as text')
             ->orderBy('id','desc')
             ->get();
 
-        /*return ['message'=>'getCategories for select2 successfully'];*/
-    }
+    }*/
 
     /**
      * Store a newly created resource in storage.

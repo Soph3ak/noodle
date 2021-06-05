@@ -2,6 +2,14 @@ body {
   color: white;
 }
 
+.overlay {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 80;
+}
+
 .container-fluid {
   background-color: black;
   width: 100%;
@@ -9,6 +17,7 @@ body {
 }
 
 #sell {
+  overflow: hidden;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -94,6 +103,12 @@ body {
 #sell .banner {
   /*padding-top: .5rem;*/
   height: 100vh;
+  z-index: 99;
+  background-color: black;
+}
+
+#sell .banner .overlay {
+  z-index: 150;
 }
 
 #sell .banner table {
@@ -182,6 +197,35 @@ body {
   width: 88%;
   background: #232323;
 }
+
+.h__100 {
+  height: 100%;
+}
+
+.modal-content {
+  background: #ecf0f3 !important;
+  height: 93vh;
+}
+
+/*.cash-in{
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 90;
+    background-color: black;
+    padding-right: .45rem;
+    animation: mymove .3s linear;
+}
+@keyframes mymove {
+    0%  {   right: -100%;
+            width: 50%;
+
+        }
+    100% {  right: 0;
+            width: 100%;
+        }
+}*/
 
 /* On screens that are 768px or less, set for col-sm */
 

@@ -25,7 +25,6 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])-
 
 Route::apiResource('customer',CustomerController::class);
 Route::get('/getCustomer',[CustomerController::class,'getCustomer'])->name('customer.getCustomer');
-Route::get('/getCustomerTest',[CustomerController::class,'getCustomerTest'])->name('customer.getCustomerTest');
 
 Route::apiResource('product',ProductController::class);
 Route::get('/getProduct',[ProductController::class,'getProduct'])->name('product.getProduct');

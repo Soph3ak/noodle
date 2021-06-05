@@ -3,22 +3,6 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <!--<div class="card-header">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-customer" @click="newModal">
-                            CREATE NEW CUSTOMER
-                        </button>
-
-                        <div class="card-tools mt-2">
-                            <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
-                    <!-- /.card-header -->
                     <div class="card-body table-responsive p-0" style="">
                         <table class="table table-head-fixed text-nowrap">
                             <thead>
@@ -64,8 +48,8 @@
             </div>
         </div>
         <!-- /.row -->
-            <!-- modal customer -->
-            <div class="modal fade" id="modal-customer" style="display: none;" aria-hidden="true">
+        <!-- modal customer -->
+        <div class="modal fade" id="modal-customer" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog">
                     <form @submit.prevent="editMode ? updateCustomer(form.name,form.id):saveCustomer(form.name) ">
                         <div class="modal-content">
@@ -111,7 +95,7 @@
                 </div>
                 <!-- /.modal-dialog -->
             </div>
-            <!-- /.modal -->
+        <!-- /.modal -->
     </div>
 </template>
 

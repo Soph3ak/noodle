@@ -78,7 +78,7 @@ class RegisterController extends Controller
             'position' => $faker->numberBetween(1,5),
             'photo' => 'avatar.png',
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => $data['password'],
         ]);
     }
 }

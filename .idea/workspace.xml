@@ -22,11 +22,25 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09e05767-61eb-4fd4-9dd4-d8dac4894053" name="Default Changelist" comment="- Fixed migration&#10;- Done with Many to Many save">
+    <list default="true" id="09e05767-61eb-4fd4-9dd4-d8dac4894053" name="Default Changelist" comment="- Reset data after saved">
+      <change afterPath="$PROJECT_DIR$/public/icons/CNY.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/icons/KHR.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/icons/THB.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/icons/USD.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/CashIn.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/CategoryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/CustomerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/sell.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/sell.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Customer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Customer.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Sell.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Sell.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/sell.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/sell.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/sell.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/sell.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +188,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/icons" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -186,10 +200,10 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\PHEAK\noodle\public\icons" />
+      <recent name="D:\PHEAK\noodle\public\css" />
       <recent name="D:\PHEAK\noodle" />
       <recent name="D:\PHEAK\NoodleShop-laravel\public\icons" />
       <recent name="D:\PHEAK\NoodleShop-laravel\resources\js\components" />
-      <recent name="D:\PHEAK\NoodleShop-laravel\resources\views" />
     </key>
   </component>
   <component name="RunManager" selected="npm.dev">
@@ -296,7 +310,18 @@
       <workItem from="1621388735885" duration="1733000" />
       <workItem from="1621629684641" duration="9235000" />
       <workItem from="1621701575425" duration="15054000" />
-      <workItem from="1621885569575" duration="6362000" />
+      <workItem from="1621885569575" duration="13820000" />
+      <workItem from="1621945652478" duration="19183000" />
+      <workItem from="1621979543116" duration="3757000" />
+      <workItem from="1622031594324" duration="5443000" />
+      <workItem from="1622219440454" duration="797000" />
+      <workItem from="1622440278430" duration="8070000" />
+      <workItem from="1622510552852" duration="5994000" />
+      <workItem from="1622533640380" duration="11457000" />
+      <workItem from="1622607332943" duration="19402000" />
+      <workItem from="1622679628463" duration="29502000" />
+      <workItem from="1622768160165" duration="5021000" />
+      <workItem from="1622877040593" duration="791000" />
     </task>
     <task id="LOCAL-00001" summary="add orders">
       <created>1618876152336</created>
@@ -340,7 +365,14 @@
       <option name="project" value="LOCAL" />
       <updated>1621886076753</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="- Reset data after saved">
+      <created>1621892138299</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1621892138299</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -365,7 +397,8 @@
     <MESSAGE value="- done with &quot;Format price to currency&quot;" />
     <MESSAGE value="- done with &quot;add orders scroll&quot;" />
     <MESSAGE value="- Fixed migration&#10;- Done with Many to Many save" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Fixed migration&#10;- Done with Many to Many save" />
+    <MESSAGE value="- Reset data after saved" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Reset data after saved" />
   </component>
   <component name="WindowStateProjectService">
     <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1621711626886">
@@ -384,30 +417,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1621046719661" />
-    <state width="1877" height="310" key="GridCell.Tab.0.bottom" timestamp="1621886146423">
+    <state width="1877" height="310" key="GridCell.Tab.0.bottom" timestamp="1622772454987">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1621886146423" />
-    <state width="1877" height="310" key="GridCell.Tab.0.center" timestamp="1621886146423">
+    <state width="1877" height="310" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1622772454987" />
+    <state width="1877" height="310" key="GridCell.Tab.0.center" timestamp="1622772454987">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1621886146423" />
-    <state width="1877" height="310" key="GridCell.Tab.0.left" timestamp="1621886146423">
+    <state width="1877" height="310" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1622772454987" />
+    <state width="1877" height="310" key="GridCell.Tab.0.left" timestamp="1622772454986">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1621886146423" />
-    <state width="1877" height="310" key="GridCell.Tab.0.right" timestamp="1621886146423">
+    <state width="1877" height="310" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1622772454986" />
+    <state width="1877" height="310" key="GridCell.Tab.0.right" timestamp="1622772454987">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1621886146423" />
+    <state width="1877" height="310" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1622772454987" />
     <state x="461" y="165" key="SettingsEditor" timestamp="1617997551456">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1617997551456" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1621886078838">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1621898660986">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1621886078838" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1621898660986" />
     <state x="565" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1615708288507">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -420,14 +453,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="667" y="119" width="585" height="801" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1614985198366" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1618773681197">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1622611048683">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1618773681197" />
-    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1621641656986">
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622611048683" />
+    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1622686337122">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1621641656986" />
+    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622686337122" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -441,6 +474,11 @@
           <url>file://$PROJECT_DIR$/resources/js/components/DropZone.vue</url>
           <line>23</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/resources/js/components/CashIn.vue</url>
+          <line>3</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

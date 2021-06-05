@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +26,7 @@ class ProductController extends Controller
 
     public function getProduct()
     {
-        return $products = Product::with('category:id,name_kh') /*category is function name in Product modal*/
+        return $products = Product::with('category:id,name_kh') /*category is function's name in Product modal*/
             ->orderBy('id', 'desc')
             ->paginate(10);
     }
