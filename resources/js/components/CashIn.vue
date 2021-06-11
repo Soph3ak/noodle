@@ -10,8 +10,8 @@
                     <div class="mr-1 flag"><img :src="getCurrencyImage()" alt="" width="32px" height="20px" class="mr-2">{{currencyText}}</div>
                     <h5 class="mb-3">Total Received</h5>
                     <h2 class="text-dark text-bold" v-if="currencyText==='USD'">${{convertToCurrency(USD)}}.00</h2>
-                    <h2 class="text-dark text-bold" v-if="currencyText==='THB'">{{convertToCurrency(THB)}}฿</h2>
-                    <h2 class="text-dark text-bold" v-if="currencyText==='CNY'">{{convertToCurrency(CNY)}}¥</h2>
+                    <h2 class="text-dark text-bold" v-if="currencyText==='THB'">฿{{convertToCurrency(THB)}}</h2>
+                    <h2 class="text-dark text-bold" v-if="currencyText==='CNY'">¥{{convertToCurrency(CNY)}}</h2>
                     <h2 class="text-dark text-bold" v-if="currencyText==='KHR'">{{convertToCurrency(KHR)}}៛</h2>
                 </div>
                 <div class="sidebar__display p-3 mb-3 text-right">
@@ -56,7 +56,10 @@
 
                     </div>
                     <p class="text-center total-cash">ប្រាក់ទទួល</p>
-                    <input type="text" class="calculator-screen z-depth-1" value="" disabled />
+                    <!--<input type="text" class="calculator-screen z-depth-1" value="" disabled />-->
+                    <div class="calculator-screen z-depth-1">
+                        <p class="display khr"></p>
+                    </div>
                     <div class="calculator-keys">
 
                         <button type="button" class="moneyInput function btn btn-info" value="100">100៛</button>
@@ -84,8 +87,8 @@
                         <button type="button" value="00" class="btn btn-secondary">00</button>
                         <button type="button" class="all-clear function btn btn-danger btn-sm" value="all-clear" ref="ac">AC</button>
 
-                        <button type="button" class="equal-sign operator btn btn-success" value="=" v-if="toTalToPay <= KHR">PAY</button>
-                        <button type="button" class="equal-sign operator btn btn-warning" value="=" disabled v-else>PAY</button>
+                        <button type="button" class="equal-sign operator btn btn-success" v-if="toTalToPay <= KHR">PAY</button>
+                        <button type="button" class="equal-sign operator btn btn-warning" disabled v-else>PAY</button>
 
                     </div>
                 </div>
@@ -159,6 +162,35 @@ export default {
         setCurrencyImage(url,text){
             this.url = url
             this.currencyText = text
+            this.displayToggleClass();
+        },
+
+        displayToggleClass(){
+            const selector = document.querySelector('p.display');
+            if(this.currencyText === 'USD'){
+                selector.classList.remove("thb")
+                selector.classList.remove("cny")
+                selector.classList.remove("khr")
+                selector.classList.add("usd")
+            }
+            else if(this.currencyText === 'THB'){
+                selector.classList.remove("usd")
+                selector.classList.remove("cny")
+                selector.classList.remove("khr")
+                selector.classList.add("thb")
+            }
+            else if(this.currencyText === 'CNY'){
+                selector.classList.remove("thb")
+                selector.classList.remove("usd")
+                selector.classList.remove("khr")
+                selector.classList.add("cny")
+            }
+            else {
+                selector.classList.remove("thb")
+                selector.classList.remove("cny")
+                selector.classList.remove("usd")
+                selector.classList.add("khr")
+            }
         },
 
         getCurrencyImage(){
@@ -295,8 +327,10 @@ export default {
 
         let vm = this;
         function updateDisplay() {
-            const display = document.querySelector('.calculator-screen');
-            display.value = convertToCurrency(calculator.displayValue);
+            /*const display = document.querySelector('.calculator-screen');
+            display.value = convertToCurrency(calculator.displayValue);*/
+            const display = document.querySelector('.display');
+            display.innerHTML = convertToCurrency(calculator.displayValue);
             vm.receivedMoney = calculator.displayValue
 
         }
@@ -387,7 +421,6 @@ html {
     background-color: #3e5761;
     color: #fff;
     text-align: center;
-    font-size: 8rem;
     z-index: 0;
     margin-top: -13px;
 }
@@ -432,6 +465,40 @@ i{
 }
 p{
     font-size: 1.5rem;
+}
+
+p.display{
+    font-size: 8rem;
+    position: relative;
+}
+
+p.usd::after {
+    content: "$";
+    color: inherit;
+    font-size: 2.5rem;
+    position: absolute;
+    top: 2.5rem;
+}
+.khr::after {
+    content: "៛";
+    color: inherit;
+    font-size: 3.5rem;
+    position: absolute;
+    top: 2rem;
+}
+.thb::after {
+    content: "฿";
+    color: inherit;
+    font-size: 2.5rem;
+    position: absolute;
+    top: 2.5rem;
+}
+.cny::after {
+    content: "¥";
+    color: inherit;
+    font-size: 2.5rem;
+    position: absolute;
+    top: 2.5rem;
 }
 .total-cash{
     z-index: 10;
