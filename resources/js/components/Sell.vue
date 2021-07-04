@@ -35,8 +35,8 @@
                                 <div class="row">
                                     <div class="header pl-3 d-flex align-items-center">
                                         <a class="mr-auto">{{currentCate}}</a>
-                                        <a class="mr-4">Tables</a>
-                                        <a class="mr-4">Customers</a>
+                                        <h5 class="mr-4">June 19,2021</h5>
+                                        <h5 class="mr-4">14:19</h5>
                                     </div>
                                     <div v-for="(product,index ) in products" :key="product.id" @click="operation(index, product.id, 'increase', 0)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3" id="sell-product">
                                         <div class="rounded shadow-sm sell-card">
@@ -57,64 +57,69 @@
                     </div>
 
                 </div>
-                <div class="col-lg-3 col-md-5 col-sm-5 banner pr-lg-5 d-flex flex-column">
-                    <div class="header d-flex">
-                        <h2 style="width: 100%">Current Orders</h2>
-                        <p class="">Sopheak</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-head-fixed text-nowrap">
-                                <tbody>
-                                <tr v-for="(ord, index) in order" :key="index">
-                                    <td class="products-list" style="padding-left: 12px">
-                                        <div class="product-img">
-                                            <img :src="'/files/'+ord.image" alt="Product Image" class="img-size-50 rounded">
+                <div class="col-lg-3 col-md-5 col-sm-5 pr-lg-5 d-flex flex-column">
+                    <div class="banner">
+                        <div class="header d-flex">
+                            <h2 style="width: 100%">Current Orders</h2>
+                            <p class="">Sopheak</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-body table-responsive p-0">
+                                <i class="fas fa-shopping-basket order" v-show="order.length===0"></i>
+                                <table class="table table-head-fixed text-nowrap">
+                                    <tbody>
+                                    <tr v-for="(ord, index) in order" :key="index">
+                                        <td class="products-list" style="padding-left: 12px">
+                                            <div class="product-img">
+                                                <img :src="'/files/'+ord.image" alt="Product Image" class="img-size-50 rounded">
 
-                                        </div>
-                                        <div class="product-info">
-                                            <a href="javascript:void(0)" class="product-title">{{ ord.name_kh }}</a>
-                                            <span class="product-description">{{ ord.name }}</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-md-0 editQty">
-                                        <a type="button" @click="operation(ord.index, ord.id, 'decrease', index)" class="testbutton"><i class="ion-minus"></i></a>
-                                        <span class="m-lg-2 m-md-1">{{ ord.qty }}</span>
-                                        <a type="button" @click="operation(ord.index, ord.id, 'increase', index)" class="testbutton"><i class="ion-plus"></i></a>
-                                    </td>
-                                    <td class="text-right">
-                                        {{ convertToCurrency(ord.amount) }}៛
-                                    </td>
-                                </tr>
+                                            </div>
+                                            <div class="product-info">
+                                                <a href="javascript:void(0)" class="product-title">{{ ord.name_kh }}</a>
+                                                <span class="product-description">{{ ord.name }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-md-0 editQty">
+                                            <a type="button" @click="operation(ord.index, ord.id, 'decrease', index)" class="testbutton"><i class="ion-minus"></i></a>
+                                            <span class="m-lg-2 m-md-1">{{ ord.qty }}</span>
+                                            <a type="button" @click="operation(ord.index, ord.id, 'increase', index)" class="testbutton"><i class="ion-plus"></i></a>
+                                        </td>
+                                        <td class="text-right">
+                                            {{ convertToCurrency(ord.amount) }}៛
+                                        </td>
 
-                                </tbody>
-                            </table>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer" v-show="order.length>=8"></div>
                         </div>
-                        <div class="card-footer"></div>
+
+                        <div class="pay mt-auto d-flex flex-column">
+                            <div class="subtotal d-flex">
+                                <h5>Subtotal</h5>
+                                <h4 class="ml-auto">{{ convertToCurrency(subTotal) }}.00៛</h4>
+                            </div>
+                            <div class="discount d-flex">
+                                <h5>Discount</h5>
+                                <h4 class="ml-auto">{{ convertToCurrency(discount) }}.00៛</h4>
+                            </div>
+                            <div class="total d-flex style7">
+                                <h5>Total</h5>
+                                <h4 class="ml-auto">{{convertToCurrency(total)}}.00៛</h4>
+                            </div>
+                            <button type="button" class="btn btn-block btn-info mb-3 mt-2" @click="cashIn">Charge {{convertToCurrency(total)}}.00៛</button>
+                            <div class="small-icon d-flex justify-content-between mt-auto">
+                                <a href="#" class="btn btn-outline-warning"><i class="fas fa-percent"></i></a>
+                                <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
+                                <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
+                                <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
+                                <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="pay mt-auto d-flex flex-column">
-                        <div class="subtotal d-flex">
-                            <h5>Subtotal</h5>
-                            <h4 class="ml-auto">{{ convertToCurrency(subTotal) }}៛</h4>
-                        </div>
-                        <div class="discount d-flex">
-                            <h5>Discount</h5>
-                            <h4 class="ml-auto">{{ convertToCurrency(discount) }}៛</h4>
-                        </div>
-                        <div class="total d-flex">
-                            <h5>Total</h5>
-                            <h4 class="ml-auto">{{convertToCurrency(total)}}៛</h4>
-                        </div>
-                        <button type="button" class="btn btn-block btn-success mb-3 mt-2" @click="cashIn">Charge {{convertToCurrency(total)}}៛</button>
-                        <div class="small-icon d-flex justify-content-between mt-auto">
-                            <a href="#" class="btn btn-outline-warning"><i class="fas fa-percent"></i></a>
-                            <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
-                            <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
-                            <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
-                            <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -297,7 +302,7 @@ import CashIn from "./CashIn";
                         }
                     }
                     if (oper === 'increase') {
-                        this.order.push({
+                        this.order.unshift({
                             'id': this.products[i].id,
                             'index': i,
                             'name_kh': this.products[i].name_kh,

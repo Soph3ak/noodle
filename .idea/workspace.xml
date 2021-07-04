@@ -22,10 +22,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09e05767-61eb-4fd4-9dd4-d8dac4894053" name="Default Changelist" comment="* Cashin">
+    <list default="true" id="09e05767-61eb-4fd4-9dd4-d8dac4894053" name="Default Changelist" comment="* CashIn -&gt; add currency sign to display screen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/sell.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/sell.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/CashIn.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CashIn.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Sell.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Sell.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/sell.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/sell.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -311,6 +314,12 @@
       <workItem from="1623045844491" duration="617000" />
       <workItem from="1623241213251" duration="3197000" />
       <workItem from="1623246894609" duration="8489000" />
+      <workItem from="1623450209359" duration="900000" />
+      <workItem from="1623591641973" duration="1421000" />
+      <workItem from="1624076173511" duration="3424000" />
+      <workItem from="1624149977689" duration="8364000" />
+      <workItem from="1624264866038" duration="704000" />
+      <workItem from="1624322975428" duration="8604000" />
     </task>
     <task id="LOCAL-00001" summary="add orders">
       <created>1618876152336</created>
@@ -368,7 +377,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622878551843</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="* CashIn -&gt; add currency sign to display screen">
+      <created>1623450353440</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1623450353440</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -395,7 +411,8 @@
     <MESSAGE value="- Fixed migration&#10;- Done with Many to Many save" />
     <MESSAGE value="- Reset data after saved" />
     <MESSAGE value="* Cashin" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Cashin" />
+    <MESSAGE value="* CashIn -&gt; add currency sign to display screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="* CashIn -&gt; add currency sign to display screen" />
   </component>
   <component name="WindowStateProjectService">
     <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1621711626886">
@@ -406,38 +423,38 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="736" y="432" width="447" height="265" key="ComposerInitDialogKey/0.0.1920.1040@0.0.1920.1040" timestamp="1618694523562" />
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1622878803788">
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1623450711909">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1622878803788" />
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1623450711909" />
     <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1621046719661">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1621046719661" />
-    <state width="1877" height="310" key="GridCell.Tab.0.bottom" timestamp="1623283124048">
+    <state width="1877" height="310" key="GridCell.Tab.0.bottom" timestamp="1624359644676">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1623283124048" />
-    <state width="1877" height="310" key="GridCell.Tab.0.center" timestamp="1623283124048">
+    <state width="1877" height="310" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1624359644676" />
+    <state width="1877" height="310" key="GridCell.Tab.0.center" timestamp="1624359644676">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1623283124048" />
-    <state width="1877" height="310" key="GridCell.Tab.0.left" timestamp="1623283124048">
+    <state width="1877" height="310" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1624359644676" />
+    <state width="1877" height="310" key="GridCell.Tab.0.left" timestamp="1624359644675">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1623283124048" />
-    <state width="1877" height="310" key="GridCell.Tab.0.right" timestamp="1623283124048">
+    <state width="1877" height="310" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1624359644675" />
+    <state width="1877" height="310" key="GridCell.Tab.0.right" timestamp="1624359644676">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1623283124048" />
+    <state width="1877" height="310" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1624359644676" />
     <state x="461" y="165" key="SettingsEditor" timestamp="1617997551456">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1617997551456" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1623246629312">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1623450362227">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1623246629312" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1623450362227" />
     <state x="565" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1615708288507">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -446,18 +463,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1621892114868" />
-    <state x="667" y="119" width="585" height="801" key="find.popup" timestamp="1614985198366">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="667" y="119" width="585" height="801" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1614985198366" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1622611048683">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622611048683" />
-    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1622686337122">
+    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1624341762541">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622686337122" />
+    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1624341762541" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

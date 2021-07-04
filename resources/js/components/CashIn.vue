@@ -20,12 +20,12 @@
                     <h2 class="text-dark text-bold">{{ convertToCurrency(KHR) }}៛</h2>
                 </div>
                 <div class="sidebar__display p-3 mb-3 text-right">
-                    <h5 class="mb-3">Remain</h5>
-                    <h2 class="text-danger text-bold">{{ convertToCurrency(remain) }}៛</h2>
-                </div>
-                <div class="sidebar__display p-3 mb-3 text-right">
                     <h5 class="mb-3">Change</h5>
                     <h2 class="text-dark text-bold">{{ convertToCurrency(change) }}៛</h2>
+                </div>
+                <div class="sidebar__display p-3 mb-3 text-right">
+                    <h5 class="mb-3">Remain</h5>
+                    <h2 class="text-danger text-bold">{{ convertToCurrency(remain) }}៛</h2>
                 </div>
                 <div class="p-3 mb-3 text-right position-relative">
                     <div class="mr-1 flag"><img :src="getCurrencyImage()" alt="" width="32px" height="20px" class="mr-2">{{currencyText}}</div>
