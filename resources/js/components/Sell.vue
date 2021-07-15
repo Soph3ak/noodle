@@ -59,10 +59,40 @@
                 </div>
                 <div class="col-lg-3 col-md-5 col-sm-5 pr-lg-5 d-flex flex-column">
                     <div class="banner">
-                        <div class="header d-flex">
-                            <h2 style="width: 100%">Current Orders</h2>
-                            <p class="">Sopheak</p>
+                        <div class="header d-flex justify-content-between align-items-center">
+                            <!--<h2 style="width: 100%">Current Orders</h2>
+                            <p class="">Sopheak</p>-->
+
+
+                                <div class="products-list add-seat" style="padding-left: 6px">
+                                    <div class="product-img">
+                                        <img src="/icons/tables-white.png" class="img-size-50 rounded" alt="Image"/>
+                                    </div>
+                                    <div class="product-info">
+                                        <a href="javascript:void(0)" class="product-title">SEAT</a>
+                                        <span class="product-description">Take away</span>
+                                    </div>
+                                </div>
+                            <div class="products-list add-customer" style="padding-left: 6px; border-left: 1px solid #414040;">
+                                <div class="product-img">
+                                    <img src="/icons/customer-white.png" class="img-size-50 rounded" alt="Image"/>
+                                </div>
+                                <div class="product-info">
+                                    <a href="javascript:void(0)" class="product-title">CUSTOMER</a>
+                                    <span class="product-description">General</span>
+                                </div>
+                            </div>
+                            <div class="products-list add-cashier" style="padding-left: 10px;border-left: 1px solid #414040;">
+                                <div class="product-img">
+                                    <img src="/icons/cashier-white.png" class="img-size-50 rounded" alt="Image"/>
+                                </div>
+                                <div class="product-info">
+                                    <a href="javascript:void(0)" class="product-title">CASHIER</a>
+                                    <span class="product-description">Sopheak</span>
+                                </div>
+                            </div>
                         </div>
+
                         <div class="card">
                             <div class="card-body table-responsive p-0">
                                 <i class="fas fa-shopping-basket order" v-show="order.length===0"></i>
@@ -109,14 +139,22 @@
                                 <h5>Total</h5>
                                 <h4 class="ml-auto">{{convertToCurrency(total)}}.00៛</h4>
                             </div>
-                            <button type="button" class="btn btn-block btn-info mb-3 mt-2" @click="cashIn">Charge {{convertToCurrency(total)}}.00៛</button>
-                            <div class="small-icon d-flex justify-content-between mt-auto">
+                            <!--<button type="button" class="btn btn-block btn-info mb-3 mt-2" @click="cashIn">Charge {{convertToCurrency(total)}}.00៛</button>-->
+                            <div class="btn-hold_btn-clear d-flex justify-content-between">
+                                <div class="btn-hold p-3 bg-info my-2 bg-gradient-danger"><h5>Hold</h5></div>
+                                <div class="btn-clear p-3 bg-info my-2 bg-danger"><h5>Clear</h5></div>
+                            </div>
+                            <div class="btn-pay d-flex justify-content-between p-3 bg-info my-2" @click="cashIn">
+                                <h5>PAY</h5>
+                                <h4 class="">{{convertToCurrency(total)}}.00៛</h4>
+                            </div>
+                            <!--<div class="small-icon d-flex justify-content-between mt-auto">
                                 <a href="#" class="btn btn-outline-warning"><i class="fas fa-percent"></i></a>
                                 <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
                                 <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
                                 <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
                                 <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
 

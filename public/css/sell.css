@@ -88,6 +88,10 @@ body {
   color: white;
 }
 
+#sell .header .product-info a {
+  font-size: 0.9rem;
+}
+
 #sell .product {
   width: 50%;
   height: 100vh;
@@ -187,13 +191,46 @@ body {
   text-overflow: ellipsis;
 }
 
+#sell .banner .add-seat,
+#sell .banner .add-customer,
+#sell .banner .add-cashier {
+  cursor: pointer;
+  margin: 0 4px;
+}
+
 #sell .banner .btn {
   font-size: 2rem;
 }
 
+#sell .banner div.btn-hold,
+#sell .banner .btn-clear {
+  text-align: center;
+  width: 45%;
+}
+
+#sell .banner div.btn-pay,
+#sell .banner .btn-hold,
+#sell .banner .btn-clear {
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+#sell .banner div.btn-pay h5,
+#sell .banner div.btn-pay h4,
+#sell .banner .btn-hold h5,
+#sell .banner .btn-hold h4,
+#sell .banner .btn-clear h5,
+#sell .banner .btn-clear h4 {
+  margin-bottom: 0;
+}
+
+#sell .banner div.btn-pay:hover {
+  background-color: red;
+}
+
 #sell .style7 {
   /*border-top: 1px solid #8c8b8b;*/
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #414040;
 }
 
 #sell .card-footer {

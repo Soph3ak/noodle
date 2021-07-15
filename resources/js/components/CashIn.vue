@@ -3,37 +3,37 @@
         <div class="row justify-content-between">
             <div class="col-3 pr-3">
                 <div class="sidebar__display p-3 mb-3 text-right">
-                    <h5 class="mb-3">Total to pay</h5>
-                    <h2 class="text-cyan text-bold">{{convertToCurrency(toTalToPay)}}៛</h2>
+                    <h6 class="mb-3">TOTAL TO PAY</h6>
+                    <h1 class="text-cyan text-bold">{{convertToCurrency(toTalToPay)}}៛</h1>
                 </div>
                 <div class="sidebar__display p-3 mb-3 text-right">
                     <div class="mr-1 flag"><img :src="getCurrencyImage()" alt="" width="32px" height="20px" class="mr-2">{{currencyText}}</div>
-                    <h5 class="mb-3">Total Received</h5>
-                    <h2 class="text-dark text-bold" v-if="currencyText==='USD'">${{convertToCurrency(USD)}}.00</h2>
-                    <h2 class="text-dark text-bold" v-if="currencyText==='THB'">฿{{convertToCurrency(THB)}}</h2>
-                    <h2 class="text-dark text-bold" v-if="currencyText==='CNY'">¥{{convertToCurrency(CNY)}}</h2>
-                    <h2 class="text-dark text-bold" v-if="currencyText==='KHR'">{{convertToCurrency(KHR)}}៛</h2>
+                    <h6 class="mb-3">TOTAL RECEIVED</h6>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='USD'">${{convertToCurrency(USD)}}.00</h1>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='THB'">฿{{convertToCurrency(THB)}}</h1>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='CNY'">¥{{convertToCurrency(CNY)}}</h1>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='KHR'">{{convertToCurrency(KHR)}}៛</h1>
                 </div>
                 <div class="sidebar__display p-3 mb-3 text-right">
                     <div class="mr-1 flag"><img :src="'icons/KHR.png'" alt="" width="32px" height="20px" class="mr-2"></div>
-                    <h5 class="mb-3">Total Received KHR</h5>
-                    <h2 class="text-dark text-bold">{{ convertToCurrency(KHR) }}៛</h2>
+                    <h6 class="mb-3">TOTAL RECEIVED KHR</h6>
+                    <h1 class="text-dark text-bold">{{ convertToCurrency(KHR) }}៛</h1>
                 </div>
                 <div class="sidebar__display p-3 mb-3 text-right">
-                    <h5 class="mb-3">Change</h5>
-                    <h2 class="text-dark text-bold">{{ convertToCurrency(change) }}៛</h2>
+                    <h6 class="mb-3">CHANGE</h6>
+                    <h1 class="text-dark text-bold">{{ convertToCurrency(change) }}៛</h1>
                 </div>
                 <div class="sidebar__display p-3 mb-3 text-right">
-                    <h5 class="mb-3">Remain</h5>
-                    <h2 class="text-danger text-bold">{{ convertToCurrency(remain) }}៛</h2>
+                    <h6 class="mb-3">REMAIN</h6>
+                    <h1 class="text-danger text-bold">{{ convertToCurrency(remain) }}៛</h1>
                 </div>
                 <div class="p-3 mb-3 text-right position-relative">
                     <div class="mr-1 flag"><img :src="getCurrencyImage()" alt="" width="32px" height="20px" class="mr-2">{{currencyText}}</div>
-                    <h5 class="mb-3 text-dark">Exchange Rates</h5>
-                    <h2 class="text-dark text-bold" v-if="currencyText==='USD'">{{convertToCurrency(usdRate)}}៛</h2>
-                    <h2 class="text-dark text-bold" v-if="currencyText==='THB'">{{convertToCurrency(thbRate)}}៛</h2>
-                    <h2 class="text-dark text-bold" v-if="currencyText==='CNY'">{{convertToCurrency(cnyRate)}}៛</h2>
-                    <h2 class="text-dark text-bold" v-if="currencyText==='KHR'">{{convertToCurrency(khrRate)}}៛</h2>
+                    <h6 class="mb-3 text-dark">EXCHANGE RATES</h6>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='USD'">{{convertToCurrency(usdRate)}}៛</h1>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='THB'">{{convertToCurrency(thbRate)}}៛</h1>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='CNY'">{{convertToCurrency(cnyRate)}}៛</h1>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='KHR'">{{convertToCurrency(khrRate)}}៛</h1>
                 </div>
 
             </div>
@@ -518,8 +518,9 @@ p.usd::after {
     border: 1px solid #e8e8e8;
 }
 
-.sidebar__display h5{
+.sidebar__display h6{
     color: #343a40;
+    margin-bottom: 5px !important;
 }
 
 .currency__switch{
@@ -538,6 +539,9 @@ p.usd::after {
 
 .dropdown-menu a{
     cursor: pointer;
+}
+h6{
+    margin-bottom: 0px;
 }
 
 

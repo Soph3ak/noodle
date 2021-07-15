@@ -70,6 +70,9 @@ body{
             font-size: 1.8rem;
             color: white;
         }
+        .product-info a{
+            font-size: .9rem;
+        }
     }
 
     .product{
@@ -161,14 +164,33 @@ body{
             overflow: hidden;
             text-overflow: ellipsis;
         }
+        .add-seat, .add-customer, .add-cashier{
+            cursor: pointer;
+            margin: 0 4px;
+        }
         .btn{
             font-size: 2rem;
+        }
+        div.btn-hold, .btn-clear{
+            text-align: center;
+            width: 45%;
+        }
+
+        div.btn-pay, .btn-hold, .btn-clear{
+            cursor: pointer;
+            border-radius: 6px;
+            h5, h4{
+                margin-bottom: 0;
+            }
+        }
+        div.btn-pay:hover{
+            background-color: red;
         }
 
     }
     .style7 {
         /*border-top: 1px solid #8c8b8b;*/
-        border-bottom: 1px solid #fff;
+        border-bottom: 1px solid #414040;
     }
     .card-footer{
         /*display: none;*/
