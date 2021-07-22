@@ -35,8 +35,8 @@
                                 <div class="row">
                                     <div class="header pl-3 d-flex align-items-center">
                                         <a class="mr-auto">{{currentCate}}</a>
-                                        <h5 class="mr-4">June 19,2021</h5>
-                                        <h5 class="mr-4">14:19</h5>
+                                        <h5 class="mr-4">{{ date }}</h5>
+                                        <h5 class="mr-4">{{ time }}</h5>
                                     </div>
                                     <div v-for="(product,index ) in products" :key="product.id" @click="operation(index, product.id, 'increase', 0)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3" id="sell-product">
                                         <div class="rounded shadow-sm sell-card">
@@ -144,7 +144,7 @@
                                 <div class="btn-hold p-3 bg-info my-2 bg-gradient-danger"><h5>Hold</h5></div>
                                 <div class="btn-clear p-3 bg-info my-2 bg-danger"><h5>Clear</h5></div>
                             </div>
-                            <div class="btn-pay d-flex justify-content-between p-3 bg-info my-2" @click="cashIn">
+                            <div class="btn-pay d-flex justify-content-between p-3 bg-gradient-info my-2" @click="cashIn">
                                 <h5>PAY</h5>
                                 <h4 class="">{{convertToCurrency(total)}}.00៛</h4>
                             </div>
@@ -203,7 +203,8 @@ import CashIn from "./CashIn";
                 total:0,
                 currentCate:'ទំនិញគ្រប់មុខ',
                 form : new Form(),
-
+                date:'June 19,2021',
+                time:' 14:19:13',
             }
         },
         methods:{
@@ -295,11 +296,19 @@ import CashIn from "./CashIn";
 
             },
 
-            operation(index, proID, oper, orderIndex){
+            operation(productIndex, proID, oper, orderIndex){
                 /*TO HANDLE USER INCREASE OR DECREASE QTY*/
-                /*index: to increase qty to array products[]*/
+                /*productIndex: to increase qty in array products[]*/
                 /*orderIndex: to remove an array from array order[]*/
-                let qty = this.products[index].qty
+                let qty = 0
+                let ordersLength = this.order.length
+                if( ordersLength > 0){
+                    for(let j=0; j<ordersLength; j++){
+                        if(proID === this.order[j].id)
+                            qty = this.order[j].qty;
+                    }
+                }
+
                 if (oper === 'increase')
                     qty+=1
                 else {
@@ -310,15 +319,30 @@ import CashIn from "./CashIn";
                         this.removeOrder(orderIndex)
                         }
                 }
-                this.products[index].qty = qty
-                this.addOrder(index,proID, oper)
-                this.changeColorQty(index, qty)
+                this.updateUIProductQty(proID,qty)
+                this.addOrder(productIndex,proID, oper)
+                /*this.changeColorQty(productIndex, qty)*/
             },
 
-            changeColorQty(index, qty){
+            updateUIProductQty(proID, qty){
+                let productLength = this.products.length
+                if( productLength > 0){
+                    for(let j=0; j<productLength; j++){
+                        if(proID === this.products[j].id){
+                            this.products[j].qty = qty;
+                            this.changeColorQty(j,qty)
+                        }
+                    }
+                }
+                else {
+                    return 0
+                }
+
+            },
+            changeColorQty(productIndex, qty){
                 /*THE PROBLEM WAS HAPPENED COZ PRODUCTS LOAD TO PAGE WAS DELAY LATE THEN CODE*/
                 /*SO WE NEED TO USE setTimeout TO SOLVE WHEN CALL THIS METHOD*/
-                let selector = $("h1.qty:eq("+index+")");
+                let selector = $("h1.qty:eq("+productIndex+")");
                 if (qty > 0)
                     selector.removeClass('text-gray');
                 else
