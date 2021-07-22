@@ -297,6 +297,8 @@ import CashIn from "./CashIn";
 
             operation(index, proID, oper, orderIndex){
                 /*TO HANDLE USER INCREASE OR DECREASE QTY*/
+                /*index: to increase qty to array products[]*/
+                /*orderIndex: to remove an array from array order[]*/
                 let qty = this.products[index].qty
                 if (oper === 'increase')
                     qty+=1

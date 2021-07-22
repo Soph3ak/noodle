@@ -22,15 +22,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09e05767-61eb-4fd4-9dd4-d8dac4894053" name="Default Changelist" comment="* CashIn">
-      <change afterPath="$PROJECT_DIR$/public/icons/cashier-white.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/icons/customer-white.png" afterDir="false" />
+    <list default="true" id="09e05767-61eb-4fd4-9dd4-d8dac4894053" name="Default Changelist" comment="* CashIn : Update UI sidebar-&gt; Change Font size&#10;* Sell : Update UI banner-&gt; add btn Seat Customer and Cashier">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/sell.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/sell.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/CashIn.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CashIn.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Sell.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Sell.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/sell.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/sell.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -326,6 +321,8 @@
       <workItem from="1625999765077" duration="1207000" />
       <workItem from="1626223184053" duration="3055000" />
       <workItem from="1626230185864" duration="15230000" />
+      <workItem from="1626307248160" duration="5333000" />
+      <workItem from="1626980340980" duration="409000" />
     </task>
     <task id="LOCAL-00001" summary="add orders">
       <created>1618876152336</created>
@@ -397,7 +394,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625437759811</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="* CashIn : Update UI sidebar-&gt; Change Font size&#10;* Sell : Update UI banner-&gt; add btn Seat Customer and Cashier">
+      <created>1626307472816</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1626307472817</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -426,7 +430,8 @@
     <MESSAGE value="* Cashin" />
     <MESSAGE value="* CashIn -&gt; add currency sign to display screen" />
     <MESSAGE value="* CashIn" />
-    <option name="LAST_COMMIT_MESSAGE" value="* CashIn" />
+    <MESSAGE value="* CashIn : Update UI sidebar-&gt; Change Font size&#10;* Sell : Update UI banner-&gt; add btn Seat Customer and Cashier" />
+    <option name="LAST_COMMIT_MESSAGE" value="* CashIn : Update UI sidebar-&gt; Change Font size&#10;* Sell : Update UI banner-&gt; add btn Seat Customer and Cashier" />
   </component>
   <component name="WindowStateProjectService">
     <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1621711626886">
@@ -445,30 +450,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1621046719661" />
-    <state width="1877" height="310" key="GridCell.Tab.0.bottom" timestamp="1626264542332">
+    <state width="1877" height="310" key="GridCell.Tab.0.bottom" timestamp="1626350292474">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1626264542332" />
-    <state width="1877" height="310" key="GridCell.Tab.0.center" timestamp="1626264542332">
+    <state width="1877" height="310" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1626350292474" />
+    <state width="1877" height="310" key="GridCell.Tab.0.center" timestamp="1626350292474">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1626264542332" />
-    <state width="1877" height="310" key="GridCell.Tab.0.left" timestamp="1626264542332">
+    <state width="1877" height="310" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1626350292474" />
+    <state width="1877" height="310" key="GridCell.Tab.0.left" timestamp="1626350292472">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1626264542332" />
-    <state width="1877" height="310" key="GridCell.Tab.0.right" timestamp="1626264542332">
+    <state width="1877" height="310" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1626350292472" />
+    <state width="1877" height="310" key="GridCell.Tab.0.right" timestamp="1626350292474">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1626264542332" />
+    <state width="1877" height="310" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1626350292474" />
     <state x="461" y="165" key="SettingsEditor" timestamp="1617997551456">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1617997551456" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1625437767271">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1626307474697">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1625437767271" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1626307474697" />
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1621892114868">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
