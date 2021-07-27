@@ -35,8 +35,9 @@
                                 <div class="row">
                                     <div class="header pl-3 d-flex align-items-center">
                                         <a class="mr-auto">{{currentCate}}</a>
-                                        <h5 class="mr-4">{{ date }}</h5>
-                                        <h5 class="mr-4">{{ time }}</h5>
+                                        <!--<h5 class="mr-4">{{ date }}</h5>-->
+                                        <!--<h5 class="mr-4">{{ time }}</h5>-->
+                                        <Clock></Clock>
                                     </div>
                                     <div v-for="(product,index ) in products" :key="product.id" @click="operation(index, product.id, 'increase', 0)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3" id="sell-product">
                                         <div class="rounded shadow-sm sell-card">
@@ -189,8 +190,9 @@
 
 <script>
 import CashIn from "./CashIn";
+import Clock from "./Clock";
     export default {
-        components:{CashIn},
+        components:{CashIn, Clock},
         data () {
             return{
                 categories:{},

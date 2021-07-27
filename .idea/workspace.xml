@@ -22,10 +22,17 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09e05767-61eb-4fd4-9dd4-d8dac4894053" name="Default Changelist" comment="* Sell : Add some commands">
+    <list default="true" id="09e05767-61eb-4fd4-9dd4-d8dac4894053" name="Default Changelist" comment="* Sell : Fixed bugs -&gt; when array product has change, operator will not working correctly">
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Clock.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/sell.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/sell.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/bootstrap.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Sell.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Sell.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/sell.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/sell.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +180,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/icons" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/js/components" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -184,11 +191,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\PHEAK\noodle\resources\js\components" />
       <recent name="D:\PHEAK\noodle\public\icons" />
       <recent name="D:\PHEAK\noodle\public\css" />
       <recent name="D:\PHEAK\noodle" />
       <recent name="D:\PHEAK\NoodleShop-laravel\public\icons" />
-      <recent name="D:\PHEAK\NoodleShop-laravel\resources\js\components" />
     </key>
   </component>
   <component name="RunManager" selected="npm.dev">
@@ -322,7 +329,8 @@
       <workItem from="1626223184053" duration="3055000" />
       <workItem from="1626230185864" duration="15230000" />
       <workItem from="1626307248160" duration="5333000" />
-      <workItem from="1626980340980" duration="14519000" />
+      <workItem from="1626980340980" duration="15184000" />
+      <workItem from="1627352714039" duration="6938000" />
     </task>
     <task id="LOCAL-00001" summary="add orders">
       <created>1618876152336</created>
@@ -408,7 +416,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626980939042</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="* Sell : Fixed bugs -&gt; when array product has change, operator will not working correctly">
+      <created>1626996848934</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1626996848934</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -439,17 +454,14 @@
     <MESSAGE value="* CashIn" />
     <MESSAGE value="* CashIn : Update UI sidebar-&gt; Change Font size&#10;* Sell : Update UI banner-&gt; add btn Seat Customer and Cashier" />
     <MESSAGE value="* Sell : Add some commands" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Sell : Add some commands" />
+    <MESSAGE value="* Sell : Fixed bugs -&gt; when array product has change, operator will not working correctly" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Sell : Fixed bugs -&gt; when array product has change, operator will not working correctly" />
   </component>
   <component name="WindowStateProjectService">
     <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1621711626886">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1621711626886" />
-    <state x="736" y="432" width="447" height="265" key="ComposerInitDialogKey" timestamp="1618694523562">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="736" y="432" width="447" height="265" key="ComposerInitDialogKey/0.0.1920.1040@0.0.1920.1040" timestamp="1618694523562" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1623450711909">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -458,26 +470,26 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1621046719661" />
-    <state width="1877" height="310" key="GridCell.Tab.0.bottom" timestamp="1626980749457">
+    <state width="1877" height="310" key="GridCell.Tab.0.bottom" timestamp="1627352751342">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1626980749457" />
-    <state width="1877" height="310" key="GridCell.Tab.0.center" timestamp="1626980749457">
+    <state width="1877" height="310" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1627352751342" />
+    <state width="1877" height="310" key="GridCell.Tab.0.center" timestamp="1627352751342">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1626980749457" />
-    <state width="1877" height="310" key="GridCell.Tab.0.left" timestamp="1626980749456">
+    <state width="1877" height="310" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1627352751342" />
+    <state width="1877" height="310" key="GridCell.Tab.0.left" timestamp="1627352751342">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1626980749456" />
-    <state width="1877" height="310" key="GridCell.Tab.0.right" timestamp="1626980749457">
+    <state width="1877" height="310" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1627352751342" />
+    <state width="1877" height="310" key="GridCell.Tab.0.right" timestamp="1627352751342">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1626980749457" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1626980944169">
+    <state width="1877" height="310" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1627352751342" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1626996852174">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1626980944169" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1626996852174" />
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1621892114868">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -486,10 +498,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622611048683" />
-    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1626232720273">
+    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1627361980127">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1626232720273" />
+    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1627361980127" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
