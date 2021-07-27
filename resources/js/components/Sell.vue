@@ -143,7 +143,7 @@
                             <!--<button type="button" class="btn btn-block btn-info mb-3 mt-2" @click="cashIn">Charge {{convertToCurrency(total)}}.00៛</button>-->
                             <div class="btn-hold_btn-clear d-flex justify-content-between">
                                 <div class="btn-hold p-3 bg-info my-2 bg-gradient-danger"><h5>Hold</h5></div>
-                                <div class="btn-clear p-3 bg-info my-2 bg-danger"><h5>Clear</h5></div>
+                                <div class="btn-clear p-3 bg-info my-2 bg-danger" @click="clearOrder"><h5>Clear</h5></div>
                             </div>
                             <div class="btn-pay d-flex justify-content-between p-3 bg-gradient-info my-2" @click="cashIn">
                                 <h5>PAY</h5>
@@ -173,7 +173,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <CashIn ref="cashIn"></CashIn>
+                            <CashIn @paySuccess="hideModal(); clear();" ref="cashIn" ></CashIn>
                         </div>
                         <!--<div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal-cashIn" @click="">បោះបង់</button>
@@ -267,7 +267,6 @@ import Clock from "./Clock";
                 /*GET QTY FROM ORDERS IF EXIST, TO PREVENT USER MAKE ORDER THEN GO TO ANOTHER CATEGORY THEN QTY CHANGE TO 0*/
                     let orderLength = this.order.length
                     let proLength = this.products.length
-                    console.log('Product Length: '+proLength)
                     if (orderLength > 0){
                         for(let i=0; i < orderLength; i++){
                             let orderProID = this.order[i].id
@@ -435,6 +434,41 @@ import Clock from "./Clock";
                     total.push(val.amount) // the value of the current key.
                 });
                 return this.subTotal = total.reduce(function(total, num){ return total + num }, 0);
+            },
+
+            clearOrder(){
+                Swal.fire({
+                    title: 'Are you sure?',
+                    html: "តើអ្នកចង់លុបមុខម្ហូបឈ្មោះ <strong>" + name +" </strong>មែនទេ?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText:'បោះបង់',
+                    confirmButtonText: 'បាទ/ចាស៎'/*Yes, delete it!*/
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.order = []
+                        let productLength = this.products.length
+                        if( productLength > 0){
+                            for(let j=0; j<productLength; j++){
+                                this.products[j].qty = 0;
+                                this.changeColorQty(j,0)
+                                /*Swal.fire(
+                                    'Deleted!',
+                                    "មុខម្ហូបឈ្មោះ <strong>" + name  +" </strong>ត្រូវបានលុបដោយជោគជ័យ!",
+                                    'success'
+                                )*/
+                            }
+                        }
+                        else {
+                            return 0
+                        }
+                    }
+                })
+
+
+
             },
 
         },

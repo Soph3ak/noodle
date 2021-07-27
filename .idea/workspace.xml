@@ -22,17 +22,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09e05767-61eb-4fd4-9dd4-d8dac4894053" name="Default Changelist" comment="* Sell : Fixed bugs -&gt; when array product has change, operator will not working correctly">
-      <change afterPath="$PROJECT_DIR$/resources/js/components/Clock.vue" afterDir="false" />
+    <list default="true" id="09e05767-61eb-4fd4-9dd4-d8dac4894053" name="Default Changelist" comment="* Sell : Add Clock using moment.js">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/sell.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/sell.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/bootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/CashIn.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CashIn.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Sell.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Sell.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/sell.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/sell.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -330,7 +324,7 @@
       <workItem from="1626230185864" duration="15230000" />
       <workItem from="1626307248160" duration="5333000" />
       <workItem from="1626980340980" duration="15184000" />
-      <workItem from="1627352714039" duration="6938000" />
+      <workItem from="1627352714039" duration="20115000" />
     </task>
     <task id="LOCAL-00001" summary="add orders">
       <created>1618876152336</created>
@@ -423,7 +417,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626996848934</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="* Sell : Add Clock using moment.js">
+      <created>1627363753040</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1627363753040</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -455,7 +456,8 @@
     <MESSAGE value="* CashIn : Update UI sidebar-&gt; Change Font size&#10;* Sell : Update UI banner-&gt; add btn Seat Customer and Cashier" />
     <MESSAGE value="* Sell : Add some commands" />
     <MESSAGE value="* Sell : Fixed bugs -&gt; when array product has change, operator will not working correctly" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Sell : Fixed bugs -&gt; when array product has change, operator will not working correctly" />
+    <MESSAGE value="* Sell : Add Clock using moment.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Sell : Add Clock using moment.js" />
   </component>
   <component name="WindowStateProjectService">
     <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1621711626886">
@@ -486,10 +488,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="310" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1627352751342" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1626996852174">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1627363766571">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1626996852174" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1627363766571" />
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1621892114868">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -498,10 +500,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622611048683" />
-    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1627361980127">
+    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1627374774862">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1627361980127" />
+    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1627374774862" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

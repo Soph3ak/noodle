@@ -87,7 +87,7 @@
                         <button type="button" value="00" class="btn btn-secondary">00</button>
                         <button type="button" class="all-clear function btn btn-danger btn-sm" value="all-clear" ref="ac">AC</button>
 
-                        <button type="button" class="equal-sign operator btn btn-success" v-if="toTalToPay <= KHR">PAY</button>
+                        <button type="button" class="equal-sign operator btn btn-success" v-if="toTalToPay <= KHR" @click="alertSuccess()">PAY</button>
                         <button type="button" class="equal-sign operator btn btn-warning" disabled v-else>PAY</button>
 
                     </div>
@@ -103,7 +103,6 @@
 export default {
     data(){
         return{
-            shoModal : false,
             url:'/icons/KHR.png',
             currencyText:'KHR',
             toTalToPay:'0',
@@ -128,6 +127,23 @@ export default {
             this.$refs.ac.click()
         },
 
+        reset(){
+            this.url='/icons/KHR.png'
+            this.currencyText='KHR'
+            this.toTalToPay='0'
+            this.receivedMoney= '0'
+            this.remain= '0'
+            this.change= '0'
+            this.KHR= '0'
+            this.USD= '0'
+            this.THB= '0'
+            this.CNY= '0'
+            this.usdRate= 4061.84
+            this.thbRate= 130.58
+            this.cnyRate= 636.14
+            this.khrRate= 1
+        },
+
         setToTalToPay(price){
             this.toTalToPay = price
         },
@@ -145,7 +161,9 @@ export default {
                 this.CNY = this.receivedMoney
                 this.KHR = this.CNY * this.cnyRate
             }
-            else this.KHR = this.receivedMoney
+            else if (this.currencyText === 'KHR'){
+                this.KHR = this.receivedMoney
+            }
         },
 
         convertToCurrency(price){
@@ -162,7 +180,6 @@ export default {
         setCurrencyImage(url,text){
             this.url = url
             this.currencyText = text
-            this.displayToggleClass();
         },
 
         displayToggleClass(){
@@ -209,6 +226,17 @@ export default {
             }
         },
 
+        alertSuccess(){
+            this.$emit("paySuccess");
+            Swal.fire(
+                'លុយអាប់: ' + this.change +'៛',
+                'ទូរទាត់បានដោយជោគជ័យ!<br>សូមអរគុណ!',
+                'success'
+            )
+            this.reset()
+            this.clear()
+        },
+
     },
 
     watch:{
@@ -220,8 +248,7 @@ export default {
         currencyText(){
             this.moneyExchange()
             this.calculate()
-
-
+            this.displayToggleClass()
         },
     },
 
