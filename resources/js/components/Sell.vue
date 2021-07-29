@@ -52,6 +52,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <Seat v-show="showSeat" ref="seat" @closeSeat="closeSeat()" @addSeat="addSeat1"></Seat>
                                 </div>
                             </div>
                         </div>
@@ -65,13 +66,13 @@
                             <p class="">Sopheak</p>-->
 
 
-                                <div class="products-list add-seat" style="padding-left: 6px">
+                                <div class="products-list add-seat" style="padding-left: 6px" @click="openSeat">
                                     <div class="product-img">
                                         <img src="/icons/tables-white.png" class="img-size-50 rounded" alt="Image"/>
                                     </div>
                                     <div class="product-info">
-                                        <a href="javascript:void(0)" class="product-title">SEAT</a>
-                                        <span class="product-description">Take away</span>
+                                        <a class="product-title">SEAT</a>
+                                        <span class="product-description">{{ seatName }}</span>
                                     </div>
                                 </div>
                             <div class="products-list add-customer" style="padding-left: 6px; border-left: 1px solid #414040;">
@@ -89,7 +90,7 @@
                                 </div>
                                 <div class="product-info">
                                     <a href="javascript:void(0)" class="product-title">CASHIER</a>
-                                    <span class="product-description">Sopheak</span>
+                                    <span class="product-description">xxxx</span>
                                 </div>
                             </div>
                         </div>
@@ -191,10 +192,14 @@
 <script>
 import CashIn from "./CashIn";
 import Clock from "./Clock";
+import Seat from "./Seat";
     export default {
-        components:{CashIn, Clock},
+        components:{CashIn, Clock, Seat},
         data () {
             return{
+                form : new Form(),
+                userID: 1,
+                userName: 'Cashier1',
                 categories:{},
                 products:[],
                 tmp:0,
@@ -204,9 +209,13 @@ import Clock from "./Clock";
                 discount:0,
                 total:0,
                 currentCate:'ទំនិញគ្រប់មុខ',
-                form : new Form(),
-                date:'June 19,2021',
-                time:' 14:19:13',
+
+                date:'',
+                time:'',
+
+                showSeat: false,
+                seatID: 1,
+                seatName:'Take away',
             }
         },
         methods:{
@@ -225,6 +234,9 @@ import Clock from "./Clock";
                 this.subTotal = 0
                 this.discount = 0
                 this.total = 0
+                this.seatID= 1
+                this.seatName='Take away'
+                this.showSeat = false
                 this.form = new Form()
                 for(let i=0; i<this.products.length; i++){
                     this.products[i].qty = 0
@@ -405,7 +417,7 @@ import Clock from "./Clock";
                     id:"",
                     user_id: "1",
                     customer_id: "2",
-                    table_id: "1",
+                    table_id: this.seatID,
                     shop_id: "1",
                     payment_id: "1",
                     order: this.order,
@@ -437,39 +449,63 @@ import Clock from "./Clock";
             },
 
             clearOrder(){
-                Swal.fire({
-                    title: 'Are you sure?',
-                    html: "តើអ្នកចង់លុបមុខម្ហូបឈ្មោះ <strong>" + name +" </strong>មែនទេ?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    cancelButtonText:'បោះបង់',
-                    confirmButtonText: 'បាទ/ចាស៎'/*Yes, delete it!*/
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.order = []
-                        let productLength = this.products.length
-                        if( productLength > 0){
-                            for(let j=0; j<productLength; j++){
-                                this.products[j].qty = 0;
-                                this.changeColorQty(j,0)
-                                /*Swal.fire(
-                                    'Deleted!',
-                                    "មុខម្ហូបឈ្មោះ <strong>" + name  +" </strong>ត្រូវបានលុបដោយជោគជ័យ!",
-                                    'success'
-                                )*/
+                let orderLength = this.order.length
+                if (orderLength > 0){
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        html: "តើអ្នកចង់បោះបង់ការកម្មង់នេះមែនទេ?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        cancelButtonText:'ទេ',
+                        confirmButtonText: 'បាទ/ចាស៎'/*Yes, delete it!*/
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.clear()
+                            let productLength = this.products.length
+                            if( productLength > 0){
+                                for(let j=0; j<productLength; j++){
+                                    this.products[j].qty = 0;
+                                    this.changeColorQty(j,0)
+                                    /*Swal.fire(
+                                        'Deleted!',
+                                        "មុខម្ហូបឈ្មោះ <strong>" + name  +" </strong>ត្រូវបានលុបដោយជោគជ័យ!",
+                                        'success'
+                                    )*/
+                                }
+                            }
+                            else {
+                                return 0
                             }
                         }
-                        else {
-                            return 0
-                        }
-                    }
-                })
-
-
-
+                    })
+                }
+                else alert('Don\'t have any orders to clear yet!')
             },
+
+            openSeat(){
+                if(this.showSeat === false)
+                    this.showSeat = true
+                else
+                    this.closeSeat()
+            },
+
+            closeSeat(){
+                this.showSeat = false
+            },
+
+            addSeat1(var1,var2){
+                this.seatID = var1
+                this.seatName = var2
+            },
+            loadUser(){
+                axios.get('api/loadUser')
+                    .then(response => {
+                        this.user = response.data;
+                    });
+
+            }
 
         },
         watch: {
@@ -485,6 +521,7 @@ import Clock from "./Clock";
         },
 
         mounted() {
+            this.loadUser()
             this.loadCategoriesSell()
             this.loadAllProducts()
         }

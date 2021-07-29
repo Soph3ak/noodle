@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\api\TableController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +27,16 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])-
 Route::apiResource('customer',CustomerController::class);
 Route::get('/getCustomer',[CustomerController::class,'getCustomer'])->name('customer.getCustomer');
 
+Route::apiResource('seatTable',TableController::class);
+Route::get('/getSeatTable',[TableController::class,'getSeatTable']);
+
+
+
 Route::apiResource('product',ProductController::class);
 Route::get('/getProduct',[ProductController::class,'getProduct'])->name('product.getProduct');
 
 Route::post('image/upload/store',[App\Http\Controllers\ImageUploadController::class, 'fileStore']);
 
 
-Route::get('/sell', function () {
-    return view('sell');
-});
+Route::get('/sell', [App\Http\Controllers\SellController::class, 'index']);
+

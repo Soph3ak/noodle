@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\OrderController;
+use App\Http\Controllers\API\TableController;
 
 use App\Http\Controllers\SellController;
 /*
@@ -28,11 +29,17 @@ Route::delete('/files/{file}', [ImageUploadController::class,'deleteFile']);
 Route::apiResource('category',CategoryController::class);
 Route::get('/getCategoriesSelect2',[CategoryController::class,'getCategoriesSelect2'])->name('category.getCategoriesSelect2');
 
+Route::get('/loadUser',[SellController::class,'loadUser']);
 Route::get('/loadCategoriesSell',[SellController::class,'loadCategoriesSell']);
 Route::get('/loadAllProducts',[SellController::class,'loadAllProducts']);
 Route::get('/loadProductsByCategory/{cate}',[SellController::class,'loadProductsByCategory']);
 
 Route::post('/save-order', [OrderController::class,'saveOrder']);
+
+Route::apiResource('seat',TableController::class);
+Route::get('/loadSeats',[TableController::class,'loadSeats']);
+
+
 
 
 

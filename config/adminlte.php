@@ -256,6 +256,13 @@ return [
             /*'label'       => 4,*/
             /*'label_color' => 'success',*/
         ],
+        [
+            'text'        => 'ព័ត៌មានតុ',
+            'url'         => 'seatTable',
+            'icon'        => 'fas fa-chair mr-1',
+            /*'label'       => 4,*/
+            /*'label_color' => 'success',*/
+        ],
         ['header' => 'ADMINISTRATOR'],
         [
             'text' => 'Users',

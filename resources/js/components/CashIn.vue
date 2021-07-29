@@ -229,7 +229,7 @@ export default {
         alertSuccess(){
             this.$emit("paySuccess");
             Swal.fire(
-                'លុយអាប់: ' + this.change +'៛',
+                'លុយអាប់: ' + this.convertToCurrency(this.change) +'៛',
                 'ទូរទាត់បានដោយជោគជ័យ!<br>សូមអរគុណ!',
                 'success'
             )

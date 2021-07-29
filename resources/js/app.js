@@ -43,6 +43,7 @@ Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 
 Vue.component('category', require('./components/Category.vue').default);
+Vue.component('seat-table', require('./components/SeatTable.vue').default);
 Vue.component('customer', require('./components/Customer.vue').default);
 Vue.component('product', require('./components/Product').default);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);

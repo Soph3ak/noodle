@@ -23,14 +23,6 @@
 <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
 <script>
 
-    $(document).ready(function(){
-        $('.card-body').overlayScrollbars({  });
-        if($('.card-body').hasOverflow){
-            alert('nm')
-        }
-
-    });
-
 </script>
 </body>
 </html>
