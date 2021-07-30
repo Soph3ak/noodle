@@ -22,21 +22,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09e05767-61eb-4fd4-9dd4-d8dac4894053" name="Default Changelist" comment="* Sell + CashIn : Add sweet alert once pay success then clear array order[] and reset cashIn">
-      <change afterPath="$PROJECT_DIR$/public/icons/take-away.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/Seat.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/SeatTable.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/table.blade.php" afterDir="false" />
+    <list default="true" id="09e05767-61eb-4fd4-9dd4-d8dac4894053" name="Default Changelist" comment="* Sell: Add seat">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/CustomerController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SellController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SellController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Table.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/adminlte.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/adminlte.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/sell.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/sell.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_12_030808_create_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_12_030808_create_products_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_04_09_225731_create_orders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_04_09_225731_create_orders_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/CashIn.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CashIn.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Sell.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Sell.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/sell.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/sell.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/sell.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/sell.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
@@ -338,7 +331,8 @@
       <workItem from="1626307248160" duration="5333000" />
       <workItem from="1626980340980" duration="15184000" />
       <workItem from="1627352714039" duration="22685000" />
-      <workItem from="1627562120907" duration="34773000" />
+      <workItem from="1627562120907" duration="38606000" />
+      <workItem from="1627648147712" duration="7169000" />
     </task>
     <task id="LOCAL-00001" summary="add orders">
       <created>1618876152336</created>
@@ -445,7 +439,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627382872022</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="* Sell: Add seat">
+      <created>1627601218881</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1627601218881</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -479,17 +480,18 @@
     <MESSAGE value="* Sell : Fixed bugs -&gt; when array product has change, operator will not working correctly" />
     <MESSAGE value="* Sell : Add Clock using moment.js" />
     <MESSAGE value="* Sell + CashIn : Add sweet alert once pay success then clear array order[] and reset cashIn" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Sell + CashIn : Add sweet alert once pay success then clear array order[] and reset cashIn" />
+    <MESSAGE value="* Sell: Add seat" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Sell: Add seat" />
   </component>
   <component name="WindowStateProjectService">
     <state x="697" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1627570178161">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="697" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1627570178161" />
-    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1627580643791">
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1627604730827">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1627580643791" />
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1627604730827" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1623450711909">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -498,26 +500,26 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1621046719661" />
-    <state width="1877" height="310" key="GridCell.Tab.0.bottom" timestamp="1627562182807">
+    <state width="1877" height="310" key="GridCell.Tab.0.bottom" timestamp="1627649432930">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1627562182807" />
-    <state width="1877" height="310" key="GridCell.Tab.0.center" timestamp="1627562182807">
+    <state width="1877" height="310" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1627649432930" />
+    <state width="1877" height="310" key="GridCell.Tab.0.center" timestamp="1627649432930">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1627562182807" />
-    <state width="1877" height="310" key="GridCell.Tab.0.left" timestamp="1627562182806">
+    <state width="1877" height="310" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1627649432930" />
+    <state width="1877" height="310" key="GridCell.Tab.0.left" timestamp="1627649432930">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1627562182806" />
-    <state width="1877" height="310" key="GridCell.Tab.0.right" timestamp="1627562182807">
+    <state width="1877" height="310" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1627649432930" />
+    <state width="1877" height="310" key="GridCell.Tab.0.right" timestamp="1627649432930">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1627562182807" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1627382877668">
+    <state width="1877" height="310" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1627649432930" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1627601219810">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1627382877668" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1627601219810" />
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1621892114868">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -526,10 +528,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622611048683" />
-    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1627597551446">
+    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1627652585778">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1627597551446" />
+    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1627652585778" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

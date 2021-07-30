@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('name_kh');
             $table->unsignedBigInteger('price');
+            $table->unsignedBigInteger('pro_discount')->default(0);
             $table->string('photo')->nullable();
             $table->tinyInteger('qty')->nullable()->default(0);
             $table->text('description')->nullable();

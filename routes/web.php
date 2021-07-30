@@ -39,4 +39,5 @@ Route::post('image/upload/store',[App\Http\Controllers\ImageUploadController::cl
 
 
 Route::get('/sell', [App\Http\Controllers\SellController::class, 'index']);
+Route::get('/loadUser', [App\Http\Controllers\SellController::class, 'loadUser']);
 

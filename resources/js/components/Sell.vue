@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="product-info">
                                     <a href="javascript:void(0)" class="product-title">CASHIER</a>
-                                    <span class="product-description">xxxx</span>
+                                    <span class="product-description">{{ userName }}</span>
                                 </div>
                             </div>
                         </div>
@@ -146,7 +146,7 @@
                                 <div class="btn-hold p-3 bg-info my-2 bg-gradient-danger"><h5>Hold</h5></div>
                                 <div class="btn-clear p-3 bg-info my-2 bg-danger" @click="clearOrder"><h5>Clear</h5></div>
                             </div>
-                            <div class="btn-pay d-flex justify-content-between p-3 bg-gradient-info my-2" @click="cashIn">
+                            <div class="btn-pay d-flex justify-content-between p-3 bg-gradient-info my-2" @click="cashIn(); saveOrder()">
                                 <h5>PAY</h5>
                                 <h4 class="">{{convertToCurrency(total)}}.00៛</h4>
                             </div>
@@ -194,10 +194,12 @@ import CashIn from "./CashIn";
 import Clock from "./Clock";
 import Seat from "./Seat";
     export default {
+        props: ['token'],
         components:{CashIn, Clock, Seat},
         data () {
             return{
                 form : new Form(),
+                user: [],
                 userID: 1,
                 userName: 'Cashier1',
                 categories:{},
@@ -415,7 +417,7 @@ import Seat from "./Seat";
             saveOrder(){
                 this.form = new Form({
                     id:"",
-                    user_id: "1",
+                    user_id: this.userID,
                     customer_id: "2",
                     table_id: this.seatID,
                     shop_id: "1",
@@ -500,11 +502,12 @@ import Seat from "./Seat";
                 this.seatName = var2
             },
             loadUser(){
-                axios.get('api/loadUser')
+                axios.get('loadUser')
                     .then(response => {
-                        this.user = response.data;
+                        this.user.push(response.data)
+                        this.userID = this.user[0].id
+                        this.userName = this.user[0].name
                     });
-
             }
 
         },

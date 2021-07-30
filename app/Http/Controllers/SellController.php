@@ -10,16 +10,19 @@ use Illuminate\Support\Facades\Auth;
 
 class SellController extends Controller
 {
+    public function __construct()
+    {
+        /*$this->middleware('auth');*/
+        $this->middleware('auth', ['only' => ['index','loadUser']]);
+    }
 
     public function index(){
-        return view('sell');
+       $user = Auth::user();
+       return view('sell');
     }
 
     public function loadUser(){
-        if(Auth::check()){
-            return $user = Auth::user();
-        }
-        else return "No";
+        return $user = Auth::user();
     }
 
     public function loadCategoriesSell(){

@@ -32,6 +32,8 @@ class CreateOrdersTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
 
+            $table->bigInteger('subtotal');
+            $table->bigInteger('discount');
             $table->bigInteger('total');
 
             $table->foreignId('payment_id')
