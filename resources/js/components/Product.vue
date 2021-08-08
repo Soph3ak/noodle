@@ -39,7 +39,9 @@
                                     </div>
                                     <div class="product-info">
                                         <a href="javascript:void(0)" class="product-title">{{ product.name_kh }}
-                                            <span class="badge badge-warning float-right">{{ product.price }}៛</span></a>
+                                            <span v-if="product.pro_discount>0" class="badge badge-danger float-right ml-1">{{ product.price - product.pro_discount }}៛</span>
+                                            <span class="badge badge-warning float-right">{{ product.price }}៛</span>
+                                        </a>
                                         <span class="product-description">{{ product.name }}</span>
                                     </div>
                                 </td>
@@ -106,16 +108,33 @@
                                             <has-error :form="form" field="name"></has-error>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label for="price">តម្លៃ</label>
-                                            <!--<currency-input v-model="value" class="form-control" placeholder="តម្លៃ" :class="{ 'is-invalid': form.errors.has('price') }" v-currency="{currency: {prefix:'', suffix:'៛'}, locale: 'en'}"/>-->
-                                            <input v-currency="{
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="price">តម្លៃ</label>
+                                                    <!--<currency-input v-model="value" class="form-control" placeholder="តម្លៃ" :class="{ 'is-invalid': form.errors.has('price') }" v-currency="{currency: {prefix:'', suffix:'៛'}, locale: 'en'}"/>-->
+                                                    <input v-currency="{
                                                currency: {prefix:'', suffix:'៛'},
                                                locale: 'en',
                                                allowNegative: false,
-                                            }" class="form-control" id="price" name="price" ref="price" placeholder="តម្លៃ"
-                                                   v-model="value" :class="{ 'is-invalid': form.errors.has('price') }"/>
-                                            <has-error :form="form" field="price"></has-error>
+                                            }" class="form-control" id="price" name="price" ref="price" :placeholder='value>0?"":"តម្លៃ"'
+                                                           v-model="value" :class="{ 'is-invalid': form.errors.has('price') }"/>
+                                                    <has-error :form="form" field="price"></has-error>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="discount">បញ្ចុះតម្លៃ</label>
+                                                        <!--<currency-input v-model="value" class="form-control" placeholder="តម្លៃ" :class="{ 'is-invalid': form.errors.has('price') }" v-currency="{currency: {prefix:'', suffix:'៛'}, locale: 'en'}"/>-->
+                                                        <input v-currency="{
+                                               currency: {prefix:'', suffix:'៛'},
+                                               locale: 'en',
+                                               allowNegative: false,
+                                            }" class="form-control" id="discount" name="price" ref="pro_discount" :placeholder='value_discount>0?"":"បញ្ចុះតម្លៃ"'
+                                                               v-model="value_discount" :class="{ 'is-invalid': form.errors.has('pro_discount') }"/>
+                                                        <has-error :form="form" field="pro_discount"></has-error>
+                                                    </div>
+                                                </div>
                                         </div>
 
                                         <div class="form-group">
@@ -165,14 +184,16 @@ export default {
     data () {
         return {
             currentPage:'1',    /*PAGINATION*/
-            value:'',           /*CURRENCY*/
+            value: '',           /*CURRENCY*/
+            value_discount: 0,
             products:{},
             editMode : false,
             form: new Form({
                 id:"",
                 name: "",
                 name_kh: "",
-                price: "",
+                price: '',
+                pro_discount: 0,
                 photo: 'NO IMAGE.jpg',
                 description:"",
                 category_id: "",
@@ -195,7 +216,8 @@ export default {
             this.editMode=true
             this.form.fill(product)
             this.value = this.form.price
-            this.updateCurrency(this.value)
+            this.value_discount = this.form.pro_discount
+            this.updateCurrency(this.value,this.value_discount)
             this.$refs.select2.updateSelect2(this.form.category_id)
             this.$refs.myVueDropzone.isEditImage(this.form.photo)
 
@@ -204,6 +226,7 @@ export default {
         resetForm(){
             this.form.reset()
             this.value=''
+            this.value_discount=0
             this.resetCurrency()
             this.photo= 'NO IMAGE.jpg'
             this.form.clear()
@@ -300,12 +323,14 @@ export default {
             return '/files/' + img
         },
 
-        updateCurrency(val) {
+        updateCurrency(val,val_discount) {
             setValue(this.$refs.price, val);
+            setValue(this.$refs.pro_discount, val_discount);
         },
 
         resetCurrency() {
             setValue(this.$refs.price, null);
+            setValue(this.$refs.pro_discount, null);
         },
 
         updateCategory(val){
@@ -320,6 +345,13 @@ export default {
     watch: {
         value() {
             this.form.price = getValue(this.$refs.price)
+        },
+        value_discount() {
+            if(getValue(this.$refs.pro_discount)>0)
+                this.form.pro_discount = getValue(this.$refs.pro_discount)
+            else
+                this.form.pro_discount = 0
+
         },
     },
 

@@ -42,11 +42,13 @@
                                     <div v-for="(product,index ) in products" :key="product.id" @click="operation(index, product.id, 'increase', 0)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3" id="sell-product">
                                         <div class="rounded shadow-sm sell-card">
                                             <img :src="'/files/'+product.photo" alt="Product Image" class="rounded" style="width: 100%; height: 100%">
+                                            <img v-if="product.pro_discount>0" :src="'/icons/discount.png'" alt="Discount Image" class="rounded dis-img">
                                             <div class="pro-text position-absolute d-flex align-items-start flex-column">
                                                 <h1 class="p-lg-4 p-md-3 text-gray mb-auto qty">{{ product.qty }}</h1>
                                                 <span class="product-description bg-black-overlay p-lg-2 px-lg-3 p-md-2 pl-md-3 ml-2">
                                                 <h6>{{product.name_kh}}</h6>
-                                                <p class="">{{convertToCurrency(product.price)}}៛</p>
+                                                <p class="">{{convertToCurrency(product.price)}}៛ <span v-if="product.pro_discount>0" class="badge badge-danger float-right ml-1 p-1">{{ product.price - product.pro_discount }}៛</span></p>
+
                                             </span>
 
                                             </div>
@@ -104,7 +106,6 @@
                                         <td class="products-list" style="padding-left: 12px">
                                             <div class="product-img">
                                                 <img :src="'/files/'+ord.image" alt="Product Image" class="img-size-50 rounded">
-
                                             </div>
                                             <div class="product-info">
                                                 <a href="javascript:void(0)" class="product-title">{{ ord.name_kh }}</a>
@@ -117,7 +118,8 @@
                                             <a type="button" @click="operation(ord.index, ord.id, 'increase', index)" class="testbutton"><i class="ion-plus"></i></a>
                                         </td>
                                         <td class="text-right">
-                                            {{ convertToCurrency(ord.amount) }}៛
+                                            {{ convertToCurrency(ord.amount) }}៛<br>
+                                            <span v-if="ord.discount>0" class="badge badge-danger float-right ml-1 p-1">{{ (ord.price - ord.discount)*ord.qty }}៛</span>
                                         </td>
 
                                     </tr>
@@ -146,9 +148,9 @@
                                 <div class="btn-hold p-3 bg-info my-2 bg-gradient-danger"><h5>Hold</h5></div>
                                 <div class="btn-clear p-3 bg-info my-2 bg-danger" @click="clearOrder"><h5>Clear</h5></div>
                             </div>
-                            <div class="btn-pay d-flex justify-content-between p-3 bg-gradient-info my-2" @click="cashIn(); saveOrder()">
+                            <div class="btn-pay d-flex justify-content-between p-3 bg-gradient-info my-2" @click="cashIn();">
                                 <h5>PAY</h5>
-                                <h4 class="">{{convertToCurrency(total)}}.00៛</h4>
+                                <h4 class="to-pay">{{convertToCurrency(total)}}.00៛</h4>
                             </div>
                             <!--<div class="small-icon d-flex justify-content-between mt-auto">
                                 <a href="#" class="btn btn-outline-warning"><i class="fas fa-percent"></i></a>
@@ -174,7 +176,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <CashIn @paySuccess="hideModal(); clear();" ref="cashIn" ></CashIn>
+                            <CashIn @paySuccess="saveOrder(); /*hideModal(); clear();*/" ref="cashIn" ></CashIn>
                         </div>
                         <!--<div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal-cashIn" @click="">បោះបង់</button>
@@ -387,6 +389,7 @@ import Seat from "./Seat";
                             'name_kh': this.products[i].name_kh,
                             'name': this.products[i].name,
                             'price': this.products[i].price,
+                            'discount': this.products[i].pro_discount,
                             'qty': this.products[i].qty,
                             'amount': this.products[i].price,
                             'image': this.products[i].photo,
@@ -401,6 +404,7 @@ import Seat from "./Seat";
                             'name_kh': this.products[i].name_kh,
                             'name': this.products[i].name,
                             'price': this.products[i].price,
+                            'discount': this.products[i].pro_discount,
                             'qty': this.products[i].qty,
                             'amount': this.products[i].price,
                             'image': this.products[i].photo,
@@ -428,10 +432,11 @@ import Seat from "./Seat";
                     total: this.total,
 
                 })
-
                 this.form.post('api/save-order')
                     .then(response => {
+                        this.hideModal()
                         this.clear()
+                        this.$refs.cashIn.alertSuccess()
                     })
                     .catch(err => console.log(err))
                     .finally(() => this.loading = false)
@@ -448,6 +453,14 @@ import Seat from "./Seat";
                     total.push(val.amount) // the value of the current key.
                 });
                 return this.subTotal = total.reduce(function(total, num){ return total + num }, 0);
+            },
+
+            calDiscount(){
+                let total = [];
+                Object.entries(this.order).forEach(([key, val]) => {
+                    total.push(val.discount * val.qty) // the value of the current key.
+                });
+                return this.discount = total.reduce(function(total, num){ return total + num }, 0);
             },
 
             clearOrder(){
@@ -470,11 +483,6 @@ import Seat from "./Seat";
                                 for(let j=0; j<productLength; j++){
                                     this.products[j].qty = 0;
                                     this.changeColorQty(j,0)
-                                    /*Swal.fire(
-                                        'Deleted!',
-                                        "មុខម្ហូបឈ្មោះ <strong>" + name  +" </strong>ត្រូវបានលុបដោយជោគជ័យ!",
-                                        'success'
-                                    )*/
                                 }
                             }
                             else {
@@ -516,8 +524,12 @@ import Seat from "./Seat";
                 return this.total =  parseInt(this.subTotal) - parseInt(this.discount)
             },
 
+            discount(){
+                return this.total =  parseInt(this.subTotal) - parseInt(this.discount)
+            },
+
             order: {
-                handler: function (val, oldVal) { this.calSubTotal() },
+                handler: function (val, oldVal) { this.calSubTotal(); this.calDiscount() },
                 deep: true
             },
 
@@ -530,5 +542,13 @@ import Seat from "./Seat";
         }
     }
 </script>
-
+<style scoped>
+    .dis-img{
+        width: 80px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: rotate(35deg);
+    }
+</style>
 

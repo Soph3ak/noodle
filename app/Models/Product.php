@@ -12,6 +12,7 @@ class Product extends Model
         'name',
         'name_kh',
         'price',
+        'pro_discount',
         'photo',
         'description',
         'category_id',

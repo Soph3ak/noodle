@@ -37,6 +37,7 @@ class ProductController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'name_kh' => ['required', 'string', 'max:255'],
             'price' => ['required', 'numeric'],
+            'pro_discount' => ['nullable', 'numeric'],
             'photo' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable','string', 'max:255'],
             'category_id' => ['required','numeric'],

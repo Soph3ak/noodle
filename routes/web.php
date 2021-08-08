@@ -1,9 +1,13 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ImageUploadController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\ProductController;
-use App\Http\Controllers\api\TableController;
+use App\Http\Controllers\API\TableController;
+use App\Http\Controllers\API\ShopController;
+use App\Http\Controllers\SellController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +26,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
 Route::apiResource('customer',CustomerController::class);
 Route::get('/getCustomer',[CustomerController::class,'getCustomer'])->name('customer.getCustomer');
@@ -35,9 +39,11 @@ Route::get('/getSeatTable',[TableController::class,'getSeatTable']);
 Route::apiResource('product',ProductController::class);
 Route::get('/getProduct',[ProductController::class,'getProduct'])->name('product.getProduct');
 
-Route::post('image/upload/store',[App\Http\Controllers\ImageUploadController::class, 'fileStore']);
+Route::post('image/upload/store',[ImageUploadController::class, 'fileStore']);
 
 
-Route::get('/sell', [App\Http\Controllers\SellController::class, 'index']);
-Route::get('/loadUser', [App\Http\Controllers\SellController::class, 'loadUser']);
+Route::get('/sell', [SellController::class, 'index']);
+Route::get('/loadUser', [SellController::class, 'loadUser']);
+
+Route::apiResource('shop',ShopController::class);
 

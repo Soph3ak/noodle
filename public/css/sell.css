@@ -271,6 +271,13 @@ body {
   font-size: 14px;
 }
 
+.subtotal,
+.discount,
+.total,
+.to-pay {
+  font-family: "Share Tech Mono", monospace;
+}
+
 .h__100 {
   height: 100%;
 }

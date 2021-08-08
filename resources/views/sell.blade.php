@@ -22,6 +22,9 @@
 <script src="{{asset('js/app.js')}}" ></script>
 <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
 <script>
+    $(document).ready(function(){
+        $('.card-body').overlayScrollbars({  });
+    });
 
 </script>
 </body>

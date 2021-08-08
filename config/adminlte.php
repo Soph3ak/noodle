@@ -263,6 +263,13 @@ return [
             /*'label'       => 4,*/
             /*'label_color' => 'success',*/
         ],
+        [
+            'text'        => 'អំពីហាង',
+            'url'         => 'shop',
+            'icon'        => 'fas fa-store-alt mr-1',
+            /*'label'       => 4,*/
+            /*'label_color' => 'success',*/
+        ],
         ['header' => 'ADMINISTRATOR'],
         [
             'text' => 'Users',

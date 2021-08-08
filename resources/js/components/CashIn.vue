@@ -87,7 +87,7 @@
                         <button type="button" value="00" class="btn btn-secondary">00</button>
                         <button type="button" class="all-clear function btn btn-danger btn-sm" value="all-clear" ref="ac">AC</button>
 
-                        <button type="button" class="equal-sign operator btn btn-success" v-if="toTalToPay <= KHR" @click="alertSuccess()">PAY</button>
+                        <button type="button" class="equal-sign operator btn btn-success" v-if="toTalToPay <= KHR" @click="pay()">PAY</button>
                         <button type="button" class="equal-sign operator btn btn-warning" disabled v-else>PAY</button>
 
                     </div>
@@ -226,8 +226,11 @@ export default {
             }
         },
 
-        alertSuccess(){
+        pay(){
             this.$emit("paySuccess");
+        },
+
+        alertSuccess(){
             Swal.fire(
                 'លុយអាប់: ' + this.convertToCurrency(this.change) +'៛',
                 'ទូរទាត់បានដោយជោគជ័យ!<br>សូមអរគុណ!',
