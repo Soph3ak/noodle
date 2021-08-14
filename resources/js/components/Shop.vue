@@ -3,19 +3,19 @@
         <div class="row px-5">
             <div class="col-6">
                 <p class="label text-gray">ឈ្មោះហាង</p>
-                <h4>ម្ហូបស្រុកស្រែ</h4><br/>
+                <h1 class="text-blue">{{name}}</h1><br/>
 
                 <p class="label text-gray">Email</p>
-                <h4>sounsophek7@gmail.com</h4><br/>
+                <h4>{{email}}</h4><br/>
 
                 <p class="label text-gray">លេខទូរសព្ទ័</p>
-                <h4>069 50 51 69</h4>
-                <h4>060 30 99 77</h4><br/>
+                <h4 v-for="(n,index) in num" :key="n.id">{{num[index]}}</h4><br>
 
                 <p class="label text-gray">អាសយដ្ធាន</p>
-                <h4>Phum Kbal Spean, Sangkat Poipet, O’Chrov District, Banteay Meanchey Province, Kingdom Of Cambodia Poipet, Cambodia 01407</h4><br/>
+                <h4>{{address}}</h4><br/><br/>
 
-                <a href="#" class="text-info font-weight-bolder" data-toggle="modal" data-target="#modal-shop">Edit Info</a>
+                <a href="#" class="text-info font-weight-bolder" data-toggle="modal" data-target="#modal-shop" @click="resetForm() ;editModal()" v-if="shop.length>0">Edit Info</a>
+                <a href="#" class="text-info font-weight-bolder" data-toggle="modal" data-target="#modal-shop" @click="newModal(); resetForm()" v-else>Create New Shop</a>
             </div>
             <div class="col-6 shop-img">
                 <img :src="'icons/shop.png'" alt="" width="100%">
@@ -25,7 +25,7 @@
         <!-- modal SeatTable -->
         <div class="modal fade" id="modal-shop" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog">
-                    <form @submit.prevent="editMode ? updateShop(form.name,form.id):saveShop(form.name) ">
+                    <form @submit.prevent="editMode ? updateShop(form.id):saveShop() ">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title" v-if="editMode"><span><i class="fas fa-store mr-2"></i></span>កែប្រែព័ត៌មានអំពីហាង</h4>
@@ -46,9 +46,21 @@
                                     <has-error :form="form" field="email"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <label for="phone">លេខទូរសព្ទ័</label>
-                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="លេខទូរសព្ទ័" v-model="form.phone_number" :class="{ 'is-invalid': form.errors.has('phone_number') }">
-                                    <has-error :form="form" field="phone_number"></has-error>
+                                    <label for="">លេខទូរសព្ទ័</label>
+                                    <span class="badge badge-primary ml-2 p-1 add__more" @click="addMoreNumber">ADD MORE NUMBER</span>
+                                    <div v-for="(phone,index) in form_phone.f_phones" class="form-group">
+                                        <div class="input-group input-group">
+                                            <input type="text" class="form-control" name="phone" placeholder="លេខទូរសព្ទ័" v-model="form_phone.f_phones[index].phone_number" :class="{ 'is-invalid': form_phone.errors.has('phone_number') }">
+                                            <span class="input-group-append">
+                                                <button type="button" class="btn btn-danger btn-flat" @click="removeNumber(index,form_phone.f_phones[index].id);"><i class="ion-minus"></i></button>
+                                            </span>
+                                            <has-error :form="form_phone" field="phone_number"></has-error>
+                                        </div>
+                                    </div>
+                                    <!--<div v-for="(phone,index) in form_phone.f_phones" :key="phone.id" class="form-group">
+                                        <input type="text" class="form-control" id="phone" name="phone" placeholder="លេខទូរសព្ទ័" v-model="form_phone.f_phones[index].phone_number" :class="{ 'is-invalid': form.errors.has('phone_number') }">
+                                        <has-error :form="form_phone" field="phone_number"></has-error>
+                                    </div>-->
                                 </div>
                                 <div class="form-group">
                                     <label for="address">អាសយដ្ធាន</label>
@@ -78,17 +90,33 @@ export default {
     props: ['token'],
     data () {
         return {
-            currentPage:'1',
-            shop:{},
-            editMode : false,
+            shop:[],
+            phones:[],
+            num:[],
+            num_id:[],
+            editMode : true,
+            isNumRemoved:false,
+            isHasNum2Delete:false ,
+
+            id:"",
+            name: "",
+            email: "",
+            phone_number: "",
+            address:"",
+
+            form_phone: new Form({
+                f_phones:[],
+                d_phones:[],
+            }),
+
             form: new Form({
                 id:"",
                 name: "",
                 email: "",
-                phone_number: "",
                 address:"",
                 _token: this.token.value
             })
+
         }
     },
     methods:{
@@ -98,53 +126,112 @@ export default {
             this.resetForm()
         },
 
-        editModal(shop){
+        editModal(){
             this.form.clear()
             this.editMode=true
-            this.form.fill(shop)
+            this.form.id = this.id
+            this.form.name = this.name
+            this.form.email = this.email
+            this.form.address = this.address
+
+            this.getPhones()
+
         },
 
         resetForm(){
             this.form.reset()
             this.form.clear()
+            this.isHasNum2Delete = false
+            this.num_id=[]
+            this.form_phone.d_phones=[]
+            this.form_phone.f_phones=[]
         },
 
         hideModal(){
             $('#modal-shop').modal('hide')
             this.form.reset()
+            this.resetForm()
         },
 
-        getResults(page = 1) {
-            axios.get('getShop?page=' + page)
+        getShop() {
+            axios.get('getShop')
                 .then(response => {
-                    this.shop = response.data;
-                    this.currentPage = page;
+                    this.shop = []
+                    this.shop.push(response.data);
+                    this.id = this.shop[0].id;
+                    this.name = this.shop[0].name
+                    this.email = this.shop[0].email
+                    this.address = this.shop[0].address
+                    this.getPhones()
+
                 });
         },
 
-        saveShop(name){
+        getPhones() {
+            axios.get('getPhones')
+                .then(response => {
+                    this.phones = response.data;
+                    this.form_phone.f_phones = this.phones
+                    this.num = [];
+                    for(let i=0; i<this.phones.length; i++){
+                        this.num.push(this.phones[i].phone_number)
+                    }
+
+                });
+        },
+
+        /*saveShop(){
             this.form.post('shop')
             .then(response => {
-                this.getResults(this.currentPage)
-                this.alertSuccess('Table',name,'saved successfully');
+                this.getShop()
+                this.alertSuccess('Saved successfully');
                 this.hideModal();
             })
                 .catch(err => console.log(err))
                 .finally(() => this.loading = false)
-        },
+        },*/
 
-        updateShop(name,id){
+        updateShop(id){
             this.form.put('shop/'+id)
                 .then(response => {
-                    this.getResults(this.currentPage)
-                    this.alertSuccess('Table',name,'updated successfully');
-                    this.hideModal();
+                    this.updatePhone()
                 })
                 .catch(err => console.log(err))
                 .finally(() => this.loading = false)
         },
 
-        deleteShop(name,id){
+        ifHasNum2Delete(){
+            let NewNum = this.form_phone.d_phones.length
+            for(let i=0; i<NewNum; i++){
+                let id = this.form_phone.d_phones[i].id
+                let num = this.form_phone.d_phones[i].phone_number
+                if (id !== '' && num !==''){
+                    this.isHasNum2Delete=true
+                    break
+                }
+                else
+                    this.isHasNum2Delete=false
+            }
+
+        },
+
+        updatePhone(){
+
+            this.form_phone.put('phones')
+                .then(response => {
+                    if(this.isHasNum2Delete === true){
+                        this.deleteNumber()
+                    }
+                    this.getShop()
+                    this.alertSuccess('Updated successfully');
+                    this.hideModal();
+                })
+                .catch(err => console.log(err))
+                .finally(() => this.loading = false)
+
+        },
+
+        /*deleteShop(name,id){
             Swal.fire({
                 title: 'Are you sure?',
                 html: "តើអ្នកចង់លុបតុឈ្មោះ <strong>" + name +" </strong>មែនទេ?",
@@ -153,12 +240,12 @@ export default {
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 cancelButtonText:'បោះបង់',
-                confirmButtonText: 'បាទ/ចាស៎'/*Yes, delete it!*/
+                confirmButtonText: 'បាទ/ចាស៎'/!*Yes, delete it!*!/
             }).then((result) => {
                 if (result.isConfirmed) {
                     this.form.delete('shop/'+id)
                         .then(response => {
-                            this.getResults(this.currentPage);
+                            this.getShop();
                             Swal.fire(
                                 'Deleted!',
                                 "តុឈ្មោះ <strong>" + name  +" </strong>ត្រូវបានលុបដោយជោគជ័យ!",
@@ -169,12 +256,32 @@ export default {
                         .finally(() => this.loading = false)
                 }
             })
+        },*/
+
+        addMoreNumber(){
+            this.form_phone.f_phones.push({"id":"","phone_number":"","shop_id":1,"created_at":"","updated_at":""})
+        },
+        removeNumber(index,num_id) {
+            this.form_phone.d_phones.push(this.form_phone.f_phones[index])
+            this.form_phone.f_phones.splice(index, 1)
+            this.ifHasNum2Delete()
         },
 
-        alertSuccess(str1,name,str2){
+        deleteNumber(){
+            this.form_phone.delete('phones')
+                .then(response => {
+                    /*this.getShop();
+                    this.alertSuccess('Updated successfully');
+                    this.hideModal();*/
+                })
+                .catch(err => console.log(err))
+                .finally(() => this.loading = false)
+        },
+
+        alertSuccess(str1){
             Toast.fire({
                 icon: 'success',
-                title: str1 +' '+ name +' '+ str2
+                title: str1
             })
 
         },
@@ -185,17 +292,23 @@ export default {
     },
 
     mounted() {
-        this.getResults();
-        const vm = this
-        $("#new-shop").on('click',function (){
+        this.getShop();
+       /* $("#new-shop").on('click',function (){
             vm.newModal()
-        })
+        })*/
+
+        /*$('#modal-shop').modal({
+            backdrop: 'static'
+        })*/
     },
 }
 </script>
 <style scoped>
 .card-footer{
     padding-bottom: 0;
+}
+.add__more{
+    cursor: pointer;
 }
 
 </style>

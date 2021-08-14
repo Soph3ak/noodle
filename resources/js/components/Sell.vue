@@ -121,7 +121,6 @@
                                             {{ convertToCurrency(ord.amount) }}៛<br>
                                             <span v-if="ord.discount>0" class="badge badge-danger float-right ml-1 p-1">{{ (ord.price - ord.discount)*ord.qty }}៛</span>
                                         </td>
-
                                     </tr>
 
                                     </tbody>
@@ -550,5 +549,6 @@ import Seat from "./Seat";
         right: 0;
         transform: rotate(35deg);
     }
+
 </style>
 

@@ -46,4 +46,8 @@ Route::get('/sell', [SellController::class, 'index']);
 Route::get('/loadUser', [SellController::class, 'loadUser']);
 
 Route::apiResource('shop',ShopController::class);
+Route::get('/getShop',[ShopController::class, 'getShop']);
+Route::get('/getPhones',[ShopController::class, 'getPhones']);
+Route::put('/phones',[ShopController::class, 'test']);
+Route::delete('/phones',[ShopController::class, 'destroy_phone']);
 
