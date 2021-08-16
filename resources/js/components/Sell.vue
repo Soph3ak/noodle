@@ -54,7 +54,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <Seat v-show="showSeat" ref="seat" @closeSeat="closeSeat()" @addSeat="addSeat1"></Seat>
+                                    <Seat v-show="showSeat" ref="seat" @closeSeat="closeSeat()" @addSeat="addSeat1" @pay="cashIn()"></Seat>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +147,7 @@
                                 <div class="btn-hold p-3 bg-info my-2 bg-gradient-danger"><h5>Hold</h5></div>
                                 <div class="btn-clear p-3 bg-info my-2 bg-danger" @click="clearOrder"><h5>Clear</h5></div>
                             </div>
-                            <div class="btn-pay d-flex justify-content-between p-3 bg-gradient-info my-2" @click="cashIn();">
+                            <div class="btn-pay d-flex justify-content-between p-3 my-2" @click="openSeat">
                                 <h5>PAY</h5>
                                 <h4 class="to-pay">{{convertToCurrency(total)}}.00៛</h4>
                             </div>
@@ -207,6 +207,8 @@ import Seat from "./Seat";
                 products:[],
                 tmp:0,
                 order: [],
+                paymentID:0,
+
 
                 subTotal:0,
                 discount:0,
@@ -226,6 +228,7 @@ import Seat from "./Seat";
                 $('#modal-cashIn').modal('show')
                 this.$refs.cashIn.setToTalToPay(this.total)
                 this.$refs.cashIn.calculate()
+                this.paymentID = 1
             },
             hideModal(){
                 $('#modal-cashIn').modal('hide')
@@ -240,6 +243,7 @@ import Seat from "./Seat";
                 this.seatID= 1
                 this.seatName='Take away'
                 this.showSeat = false
+                this.paymentID = 0
                 this.form = new Form()
                 for(let i=0; i<this.products.length; i++){
                     this.products[i].qty = 0
@@ -424,7 +428,7 @@ import Seat from "./Seat";
                     customer_id: "2",
                     table_id: this.seatID,
                     shop_id: "1",
-                    payment_id: "1",
+                    payment_id: this.paymentID,
                     order: this.order,
                     subTotal: this.subTotal,
                     discount: this.discount,
@@ -468,7 +472,7 @@ import Seat from "./Seat";
                     Swal.fire({
                         title: 'Are you sure?',
                         html: "តើអ្នកចង់បោះបង់ការកម្មង់នេះមែនទេ?",
-                        icon: 'warning',
+                        icon: 'question',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
@@ -477,6 +481,8 @@ import Seat from "./Seat";
                     }).then((result) => {
                         if (result.isConfirmed) {
                             this.clear()
+                            this.$refs.cashIn.clear()
+                            this.$refs.seat.clearSelected()
                             let productLength = this.products.length
                             if( productLength > 0){
                                 for(let j=0; j<productLength; j++){
@@ -494,10 +500,20 @@ import Seat from "./Seat";
             },
 
             openSeat(){
-                if(this.showSeat === false)
-                    this.showSeat = true
-                else
-                    this.closeSeat()
+                if(this.order.length > 0){
+                    this.$refs.seat.getTotal(this.total)
+                    if(this.showSeat === false) {
+                        if (this.seatID === 1) {
+                            //TO MAKE "TAKE AWAY" AS DEFAULT SELECTED
+                            this.$refs.seat.clearSelected()
+                        }
+                        this.showSeat = true
+                    }
+                    else
+                        /*this.closeSeat()*/
+                        this.cashIn()
+                }
+                else alert('Please make order!')
             },
 
             closeSeat(){
@@ -515,16 +531,18 @@ import Seat from "./Seat";
                         this.userID = this.user[0].id
                         this.userName = this.user[0].name
                     });
-            }
+            },
 
         },
         watch: {
             subTotal(){
-                return this.total =  parseInt(this.subTotal) - parseInt(this.discount)
+                this.total =  parseInt(this.subTotal) - parseInt(this.discount)
+                return this.$refs.seat.getTotal(this.total)
             },
 
             discount(){
-                return this.total =  parseInt(this.subTotal) - parseInt(this.discount)
+                this.total =  parseInt(this.subTotal) - parseInt(this.discount)
+                return this.$refs.seat.getTotal(this.total)
             },
 
             order: {
@@ -548,6 +566,9 @@ import Seat from "./Seat";
         top: 0;
         right: 0;
         transform: rotate(35deg);
+    }
+    .btn-pay{
+        background-color: dodgerblue;
     }
 
 </style>

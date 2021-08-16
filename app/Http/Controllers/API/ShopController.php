@@ -126,8 +126,7 @@ class ShopController extends Controller
 
         foreach ($request->d_phones as $req){
             $i = $req['id'];
-            if((Phone::find($i))){
-                $found = Phone::find($i);
+            if(Phone::find($i)){
                 Phone::findOrFail($i)->delete();
             }
 
