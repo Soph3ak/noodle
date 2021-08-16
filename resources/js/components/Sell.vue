@@ -54,7 +54,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <Seat v-show="showSeat" ref="seat" @closeSeat="closeSeat()" @addSeat="addSeat1" @pay="cashIn()"></Seat>
+                                    <Seat v-show="showSeat" ref="seat" @closeSeat="closeSeat()" @addSeat="addSeat1" @pay="cashIn()" @hold="openSeat('hold')"></Seat>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                             <p class="">Sopheak</p>-->
 
 
-                                <div class="products-list add-seat" style="padding-left: 6px" @click="openSeat">
+                                <div class="products-list add-seat" style="padding-left: 6px" @click="openSeat('')">
                                     <div class="product-img">
                                         <img src="/icons/tables-white.png" class="img-size-50 rounded" alt="Image"/>
                                     </div>
@@ -129,7 +129,7 @@
                             <div class="card-footer" v-show="order.length>=8"></div>
                         </div>
 
-                        <div class="pay mt-auto d-flex flex-column">
+                        <div class="pay mt-auto d-flex flex-column clickable">
                             <div class="subtotal d-flex">
                                 <h5>Subtotal</h5>
                                 <h4 class="ml-auto">{{ convertToCurrency(subTotal) }}.00៛</h4>
@@ -144,11 +144,11 @@
                             </div>
                             <!--<button type="button" class="btn btn-block btn-info mb-3 mt-2" @click="cashIn">Charge {{convertToCurrency(total)}}.00៛</button>-->
                             <div class="btn-hold_btn-clear d-flex justify-content-between">
-                                <div class="btn-hold p-3 bg-info my-2 bg-gradient-danger"><h5>Hold</h5></div>
+                                <div class="btn-hold p-3 bg-info my-2 bg-gradient-danger" @click="openSeat('hold');clickablePay(false)"><h5>Hold</h5></div>
                                 <div class="btn-clear p-3 bg-info my-2 bg-danger" @click="clearOrder"><h5>Clear</h5></div>
                             </div>
-                            <div class="btn-pay d-flex justify-content-between p-3 my-2" @click="openSeat">
-                                <h5>PAY</h5>
+                            <div class="btn-pay d-flex justify-content-between p-3 my-2" @click="openSeat('pay'); clickablePay(false)">
+                                <h5>TOTAL</h5>
                                 <h4 class="to-pay">{{convertToCurrency(total)}}.00៛</h4>
                             </div>
                             <!--<div class="small-icon d-flex justify-content-between mt-auto">
@@ -208,7 +208,6 @@ import Seat from "./Seat";
                 tmp:0,
                 order: [],
                 paymentID:0,
-
 
                 subTotal:0,
                 discount:0,
@@ -430,7 +429,7 @@ import Seat from "./Seat";
                     shop_id: "1",
                     payment_id: this.paymentID,
                     order: this.order,
-                    subTotal: this.subTotal,
+                    subtotal: this.subTotal,
                     discount: this.discount,
                     total: this.total,
 
@@ -438,8 +437,12 @@ import Seat from "./Seat";
                 this.form.post('api/save-order')
                     .then(response => {
                         this.hideModal()
+                        if(this.paymentID===1)
+                            this.$refs.cashIn.alertSuccess()
+                        else if (this.paymentID===2)
+                            this.$refs.seat.alertSuccess()
                         this.clear()
-                        this.$refs.cashIn.alertSuccess()
+
                     })
                     .catch(err => console.log(err))
                     .finally(() => this.loading = false)
@@ -499,7 +502,7 @@ import Seat from "./Seat";
                 else alert('Don\'t have any orders to clear yet!')
             },
 
-            openSeat(){
+            openSeat(action){
                 if(this.order.length > 0){
                     this.$refs.seat.getTotal(this.total)
                     if(this.showSeat === false) {
@@ -507,17 +510,35 @@ import Seat from "./Seat";
                             //TO MAKE "TAKE AWAY" AS DEFAULT SELECTED
                             this.$refs.seat.clearSelected()
                         }
+                        this.$refs.seat.getActionBtn(action)
                         this.showSeat = true
                     }
                     else
-                        /*this.closeSeat()*/
-                        this.cashIn()
+                    {
+                      if(action==='pay')
+                          this.cashIn()
+                      else if(action==='hold'){
+                          this.paymentID = 2
+                          this.saveOrder()
+                      }
+
+                    }
+
                 }
                 else alert('Please make order!')
             },
 
+            clickablePay(bool){
+                let pay = $("#sell .pay")
+                if (bool===true)
+                    pay.addClass('clickable')
+                else
+                    pay.removeClass('clickable')
+            },
+
             closeSeat(){
                 this.showSeat = false
+                this.clickablePay(true)
             },
 
             addSeat1(var1,var2){

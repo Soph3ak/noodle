@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +32,13 @@ class SellController extends Controller
 
     public function loadProductsByCategory($id){
         $products = Category::find($id)->products;
-        return $cols = collect($products);
+        /*$products = Product::where('category_id',$id)->get();*/ /*SAME RESULT*/
+        foreach ($products as $product) {
+
+        }
+        $cols = collect($products);
+        return $cols;
+
     }
 
 }

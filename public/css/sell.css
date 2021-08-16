@@ -251,6 +251,11 @@ body {
   bottom: 0;
   width: 88%;
   background-color: #151515;
+  pointer-events: none;
+}
+
+#sell .pay.clickable {
+  pointer-events: initial;
 }
 
 #clock {

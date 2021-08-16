@@ -15,6 +15,8 @@ class Order extends Model
         'table_id',
         'shop_id',
         'payment_id',
+        'subtotal',
+        'discount',
         'total',
     ];
 

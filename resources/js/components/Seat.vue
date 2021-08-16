@@ -13,8 +13,12 @@
                 </div>
             </div>
         </div>
-        <div class="btn-pay d-flex justify-content-between p-3 my-2" @click="pay()">
+        <div class="btn-pay d-flex justify-content-between p-3 my-2" @click="pay()" v-if="actionBtn==='pay'">
             <h5>PAY</h5>
+            <h4 class="to-pay">{{convertToCurrency(total)}}.00៛</h4>
+        </div>
+        <div class="btn-pay d-flex justify-content-between p-3 my-2 bg-gradient-danger" @click="hold()" v-if="actionBtn==='hold'">
+            <h5>HOLD</h5>
             <h4 class="to-pay">{{convertToCurrency(total)}}.00៛</h4>
         </div>
         <div class="btn-close" @click="closeSeat()">
@@ -29,6 +33,7 @@
             return{
                 seats:[],
                 total:0,
+                actionBtn:'pay',
             }
         },
         methods:{
@@ -59,14 +64,23 @@
                 let allSeat = $(".seat-card")
                 allSeat.removeClass('selected')
                 takeAwaySeat.addClass('selected')
+                this.actionBtn = 'pay'
             },
 
             pay(){
                 this.$emit("pay")
             },
 
+            hold(){
+                this.$emit("hold")
+            },
+
             getTotal(total){
                 this.total=total
+            },
+
+            getActionBtn(action){
+                this.actionBtn = action
             },
 
             convertToCurrency(price){
@@ -78,6 +92,15 @@
                     minimumFractionDigits: 0
                 })
                 return converted = formatter.format(price)
+            },
+            alertSuccess(){
+                Swal.fire(
+                    'Hold Success!',
+                    'ទូរទាត់ប្រាក់ពេលក្រោយ!<br>សូមអរគុណ!',
+                    'success'
+                )
+                this.clearSelected()
+                this.closeSeat()
             },
         },
         mounted() {

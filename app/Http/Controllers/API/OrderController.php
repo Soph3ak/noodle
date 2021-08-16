@@ -22,7 +22,7 @@ class OrderController extends Controller
     }
 
     public function saveOrder(Request $request){
-        return $request;
+        /*return $request;*/
 
         $this->validator($request->all())->validate();
         $order = Order::create($request->all());
