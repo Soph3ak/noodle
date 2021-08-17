@@ -13,14 +13,11 @@
                 </div>
             </div>
         </div>
-        <div class="btn-pay d-flex justify-content-between p-3 my-2" @click="pay()" v-if="actionBtn==='pay'">
-            <h5>PAY</h5>
+        <div class="btn-pay-seat d-flex justify-content-between p-3 my-2" @click="payment">
+            <h5 class="text-uppercase">{{actionBtn}}</h5>
             <h4 class="to-pay">{{convertToCurrency(total)}}.00៛</h4>
         </div>
-        <div class="btn-pay d-flex justify-content-between p-3 my-2 bg-gradient-danger" @click="hold()" v-if="actionBtn==='hold'">
-            <h5>HOLD</h5>
-            <h4 class="to-pay">{{convertToCurrency(total)}}.00៛</h4>
-        </div>
+
         <div class="btn-close" @click="closeSeat()">
             <i class="ion-close"></i>
         </div>
@@ -67,12 +64,8 @@
                 this.actionBtn = 'pay'
             },
 
-            pay(){
-                this.$emit("pay")
-            },
-
-            hold(){
-                this.$emit("hold")
+            payment(){
+                this.$emit("payment", this.actionBtn)
             },
 
             getTotal(total){
@@ -81,7 +74,21 @@
 
             getActionBtn(action){
                 this.actionBtn = action
+
+                let btnClose = $(".btn-close")
+                let btnPay = $(".btn-pay-seat")
+                if(action==='hold'){
+                    btnClose.addClass('bg-gradient-danger')
+                    btnPay.addClass('bg-gradient-danger')
+                }
+                else
+                {
+                    btnClose.removeClass('bg-gradient-danger')
+                    btnPay.removeClass('bg-gradient-danger')
+                }
+
             },
+
 
             convertToCurrency(price){
                 /*https://flaviocopes.com/how-to-format-number-as-currency-javascript/*/
@@ -169,7 +176,7 @@
         opacity: 1;
     }
 
-    .btn-pay{
+    .btn-pay-seat{
         border-radius: 6px;
         width: 70%;
         height: 60px;

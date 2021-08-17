@@ -254,8 +254,20 @@ body {
   pointer-events: none;
 }
 
+#sell .pay .btn-hold,
+#sell .pay .btn-clear,
+#sell .pay .btn-pay {
+  opacity: 0.5;
+}
+
 #sell .pay.clickable {
   pointer-events: initial;
+}
+
+#sell .pay.clickable .btn-hold,
+#sell .pay.clickable .btn-clear,
+#sell .pay.clickable .btn-pay {
+  opacity: 1;
 }
 
 #clock {

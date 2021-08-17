@@ -210,9 +210,16 @@ body{
         width: 88%;
         background-color: #151515;
         pointer-events: none;
+
+        .btn-hold, .btn-clear, .btn-pay{
+            opacity: .5;
+        }
     }
     .pay.clickable{
         pointer-events: initial;
+        .btn-hold, .btn-clear, .btn-pay{
+            opacity: 1;
+        }
     }
 
 }

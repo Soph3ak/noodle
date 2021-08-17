@@ -54,7 +54,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <Seat v-show="showSeat" ref="seat" @closeSeat="closeSeat()" @addSeat="addSeat1" @pay="cashIn()" @hold="openSeat('hold')"></Seat>
+                                    <Seat v-show="showSeat" ref="seat" @closeSeat="closeSeat()" @addSeat="addSeat1" @payment="payment"></Seat>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                             <p class="">Sopheak</p>-->
 
 
-                                <div class="products-list add-seat" style="padding-left: 6px" @click="openSeat('')">
+                                <div class="products-list add-seat" style="padding-left: 6px">
                                     <div class="product-img">
                                         <img src="/icons/tables-white.png" class="img-size-50 rounded" alt="Image"/>
                                     </div>
@@ -144,11 +144,11 @@
                             </div>
                             <!--<button type="button" class="btn btn-block btn-info mb-3 mt-2" @click="cashIn">Charge {{convertToCurrency(total)}}.00៛</button>-->
                             <div class="btn-hold_btn-clear d-flex justify-content-between">
-                                <div class="btn-hold p-3 bg-info my-2 bg-gradient-danger" @click="openSeat('hold');clickablePay(false)"><h5>Hold</h5></div>
+                                <div class="btn-hold p-3 bg-info my-2 bg-gradient-danger" @click="openSeat('hold');clickablePay()"><h5>Hold</h5></div>
                                 <div class="btn-clear p-3 bg-info my-2 bg-danger" @click="clearOrder"><h5>Clear</h5></div>
                             </div>
-                            <div class="btn-pay d-flex justify-content-between p-3 my-2" @click="openSeat('pay'); clickablePay(false)">
-                                <h5>TOTAL</h5>
+                            <div class="btn-pay d-flex justify-content-between p-3 my-2" @click="openSeat('pay'); clickablePay()">
+                                <h5>PAY</h5>
                                 <h4 class="to-pay">{{convertToCurrency(total)}}.00៛</h4>
                             </div>
                             <!--<div class="small-icon d-flex justify-content-between mt-auto">
@@ -414,12 +414,11 @@ import Seat from "./Seat";
                     }
                 }
             },
+
             cashIn(){
-                if(this.order.length > 0){
-                    this.showModal()
-                }
-                else alert('Please make order!')
+                this.showModal()
             },
+
             saveOrder(){
                 this.form = new Form({
                     id:"",
@@ -436,9 +435,11 @@ import Seat from "./Seat";
                 })
                 this.form.post('api/save-order')
                     .then(response => {
-                        this.hideModal()
-                        if(this.paymentID===1)
+                        if(this.paymentID===1){
+                            this.hideModal()
                             this.$refs.cashIn.alertSuccess()
+                            this.closeSeat()
+                        }
                         else if (this.paymentID===2)
                             this.$refs.seat.alertSuccess()
                         this.clear()
@@ -499,38 +500,52 @@ import Seat from "./Seat";
                         }
                     })
                 }
-                else alert('Don\'t have any orders to clear yet!')
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Empty Order',
+                        text: 'We don\'t have any order currently !',
+                    })
+                }
             },
 
             openSeat(action){
                 if(this.order.length > 0){
                     this.$refs.seat.getTotal(this.total)
-                    if(this.showSeat === false) {
-                        if (this.seatID === 1) {
-                            //TO MAKE "TAKE AWAY" AS DEFAULT SELECTED
-                            this.$refs.seat.clearSelected()
-                        }
-                        this.$refs.seat.getActionBtn(action)
-                        this.showSeat = true
+                    if (this.seatID === 1) {
+                        //TO MAKE "TAKE AWAY" AS DEFAULT SELECTED
+                        this.$refs.seat.clearSelected()
                     }
-                    else
-                    {
-                      if(action==='pay')
-                          this.cashIn()
-                      else if(action==='hold'){
-                          this.paymentID = 2
-                          this.saveOrder()
-                      }
-
-                    }
+                    this.showSeat = true
+                    this.$refs.seat.getActionBtn(action)
 
                 }
-                else alert('Please make order!')
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Empty Order',
+                        text: 'We don\'t have any order currently !',
+                    })
+                }
             },
 
-            clickablePay(bool){
+            holdPayment(){
+                this.paymentID = 2
+                this.saveOrder()
+            },
+
+            payment(variable){
+                if(variable==='hold'){
+                    this.holdPayment()
+                }
+                else {
+                    this.cashIn()
+                }
+            },
+
+            clickablePay(){
                 let pay = $("#sell .pay")
-                if (bool===true)
+                if (this.showSeat === false)
                     pay.addClass('clickable')
                 else
                     pay.removeClass('clickable')
@@ -538,7 +553,7 @@ import Seat from "./Seat";
 
             closeSeat(){
                 this.showSeat = false
-                this.clickablePay(true)
+                this.clickablePay()
             },
 
             addSeat1(var1,var2){
