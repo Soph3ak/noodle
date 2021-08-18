@@ -3,37 +3,45 @@
         <div class="row justify-content-between">
             <div class="col-3 pr-3">
                 <div class="sidebar__display p-3 mb-3 text-right">
-                    <h6 class="mb-3">TOTAL TO PAY</h6>
-                    <h1 class="text-cyan text-bold">{{convertToCurrency(toTalToPay)}}៛</h1>
+                    <h6 class="mb-3">តម្លៃសរុប</h6>
+                    <h1 class="text-cyan text-bold">៛{{convertToCurrency(toTalToPay)}}</h1>
+                    <h5 class="text-cyan text-bold" v-if="currencyText==='USD'">${{convertToCurrency2Digit(toTalToPay/usdRate)}}</h5>
+                    <h5 class="text-cyan text-bold" v-else-if="currencyText==='THB'">฿{{convertToCurrency2Digit(toTalToPay/thbRate)}}</h5>
+                    <h5 class="text-cyan text-bold" v-else-if="currencyText==='CNY'">¥{{convertToCurrency2Digit(toTalToPay/cnyRate)}}</h5>
+                    <h5 class="text-cyan text-bold" v-else>${{convertToCurrency2Digit(toTalToPay/usdRate)}}</h5>
+                    <!--<h5 class="text-cyan text-bold">${{convertToCurrency2Digit(toTalToPay/usdRate)}}</h5>
+                    <h5 class="text-cyan text-bold">฿{{convertToCurrency2Digit(toTalToPay/thbRate)}}</h5>
+                    <h5 class="text-cyan text-bold">¥{{convertToCurrency2Digit(toTalToPay/cnyRate)}}</h5>-->
                 </div>
                 <div class="sidebar__display p-3 mb-3 text-right">
                     <div class="mr-1 flag"><img :src="getCurrencyImage()" alt="" width="32px" height="20px" class="mr-2">{{currencyText}}</div>
-                    <h6 class="mb-3">TOTAL RECEIVED</h6>
-                    <h1 class="text-dark text-bold" v-if="currencyText==='USD'">${{convertToCurrency(USD)}}.00</h1>
-                    <h1 class="text-dark text-bold" v-if="currencyText==='THB'">฿{{convertToCurrency(THB)}}</h1>
-                    <h1 class="text-dark text-bold" v-if="currencyText==='CNY'">¥{{convertToCurrency(CNY)}}</h1>
-                    <h1 class="text-dark text-bold" v-if="currencyText==='KHR'">{{convertToCurrency(KHR)}}៛</h1>
+                    <h6 class="mb-3">ប្រាក់ទទួល</h6>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='USD'">${{convertToCurrency2Digit(USD)}}</h1>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='THB'">฿{{convertToCurrency2Digit(THB)}}</h1>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='CNY'">¥{{convertToCurrency2Digit(CNY)}}</h1>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='KHR'">៛{{convertToCurrency(KHR)}}</h1>
+                    <h5 class="text-dark text-bold">៛{{ convertToCurrency(KHR) }}</h5>
                 </div>
-                <div class="sidebar__display p-3 mb-3 text-right">
-                    <div class="mr-1 flag"><img :src="'icons/KHR.png'" alt="" width="32px" height="20px" class="mr-2"></div>
-                    <h6 class="mb-3">TOTAL RECEIVED KHR</h6>
+                <!--<div class="sidebar__display p-3 mb-3 text-right">
+                    <div class="mr-1 flag"><img :src="'icons/KHR.png'" alt="" width="32px" height="20px" class="mr-2">KHR</div>
+                    <h6 class="mb-3">ប្រាក់ទទួលរៀល</h6>
                     <h1 class="text-dark text-bold">{{ convertToCurrency(KHR) }}៛</h1>
+                </div>-->
+                <div class="sidebar__display p-3 mb-3 text-right">
+                    <h6 class="mb-3">ប្រាក់អាប់</h6>
+                    <h1 class="text-dark text-bold">៛{{ convertToCurrency(change) }}</h1>
                 </div>
                 <div class="sidebar__display p-3 mb-3 text-right">
-                    <h6 class="mb-3">CHANGE</h6>
-                    <h1 class="text-dark text-bold">{{ convertToCurrency(change) }}៛</h1>
-                </div>
-                <div class="sidebar__display p-3 mb-3 text-right">
-                    <h6 class="mb-3">REMAIN</h6>
-                    <h1 class="text-danger text-bold">{{ convertToCurrency(remain) }}៛</h1>
+                    <h6 class="mb-3">ប្រាក់នៅខ្វះ</h6>
+                    <h1 class="text-danger text-bold">៛{{ convertToCurrency(remain) }}</h1>
                 </div>
                 <div class="p-3 mb-3 text-right position-relative">
                     <div class="mr-1 flag"><img :src="getCurrencyImage()" alt="" width="32px" height="20px" class="mr-2">{{currencyText}}</div>
-                    <h6 class="mb-3 text-dark">EXCHANGE RATES</h6>
-                    <h1 class="text-dark text-bold" v-if="currencyText==='USD'">{{convertToCurrency(usdRate)}}៛</h1>
-                    <h1 class="text-dark text-bold" v-if="currencyText==='THB'">{{convertToCurrency(thbRate)}}៛</h1>
-                    <h1 class="text-dark text-bold" v-if="currencyText==='CNY'">{{convertToCurrency(cnyRate)}}៛</h1>
-                    <h1 class="text-dark text-bold" v-if="currencyText==='KHR'">{{convertToCurrency(khrRate)}}៛</h1>
+                    <h6 class="mb-3 text-dark">អត្រាប្តូរប្រាក់រៀល</h6>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='USD'">៛{{convertToCurrency(usdRate)}}</h1>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='THB'">៛{{convertToCurrency(thbRate)}}</h1>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='CNY'">៛{{convertToCurrency(cnyRate)}}</h1>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='KHR'">៛{{convertToCurrency(khrRate)}}</h1>
                 </div>
 
             </div>
@@ -164,6 +172,17 @@ export default {
             else if (this.currencyText === 'KHR'){
                 this.KHR = this.receivedMoney
             }
+        },
+
+        convertToCurrency2Digit(price){
+            /*https://flaviocopes.com/how-to-format-number-as-currency-javascript/*/
+            let converted
+            const formatter = new Intl.NumberFormat('en-US', {
+                /*style: 'currency',
+                currency: 'USD',*/
+                minimumFractionDigits: 2
+            })
+            return converted = formatter.format(price)
         },
 
         convertToCurrency(price){
@@ -571,7 +590,8 @@ p.usd::after {
     cursor: pointer;
 }
 h6{
-    margin-bottom: 0px;
+    margin-bottom: 0;
+    font-size: 1.2rem;
 }
 
 
