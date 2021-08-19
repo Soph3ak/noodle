@@ -2,7 +2,7 @@
     <div class="cash-in" ref="cashIn">
         <div class="row justify-content-between">
             <div class="col-3 pr-3">
-                <div class="sidebar__display p-3 mb-3 text-right">
+                <div class="sidebar__display p-3 mb-3 text-right total-to-pay">
                     <h6 class="mb-3">តម្លៃសរុប</h6>
                     <h1 class="text-cyan text-bold">៛{{convertToCurrency(toTalToPay)}}</h1>
                     <h5 class="text-cyan text-bold" v-if="currencyText==='USD'">${{convertToCurrency2Digit(toTalToPay/usdRate)}}</h5>
@@ -13,12 +13,12 @@
                     <h5 class="text-cyan text-bold">฿{{convertToCurrency2Digit(toTalToPay/thbRate)}}</h5>
                     <h5 class="text-cyan text-bold">¥{{convertToCurrency2Digit(toTalToPay/cnyRate)}}</h5>-->
                 </div>
-                <div class="sidebar__display p-3 mb-3 text-right">
+                <div class="sidebar__display p-3 mb-3 text-right received-money">
                     <div class="mr-1 flag"><img :src="getCurrencyImage()" alt="" width="32px" height="20px" class="mr-2">{{currencyText}}</div>
                     <h6 class="mb-3">ប្រាក់ទទួល</h6>
-                    <h1 class="text-dark text-bold" v-if="currencyText==='USD'">${{convertToCurrency2Digit(USD)}}</h1>
-                    <h1 class="text-dark text-bold" v-if="currencyText==='THB'">฿{{convertToCurrency2Digit(THB)}}</h1>
-                    <h1 class="text-dark text-bold" v-if="currencyText==='CNY'">¥{{convertToCurrency2Digit(CNY)}}</h1>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='USD'">${{convertToCurrency(USD)}}</h1>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='THB'">฿{{convertToCurrency(THB)}}</h1>
+                    <h1 class="text-dark text-bold" v-if="currencyText==='CNY'">¥{{convertToCurrency(CNY)}}</h1>
                     <h1 class="text-dark text-bold" v-if="currencyText==='KHR'">៛{{convertToCurrency(KHR)}}</h1>
                     <h5 class="text-dark text-bold">៛{{ convertToCurrency(KHR) }}</h5>
                 </div>
@@ -27,11 +27,11 @@
                     <h6 class="mb-3">ប្រាក់ទទួលរៀល</h6>
                     <h1 class="text-dark text-bold">{{ convertToCurrency(KHR) }}៛</h1>
                 </div>-->
-                <div class="sidebar__display p-3 mb-3 text-right">
+                <div class="sidebar__display p-3 mb-3 text-right change">
                     <h6 class="mb-3">ប្រាក់អាប់</h6>
                     <h1 class="text-dark text-bold">៛{{ convertToCurrency(change) }}</h1>
                 </div>
-                <div class="sidebar__display p-3 mb-3 text-right">
+                <div class="sidebar__display p-3 mb-3 text-right remain">
                     <h6 class="mb-3">ប្រាក់នៅខ្វះ</h6>
                     <h1 class="text-danger text-bold">៛{{ convertToCurrency(remain) }}</h1>
                 </div>
@@ -65,7 +65,7 @@
                     </div>
                     <p class="text-center total-cash">ប្រាក់ទទួល</p>
                     <!--<input type="text" class="calculator-screen z-depth-1" value="" disabled />-->
-                    <div class="calculator-screen z-depth-1">
+                    <div class="calculator-screen z-depth-1 received-money">
                         <p class="display khr"></p>
                     </div>
                     <div class="calculator-keys">
@@ -84,6 +84,9 @@
                         <button type="button" value="4" class="btn btn-light waves-effect">4</button>
                         <button type="button" value="5" class="btn btn-light waves-effect">5</button>
                         <button type="button" value="6" class="btn btn-light waves-effect">6</button>
+                        <!--<button type="button" class="pay-and-print operator btn btn-success" @click="pay()"><i class="fas fa-print"></i></button>-->
+                        <button type="button" class="pay-and-print operator btn btn-app" v-if="toTalToPay <= KHR" @click="pay1()"><i class="ion-printer"></i>PAY & PRINT</button>
+                        <button type="button" class="pay-and-print operator btn btn-app" disabled v-else><i class="ion-printer"></i>PAY & PRINT</button>
 
 
                         <button type="button" value="1" class="btn btn-light waves-effect">1</button>
@@ -259,12 +262,42 @@ export default {
             this.clear()
         },
 
+        fontResize(selector,length){
+            if(length <= 8){
+                selector.removeClass('smaller1 smaller2')
+            }
+            else if(length <= 9){
+                selector.removeClass('smaller2')
+                selector.addClass('smaller1')
+            }
+            else if(length > 9){
+                selector.removeClass('smaller1')
+                selector.addClass('smaller2')
+            }
+        },
+
     },
 
     watch:{
         receivedMoney(){
             this.moneyExchange()
             this.calculate()
+
+            let selector = $(".received-money")
+            let length = (this.receivedMoney).toString().length
+            this.fontResize(selector,length)
+        },
+
+        remain(){
+            let selector = $(".remain")
+            let length = this.remain.length
+            this.fontResize(selector,length)
+        },
+
+        change(){
+            let selector = $(".change")
+            let length = (this.change).toString().length
+            this.fontResize(selector,length)
         },
 
         currencyText(){
@@ -272,6 +305,8 @@ export default {
             this.calculate()
             this.displayToggleClass()
         },
+
+
     },
 
     mounted() {
@@ -481,7 +516,7 @@ button {
 
 .equal-sign {
     height: 100%;
-    grid-area: 3 / 4 / 6 / 5;
+    grid-area: 4 / 4 / 6 / 5;
 }
 
 .calculator-keys {
@@ -505,6 +540,17 @@ button {
     border-radius: 0;
     box-shadow: none !important;
 }
+
+.pay-and-print{
+    font-size: 1.2rem !important;
+    padding-top: 13px;
+}
+.pay-and-print i{
+    font-size: 2rem !important;
+    display: block;
+    line-height: 0;
+}
+
 .btn{
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
     border: none;
@@ -565,6 +611,19 @@ p.usd::after {
     box-shadow:  5px 5px 4px #bebebe,
     -5px -5px 4px #ffffff;
     border: 1px solid #e8e8e8;
+}
+.smaller1 h1{
+    font-size: 2rem;
+}
+.smaller2 h1{
+    font-size: 1.5rem;
+}
+
+.smaller1 p{
+    font-size: 8rem;
+}
+.smaller2 p{
+    font-size: 7rem;
 }
 
 .sidebar__display h6{

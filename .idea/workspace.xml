@@ -22,7 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09e05767-61eb-4fd4-9dd4-d8dac4894053" name="Default Changelist" comment="* Sell.vue: Working on bottom &quot;Hold&quot;">
+    <list default="true" id="09e05767-61eb-4fd4-9dd4-d8dac4894053" name="Default Changelist" comment="Working on CashIn edit interface">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/CashIn.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CashIn.vue" afterDir="false" />
@@ -339,7 +339,8 @@
       <workItem from="1629116725092" duration="20148000" />
       <workItem from="1629208763615" duration="15628000" />
       <workItem from="1629294510027" duration="13237000" />
-      <workItem from="1629327711358" duration="1382000" />
+      <workItem from="1629327711358" duration="1530000" />
+      <workItem from="1629376647748" duration="16491000" />
     </task>
     <task id="LOCAL-00001" summary="add orders">
       <created>1618876152336</created>
@@ -502,7 +503,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629243556081</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Working on CashIn edit interface">
+      <created>1629330385773</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1629330385773</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -542,7 +550,8 @@
     <MESSAGE value="* Shop.vue: Done with phone" />
     <MESSAGE value="* Sell.vue: Working on Seat" />
     <MESSAGE value="* Sell.vue: Working on bottom &quot;Hold&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Sell.vue: Working on bottom &quot;Hold&quot;" />
+    <MESSAGE value="Working on CashIn edit interface" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working on CashIn edit interface" />
   </component>
   <component name="WindowStateProjectService">
     <state x="697" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1627570178161">
@@ -561,30 +570,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1621046719661" />
-    <state width="1877" height="310" key="GridCell.Tab.0.bottom" timestamp="1629321374692">
+    <state width="1877" height="310" key="GridCell.Tab.0.bottom" timestamp="1629376757229">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1629321374692" />
-    <state width="1877" height="310" key="GridCell.Tab.0.center" timestamp="1629321374692">
+    <state width="1877" height="310" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1629376757229" />
+    <state width="1877" height="310" key="GridCell.Tab.0.center" timestamp="1629376757229">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1629321374692" />
-    <state width="1877" height="310" key="GridCell.Tab.0.left" timestamp="1629321374692">
+    <state width="1877" height="310" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1629376757229" />
+    <state width="1877" height="310" key="GridCell.Tab.0.left" timestamp="1629376757229">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1629321374692" />
-    <state width="1877" height="310" key="GridCell.Tab.0.right" timestamp="1629321374692">
+    <state width="1877" height="310" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1629376757229" />
+    <state width="1877" height="310" key="GridCell.Tab.0.right" timestamp="1629376757229">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1629321374692" />
+    <state width="1877" height="310" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1629376757229" />
     <state x="807" y="433" key="VCS.ChangelistChooser" timestamp="1629135795084">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="807" y="433" key="VCS.ChangelistChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1629135795084" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1629243563843">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1629330397775">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1629243563843" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1629330397775" />
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1627687722363">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -593,14 +602,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="760" y="421" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1628966974484" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1622611048683">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1629396958314">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622611048683" />
-    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1629223384766">
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1629396958314" />
+    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1629378325288">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1629223384766" />
+    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1629378325288" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
