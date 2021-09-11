@@ -21,6 +21,20 @@ class OrderController extends Controller
         ]);
     }
 
+    public function invoice(Request $request){
+        return response()->json($request);
+        /*return $request->user()->downloadInvoice(1, [
+            'vendor' => 'Your Company',
+            'product' => 'Your Product',
+            'street' => 'Main Str. 1',
+            'location' => '2000 Antwerp, Belgium',
+            'phone' => '+32 499 00 00 00',
+            'email' => 'info@example.com',
+            'url' => 'https://example.com',
+            'vendorVat' => 'BE123456789',
+        ], 'my-invoice');*/
+    }
+
     public function saveOrder(Request $request){
         /*return $request;*/
 
@@ -40,7 +54,8 @@ class OrderController extends Controller
             $data[] = $nest;
         }
         $order->products()->sync($data);
-        return $data;
+        $invoice = collect($order)->merge($data);
+        return $invoice->all();
 
     }
 }

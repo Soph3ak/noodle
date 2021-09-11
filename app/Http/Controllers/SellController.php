@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
+use http\Env\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SellController extends Controller
@@ -17,6 +18,7 @@ class SellController extends Controller
        $user = Auth::user();
        return view('sell');
     }
+
 
     public function loadUser(){
         return $user = Auth::user();
@@ -33,9 +35,6 @@ class SellController extends Controller
     public function loadProductsByCategory($id){
         $products = Category::find($id)->products;
         /*$products = Product::where('category_id',$id)->get();*/ /*SAME RESULT*/
-        foreach ($products as $product) {
-
-        }
         $cols = collect($products);
         return $cols;
 

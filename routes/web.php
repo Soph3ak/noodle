@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageUploadController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('/test',[ProductController::class, 'test']);
 
 Auth::routes();
@@ -46,6 +48,7 @@ Route::post('image/upload/store',[ImageUploadController::class, 'fileStore']);
 
 Route::get('/sell', [SellController::class, 'index']);
 Route::get('/loadUser', [SellController::class, 'loadUser']);
+Route::post('/invoice', [OrderController::class, 'invoice']);
 
 Route::apiResource('shop',ShopController::class);
 Route::get('/getShop',[ShopController::class, 'getShop']);

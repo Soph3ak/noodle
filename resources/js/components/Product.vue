@@ -34,7 +34,7 @@
                             <tbody>
                             <tr v-for="product in products.data" :key="product.id">
                                 <td class="products-list">
-                                    <div class="product-img">
+                                    <div class="product-img mask-squircle">
                                         <img :src="getImgUrl(product.photo)" alt="Product Image" class="img-size-50">
                                     </div>
                                     <div class="product-info">

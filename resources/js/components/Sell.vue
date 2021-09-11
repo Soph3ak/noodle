@@ -104,7 +104,7 @@
                                     <tbody>
                                     <tr v-for="(ord, index) in order" :key="index">
                                         <td class="products-list" style="padding-left: 12px">
-                                            <div class="product-img">
+                                            <div class="product-img mask-squircle">
                                                 <img :src="'/files/'+ord.image" alt="Product Image" class="img-size-50 rounded">
                                             </div>
                                             <div class="product-info">
@@ -175,7 +175,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <CashIn @paySuccess="saveOrder(); /*hideModal(); clear();*/" ref="cashIn" ></CashIn>
+                            <CashIn @paySuccess="saveOrder();" @print="print" ref="cashIn" ></CashIn>
                         </div>
                         <!--<div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal-cashIn" @click="">បោះបង់</button>
@@ -220,6 +220,7 @@ import Seat from "./Seat";
                 showSeat: false,
                 seatID: 1,
                 seatName:'Take away',
+                invoice:''
             }
         },
         methods:{
@@ -442,10 +443,33 @@ import Seat from "./Seat";
                         }
                         else if (this.paymentID===2)
                             this.$refs.seat.alertSuccess()
+                        this.invoice=response.data
                         this.clear()
 
                     })
                     .catch(err => console.log(err))
+                    .finally(() => this.loading = false)
+            },
+
+            print(){
+                this.form = new Form({
+                    id:"",
+                    user_id: this.userID,
+                    customer_id: "2",
+                    table_id: this.seatID,
+                    shop_id: "1",
+                    payment_id: this.paymentID,
+                    order: this.order,
+                    subtotal: this.subTotal,
+                    discount: this.discount,
+                    total: this.total,
+
+                })
+                this.form.post('invoice')
+                    .then(response => {
+                        this.file = response.data
+                    })
+                    .catch(error => console.log(error))
                     .finally(() => this.loading = false)
             },
 

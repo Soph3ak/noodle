@@ -85,7 +85,7 @@
                         <button type="button" value="5" class="btn btn-light waves-effect">5</button>
                         <button type="button" value="6" class="btn btn-light waves-effect">6</button>
                         <!--<button type="button" class="pay-and-print operator btn btn-success" @click="pay()"><i class="fas fa-print"></i></button>-->
-                        <button type="button" class="pay-and-print operator btn btn-app" v-if="toTalToPay <= KHR" @click="pay1()"><i class="ion-printer"></i>PAY & PRINT</button>
+                        <button type="button" class="pay-and-print operator btn btn-app" v-if="toTalToPay <= KHR" @click="print()"><i class="ion-printer"></i>PAY & PRINT</button>
                         <button type="button" class="pay-and-print operator btn btn-app" disabled v-else><i class="ion-printer"></i>PAY & PRINT</button>
 
 
@@ -274,6 +274,10 @@ export default {
                 selector.removeClass('smaller1')
                 selector.addClass('smaller2')
             }
+        },
+
+        print(){
+            this.$emit("print");
         },
 
     },
@@ -601,7 +605,7 @@ p.usd::after {
     background-color: #3e5761;
 }
 .remaining{
-    padding: 5px 0px;
+    padding: 5px 0;
     background-color: #2d4833;
 }
 .sidebar__display{
