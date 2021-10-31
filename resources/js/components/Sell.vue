@@ -220,7 +220,9 @@ import Seat from "./Seat";
                 showSeat: false,
                 seatID: 1,
                 seatName:'Take away',
-                invoice:''
+                invoice:[],
+
+                /*file:[],*/
             }
         },
         methods:{
@@ -443,6 +445,7 @@ import Seat from "./Seat";
                         }
                         else if (this.paymentID===2)
                             this.$refs.seat.alertSuccess()
+
                         this.invoice=response.data
                         this.clear()
 
@@ -467,7 +470,7 @@ import Seat from "./Seat";
                 })
                 this.form.post('invoice')
                     .then(response => {
-                        this.file = response.data
+                        this.invoice = response.data
                     })
                     .catch(error => console.log(error))
                     .finally(() => this.loading = false)
