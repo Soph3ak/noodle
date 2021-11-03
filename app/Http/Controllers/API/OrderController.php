@@ -7,6 +7,10 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+use LaravelDaily\Invoices\Invoice;
+use LaravelDaily\Invoices\Classes\Buyer;
+use LaravelDaily\Invoices\Classes\InvoiceItem;
+
 class OrderController extends Controller
 {
     protected function validator(array $data)
@@ -22,17 +26,44 @@ class OrderController extends Controller
     }
 
     public function invoice(Request $request){
-        return response()->json($request);
-        /*return $request->user()->downloadInvoice(1, [
-            'vendor' => 'Your Company',
-            'product' => 'Your Product',
-            'street' => 'Main Str. 1',
-            'location' => '2000 Antwerp, Belgium',
-            'phone' => '+32 499 00 00 00',
-            'email' => 'info@example.com',
-            'url' => 'https://example.com',
-            'vendorVat' => 'BE123456789',
-        ], 'my-invoice');*/
+        //return response()->json($request);
+
+        $customer = new Buyer([
+            'name'          => 'John Doe',
+            'custom_fields' => [
+                'email' => 'test@example.com',
+            ],
+        ]);
+
+        $items = array();
+        foreach ($request->order as $ord){
+
+            $item = (new InvoiceItem())
+                    ->title($ord['name_kh'])
+                    ->pricePerUnit($ord['price'])
+                    ->quantity($ord['id']);
+            /*$nest = array();
+            $nest['order_id'] = $order->id;
+            $nest['product_id'] = $ord['id'];
+            $nest['quantity'] = $ord['qty'];
+            $nest['unit_price'] = $ord['price'];
+            $nest['amount'] = $ord['amount'];
+            $nest['sub_discount'] = $ord['discount'];
+
+            $data[] = $nest;*/
+            $items[]=$item;
+
+        }
+
+        $invoice = Invoice::make()
+            ->buyer($customer)
+            ->discountByPercent(10)
+            ->taxRate(15)
+            ->shipping(1.99)
+            ->addItems($items);
+
+        return $invoice->stream();
+
     }
 
     public function saveOrder(Request $request){

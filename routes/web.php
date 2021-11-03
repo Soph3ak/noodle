@@ -50,6 +50,11 @@ Route::get('/sell', [SellController::class, 'index']);
 Route::get('/loadUser', [SellController::class, 'loadUser']);
 Route::post('/invoice', [OrderController::class, 'invoice']);
 
+//Test Invoice=======
+Route::get('/invoice', [OrderController::class, 'invoice']);
+
+//=======
+
 Route::apiResource('shop',ShopController::class);
 Route::get('/getShop',[ShopController::class, 'getShop']);
 Route::get('/getPhones',[ShopController::class, 'getPhones']);

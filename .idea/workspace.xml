@@ -19,13 +19,25 @@
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:origin/main" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09e05767-61eb-4fd4-9dd4-d8dac4894053" name="Default Changelist" comment="NO COMMAND">
+    <list default="true" id="09e05767-61eb-4fd4-9dd4-d8dac4894053" name="Default Changelist" comment="Before add Invoice npm">
+      <change beforePath="$PROJECT_DIR$/.idea/TestAdminLte-laravel.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TestAdminLte-laravel.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Sell.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Sell.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,6 +175,20 @@
       <path value="$PROJECT_DIR$/vendor/fakerphp/faker" />
       <path value="$PROJECT_DIR$/vendor/orchestra/testbench-core" />
       <path value="$PROJECT_DIR$/vendor/orchestra/testbench" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/pimple/pimple" />
+      <path value="$PROJECT_DIR$/vendor/nette/schema" />
+      <path value="$PROJECT_DIR$/vendor/nette/utils" />
+      <path value="$PROJECT_DIR$/vendor/league/config" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/vendor/dflydev/dot-access-data" />
+      <path value="$PROJECT_DIR$/vendor/laravel/serializable-closure" />
+      <path value="$PROJECT_DIR$/vendor/phenx/php-svg-lib" />
+      <path value="$PROJECT_DIR$/vendor/phenx/php-font-lib" />
+      <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-dompdf" />
+      <path value="$PROJECT_DIR$/vendor/dompdf/dompdf" />
+      <path value="$PROJECT_DIR$/vendor/sabberworm/php-css-parser" />
+      <path value="$PROJECT_DIR$/vendor/laraveldaily/laravel-invoices" />
     </include_path>
   </component>
   <component name="ProjectId" id="1pIsd5yEwuV8nCZy5pKxsJOACaZ" />
@@ -350,6 +376,10 @@
       <workItem from="1634048762587" duration="787000" />
       <workItem from="1634508371018" duration="676000" />
       <workItem from="1635653847603" duration="6072000" />
+      <workItem from="1635677093893" duration="473000" />
+      <workItem from="1635679364021" duration="1578000" />
+      <workItem from="1635839000978" duration="12687000" />
+      <workItem from="1635918907163" duration="387000" />
     </task>
     <task id="LOCAL-00001" summary="add orders">
       <created>1618876152336</created>
@@ -539,12 +569,34 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -576,9 +628,14 @@
     <MESSAGE value="Working on CashIn edit interface" />
     <MESSAGE value="Working on CashIn FontResize" />
     <MESSAGE value="NO COMMAND" />
-    <option name="LAST_COMMIT_MESSAGE" value="NO COMMAND" />
+    <MESSAGE value="Before add Invoice npm" />
+    <option name="LAST_COMMIT_MESSAGE" value="Before add Invoice npm" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="715" y="344" key="#Notifications" timestamp="1635677288958">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="715" y="344" key="#Notifications/0.0.1920.1040@0.0.1920.1040" timestamp="1635677288958" />
     <state x="697" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1627570178161">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -587,38 +644,42 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1629627485244" />
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1627672075255">
+    <state x="66" y="133" width="1736" height="856" key="DiffContextDialog" timestamp="1635677570550">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1627672075255" />
-    <state width="1877" height="310" key="GridCell.Tab.0.bottom" timestamp="1635653881042">
+    <state x="66" y="133" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1635677570550" />
+    <state width="1877" height="310" key="GridCell.Tab.0.bottom" timestamp="1635918929160">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1635653881042" />
-    <state width="1877" height="310" key="GridCell.Tab.0.center" timestamp="1635653881042">
+    <state width="1877" height="310" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1635918929160" />
+    <state width="1877" height="310" key="GridCell.Tab.0.center" timestamp="1635918929160">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1635653881042" />
-    <state width="1877" height="310" key="GridCell.Tab.0.left" timestamp="1635653881042">
+    <state width="1877" height="310" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1635918929160" />
+    <state width="1877" height="310" key="GridCell.Tab.0.left" timestamp="1635918929160">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1635653881042" />
-    <state width="1877" height="310" key="GridCell.Tab.0.right" timestamp="1635653881042">
+    <state width="1877" height="310" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1635918929160" />
+    <state width="1877" height="310" key="GridCell.Tab.0.right" timestamp="1635918929160">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="310" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1635653881042" />
-    <state x="807" y="433" key="VCS.ChangelistChooser" timestamp="1629135795084">
+    <state width="1877" height="310" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1635918929160" />
+    <state x="805" y="240" key="RollbackChangesDialog" timestamp="1635677545563">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="807" y="433" key="VCS.ChangelistChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1629135795084" />
+    <state x="805" y="240" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1635677545563" />
+    <state x="807" y="433" key="VCS.ChangelistChooser" timestamp="1635676655685">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="807" y="433" key="VCS.ChangelistChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1635676655685" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1631331718049">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1631331718049" />
-    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1627687722363">
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1635677420524">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1627687722363" />
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1635677420524" />
     <state x="760" y="421" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1628966974484">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -627,10 +688,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1629396958314" />
-    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1635657533902">
+    <state x="664" y="280" width="672" height="678" key="search.everywhere.popup" timestamp="1635852956115">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="918" y="253" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1635657533902" />
+    <state x="664" y="280" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1635852956115" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
