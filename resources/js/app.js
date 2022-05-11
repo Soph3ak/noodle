@@ -28,6 +28,9 @@ window.Toast = Toast;
 import VueCurrencyInput from 'vue-currency-input'
 Vue.use(VueCurrencyInput)
 
+
+import 'vue-loading-overlay/dist/vue-loading.css';
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -46,6 +49,7 @@ Vue.component('category', require('./components/Category.vue').default);
 Vue.component('seat-table', require('./components/SeatTable.vue').default);
 Vue.component('shop', require('./components/Shop').default);
 Vue.component('customer', require('./components/Customer.vue').default);
+Vue.component('report', require('./components/Report').default);
 Vue.component('product', require('./components/Product').default);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('sell', require('./components/Sell.vue').default);

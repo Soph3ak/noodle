@@ -9,6 +9,7 @@ use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\TableController;
 use App\Http\Controllers\API\ShopController;
 use App\Http\Controllers\SellController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,7 @@ Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 Route::apiResource('customer',CustomerController::class);
 Route::get('/getCustomer',[CustomerController::class,'getCustomer'])->name('customer.getCustomer');
 
+
 Route::apiResource('seatTable',TableController::class);
 Route::get('/getSeatTable',[TableController::class,'getSeatTable']);
 
@@ -60,4 +62,10 @@ Route::get('/getShop',[ShopController::class, 'getShop']);
 Route::get('/getPhones',[ShopController::class, 'getPhones']);
 Route::put('/phones',[ShopController::class, 'test']);
 Route::delete('/phones',[ShopController::class, 'destroy_phone']);
+
+
+Route::get('/reports',[ReportController::class,'index'])->name('report.index');
+Route::get('/getReport',[ReportController::class,'getReport'])->name('report.getReport');
+
+
 

@@ -11,6 +11,7 @@ use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 
+
 class OrderController extends Controller
 {
     protected function validator(array $data)
@@ -27,7 +28,6 @@ class OrderController extends Controller
 
     public function invoice(Request $request){
         //return response()->json($request);
-
         $customer = new Buyer([
             'name'          => 'John Doe',
             'custom_fields' => [
@@ -37,11 +37,11 @@ class OrderController extends Controller
 
         $items = array();
         foreach ($request->order as $ord){
-
+            $ItemId = $ord['id'];
             $item = (new InvoiceItem())
                     ->title($ord['name_kh'])
                     ->pricePerUnit($ord['price'])
-                    ->quantity($ord['id']);
+                    ->quantity($ord['qty']);
             /*$nest = array();
             $nest['order_id'] = $order->id;
             $nest['product_id'] = $ord['id'];
@@ -58,10 +58,9 @@ class OrderController extends Controller
         $invoice = Invoice::make()
             ->buyer($customer)
             ->discountByPercent(10)
-            ->taxRate(15)
+            ->taxRate(15.2)
             ->shipping(1.99)
             ->addItems($items);
-
         return $invoice->stream();
 
     }

@@ -132,15 +132,15 @@
                         <div class="pay mt-auto d-flex flex-column clickable">
                             <div class="subtotal d-flex">
                                 <h5>Subtotal</h5>
-                                <h4 class="ml-auto">{{ convertToCurrency(subTotal) }}.00៛</h4>
+                                <h4 class="ml-auto">{{ convertToCurrency(subTotal) }}៛</h4>
                             </div>
                             <div class="discount d-flex">
                                 <h5>Discount</h5>
-                                <h4 class="ml-auto">{{ convertToCurrency(discount) }}.00៛</h4>
+                                <h4 class="ml-auto">{{ convertToCurrency(discount) }}៛</h4>
                             </div>
                             <div class="total d-flex style7">
                                 <h5>Total</h5>
-                                <h4 class="ml-auto">{{convertToCurrency(total)}}.00៛</h4>
+                                <h4 class="ml-auto">{{convertToCurrency(total)}}៛</h4>
                             </div>
                             <!--<button type="button" class="btn btn-block btn-info mb-3 mt-2" @click="cashIn">Charge {{convertToCurrency(total)}}.00៛</button>-->
                             <div class="btn-hold_btn-clear d-flex justify-content-between">
@@ -263,7 +263,10 @@ import Seat from "./Seat";
                     currency: 'USD',*/
                     minimumFractionDigits: 0
                 })
-                return converted = formatter.format(price)
+                if(price > 0){
+                    return converted = formatter.format(price)
+                }
+                else return converted = '0.00'
             },
 
             loadCategoriesSell(){

@@ -278,6 +278,7 @@ export default {
 
         print(){
             this.$emit("print");
+            //sent event to Sell.vue
         },
 
     },

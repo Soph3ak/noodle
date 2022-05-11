@@ -270,6 +270,14 @@ return [
             /*'label'       => 4,*/
             /*'label_color' => 'success',*/
         ],
+
+        ['header' => 'REPORTS'],
+        [
+            'text' => 'របាយការណ៏លក់',
+            'url'  => 'reports',
+            'icon' => 'fas fa-chart-bar mr-1',
+        ],
+
         ['header' => 'ADMINISTRATOR'],
         [
             'text' => 'Users',
