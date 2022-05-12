@@ -229,7 +229,7 @@ import Seat from "./Seat";
             showModal(){
                 $('#modal-cashIn').modal('show')
                 this.$refs.cashIn.setToTalToPay(this.total)
-                this.$refs.cashIn.calculate()
+                /*this.$refs.cashIn.calculate()*/
                 this.paymentID = 1
             },
             hideModal(){
@@ -426,6 +426,11 @@ import Seat from "./Seat";
             },
 
             saveOrder(){
+                /*if(this.paymentID===1){
+                    this.hideModal()
+                    this.$refs.cashIn.alertSuccess()
+                    this.closeSeat()
+                }*/
                 this.form = new Form({
                     id:"",
                     user_id: this.userID,

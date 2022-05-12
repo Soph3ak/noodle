@@ -45,7 +45,7 @@
 
         <div class="row">
             <div class="col-12">
-                <div class="card">
+                <div class="card table-block">
                     <div class="card-header d-flex align-items-center">
                         <div class="show-page-calendar">
                             <div class="d-flex" style="width: 620px;">

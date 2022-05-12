@@ -70,10 +70,10 @@
                     </div>
                     <div class="calculator-keys">
 
-                        <button type="button" class="moneyInput function btn btn-info" value="100">100៛</button>
-                        <button type="button" class="moneyInput function btn btn-info" value="500">500៛</button>
-                        <button type="button" class="moneyInput function btn btn-info" value="1000">1000៛</button>
-                        <button type="button" class="moneyInput function btn btn-info" value="10000">10000៛</button>
+                        <button type="button" class="moneyInput function btn btn-info" value="100">100</button>
+                        <button type="button" class="moneyInput function btn btn-info" value="500">500</button>
+                        <button type="button" class="moneyInput function btn btn-info" value="1000">1000</button>
+                        <button type="button" class="moneyInput function btn btn-info" value="10000">10000</button>
 
                         <button type="button" value="7" class="btn btn-light waves-effect">7</button>
                         <button type="button" value="8" class="btn btn-light waves-effect">8</button>
@@ -102,6 +102,7 @@
                         <button type="button" class="equal-sign operator btn btn-warning" disabled v-else>PAY</button>
 
                     </div>
+
                 </div>
             </div>
         </div>
@@ -116,14 +117,14 @@ export default {
         return{
             url:'/icons/KHR.png',
             currencyText:'KHR',
-            toTalToPay:'0',
-            receivedMoney: '0',
-            remain: '0',
-            change: '0',
-            KHR: '0',
-            USD: '0',
-            THB: '0',
-            CNY: '0',
+            toTalToPay:0,
+            receivedMoney: 0,
+            remain: 0,
+            change: 0,
+            KHR: 0,
+            USD: 0,
+            THB: 0,
+            CNY: 0,
             usdRate: 4061.84,
             thbRate: 130.58,
             cnyRate: 636.14,
@@ -141,14 +142,14 @@ export default {
         reset(){
             this.url='/icons/KHR.png'
             this.currencyText='KHR'
-            this.toTalToPay='0'
-            this.receivedMoney= '0'
-            this.remain= '0'
-            this.change= '0'
+            this.toTalToPay= 0
+            this.receivedMoney= 0
+            this.remain= 0
+            this.change= 0
             this.KHR= '0'
-            this.USD= '0'
-            this.THB= '0'
-            this.CNY= '0'
+            this.USD= 0
+            this.THB= 0
+            this.CNY= 0
             this.usdRate= 4061.84
             this.thbRate= 130.58
             this.cnyRate= 636.14
@@ -237,13 +238,16 @@ export default {
         },
 
         calculate(){
-            if(this.KHR < this.toTalToPay){
+            if(parseInt(this.KHR) < parseInt(this.toTalToPay)){
+                console.log('up running')
                 this.remain = this.KHR - this.toTalToPay
                 this.change = 0
             }
 
             else {
+                console.log('down running!!!!' +this.change+' '+parseInt(this.KHR)+' '+parseInt(this.toTalToPay))
                 this.change = parseInt(this.KHR) - parseInt(this.toTalToPay)
+                console.log('down running' + parseInt(this.change))
                 this.remain = 0
             }
         },
@@ -253,11 +257,13 @@ export default {
         },
 
         alertSuccess(){
+            console.log('Change: '+this.change)
             Swal.fire(
                 'លុយអាប់: ' + this.convertToCurrency(this.change) +'៛',
                 'ទូរទាត់បានដោយជោគជ័យ!<br>សូមអរគុណ!',
                 'success'
             )
+            console.log('Change: '+this.change)
             this.reset()
             this.clear()
         },
@@ -285,7 +291,9 @@ export default {
 
     watch:{
         receivedMoney(){
+            console.log('Here is watch runing - receivedMoney: '+this.receivedMoney)
             this.moneyExchange()
+            console.log('Here is watch runing'+' - receivedMoney: '+this.receivedMoney+' KHR: '+this.KHR+' after exchange')
             this.calculate()
 
             let selector = $(".received-money")
@@ -416,8 +424,6 @@ export default {
 
         let vm = this;
         function updateDisplay() {
-            /*const display = document.querySelector('.calculator-screen');
-            display.value = convertToCurrency(calculator.displayValue);*/
             const display = document.querySelector('.display');
             display.innerHTML = convertToCurrency(calculator.displayValue);
             vm.receivedMoney = calculator.displayValue
@@ -474,6 +480,10 @@ export default {
                 inputDigit(target.value);
                 updateDisplay();
                 return;
+            }
+
+            if (target.classList.contains('equal-sign')) {
+                return; //NO INPUT NEEDED, JUST DO FUNCTION @pay
             }
 
             inputDigit(target.value);

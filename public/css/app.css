@@ -231,9 +231,14 @@ table.sell-reports .badge {
   color: #DA100B;
 }
 
-.search-block {
+.search-block,
+.table-block {
   border-radius: 9px !important;
   padding: 0.2rem 20px;
+}
+
+.table-block {
+  padding: 0.2rem 0px;
 }
 
 
