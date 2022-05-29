@@ -37,7 +37,8 @@ class TableController extends Controller
 
     public function getSeatTable()
     {
-        return $seatTables = Table::orderBy('id', 'desc')->paginate(10);
+        return $seatTables = Table::orderBy('name', 'asc')
+            ->paginate(10);
     }
 
     /**

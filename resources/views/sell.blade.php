@@ -24,6 +24,7 @@
 <script>
     $(document).ready(function(){
         $('.card-body').overlayScrollbars({  });
+
     });
 
 </script>

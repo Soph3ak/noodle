@@ -16,7 +16,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="seatTable in seatTables.data" :key="seatTables.id">
+                            <tr v-for="seatTable in seatTables.data" :key="seatTable.id" v-show="seatTable.id !== 7">
                                 <td>{{ seatTable.id }}</td>
                                 <td>{{ seatTable.name }}</td>
                                 <td v-if="seatTable.available === 0">កក់</td>
@@ -208,7 +208,7 @@ export default {
     mounted() {
         this.getResults();
         const vm = this
-        $("#new-seatTable").on('click',function (){
+        $("#new-table").on('click',function (){
             vm.newModal()
         })
     },

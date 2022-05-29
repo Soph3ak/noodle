@@ -1,43 +1,41 @@
 <template>
     <div class="mt-4">
-        <div class="card search-block">
+        <div class="card search-block py-2">
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label class="col-form-label" for="inputSuccess"> What are you looking for?</label>
-                        <input type="text" class="form-control is-valid" id="inputSuccess" placeholder="Enter ...">
+                        <label class="col-form-label"> What are you looking for?</label>
+                        <input type="text" class="form-control search" placeholder="Search invoice number here ..." v-model="searchTitle" @keyup.enter="page = 1; retrieveReports()">
                     </div>
                 </div>
                 <div class="col-2">
                     <div class="form-group">
-                        <label class="col-form-label">Select</label>
-                        <select class="form-control">
-                            <option>option 1</option>
-                            <option>option 2</option>
-                            <option>option 3</option>
-                            <option>option 4</option>
-                            <option>option 5</option>
+                        <label class="col-form-label">Payment</label>
+                        <select class="form-control" v-model="paymentType" @change="handlePaymentChange($event)">
+                            <option value="">Show all payment</option>
+                            <option value="1">PAID</option>
+                            <option value="2">UNPAID</option>
+                            <option value="3">VOID</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class="form-group">
-                        <label class="col-form-label">Select</label>
-                        <select class="form-control">
-                            <option>option 1</option>
-                            <option>option 2</option>
-                            <option>option 3</option>
-                            <option>option 4</option>
-                            <option>option 5</option>
+                        <label class="col-form-label">Table</label>
+                        <select v-model="table" @change="handleTableChange($event)" class="form-control">
+                            <option v-for="t in tables" :key="t.id" :value="t.id">
+                                {{ t.name }}
+                            </option>
                         </select>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class="form-group">
                         <label class="col-form-label text-white">Search...</label>
-                        <button type="button" id="report" class="btn btn-primary float-right form-control">
+                        <button type="button" id="report" class="btn btn-primary float-right form-control" @click="page = 1; retrieveReports()">
                             ស្វែងរក
                         </button>
+
                     </div>
                 </div>
             </div>
@@ -57,7 +55,7 @@
                                         </option>
                                     </select>
                                 </div>
-                                <div id="reportrange" style="background: #fff; cursor: pointer; border: 1px solid #ccc; width: 45%" class="form-control text-center ml-2">
+                                <div id="reportrange" style="background: #fff; cursor: pointer; border: 1px solid #ccc; width: 48%" class="form-control text-center ml-2">
                                     <i class="fa fa-calendar text-primary"></i>&nbsp;
                                     <span></span> <i class="fa fa-caret-down"></i>
                                 </div>
@@ -124,30 +122,27 @@
                                 <td>{{ convertToCurrency(report.subtotal) }}៛</td>
                                 <td>{{ convertToCurrency(report.discount) }}៛</td>
                                 <td>{{ convertToCurrency(report.total) }}៛</td>
-                                <!--<td class="text-center">
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-customer" @click="editModal(customer)"><i class="fas fa-pencil-alt"></i></button>
+                            </tr>
+                            <tr v-show="reportCount === 0">
+                                <td class="" colspan="10">
+                                    <div class="sc-5kpu8c-5 dcdHhK">
+                                        <div class="sc-5kpu8c-6 fbNBuP mb-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" height="24px" width="24px" viewBox="0 0 24 24" class="sc-16r8icm-0 jZwKai">
+                                                <path d="M16.4153 16.4153L20 20M18.5455 11.2727C18.5455 15.2893 15.2894 18.5454 11.2728 18.5454C7.25612 18.5454 4 15.2893 4 11.2727C4 7.2561 7.25612 4 11.2728 4C15.2894 4 18.5455 7.2561 18.5455 11.2727Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </div>
+                                        <h3 font-size="16px" font-weight="500" color="text" class="sc-1eb5slv-0 ddqQcN" style="text-align: center;">No results found</h3>
+                                        <p color="text2" font-size="1" class="sc-1eb5slv-0 bSDVZJ">We couldn't find anything matching your search.</p>
+                                        <p color="text2" font-size="1" class="sc-1eb5slv-0 bSDVZJ">Try again with a different term.</p></div>
                                 </td>
-                                <td class="text-center">
-                                    <button class="btn btn-danger" @click="deleteCustomer(report.name, report.id)"><i class="far fa-trash-alt"></i></button>
-                                </td>-->
                             </tr>
 
                             </tbody>
                         </table>
                     </div>
                     <!-- /.card-body -->
-                    <div class="card-footer">
-                        <div v-show="reportCount === 0">
-                            <div class="sc-5kpu8c-5 dcdHhK">
-                                <div class="sc-5kpu8c-6 fbNBuP mb-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" height="24px" width="24px" viewBox="0 0 24 24" class="sc-16r8icm-0 jZwKai">
-                                        <path d="M16.4153 16.4153L20 20M18.5455 11.2727C18.5455 15.2893 15.2894 18.5454 11.2728 18.5454C7.25612 18.5454 4 15.2893 4 11.2727C4 7.2561 7.25612 4 11.2728 4C15.2894 4 18.5455 7.2561 18.5455 11.2727Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </svg>
-                                </div>
-                                <h3 font-size="16px" font-weight="500" color="text" class="sc-1eb5slv-0 ddqQcN" style="text-align: center;">No results found</h3>
-                                <p color="text2" font-size="1" class="sc-1eb5slv-0 bSDVZJ">We couldn't find anything matching your search.</p>
-                                <p color="text2" font-size="1" class="sc-1eb5slv-0 bSDVZJ">Try again with a different term.</p></div>
-                        </div>
+                    <div class="card-footer bg-white">
+
                     </div>
                     <!-- /.card-footer -->
                 </div>
@@ -178,6 +173,7 @@ export default {
             count: 0,
             pageSize: 10,
             pageSizes: [10, 25, 50, 100],
+            paymentType: '',
             start: null,
             end: null,
 
@@ -190,6 +186,9 @@ export default {
             height: 70,
             width: 70,
 
+            tables:{},
+            table:7, //To default select All Tables (7 is id in db)
+
         }
     },
     methods:{
@@ -200,7 +199,7 @@ export default {
             return axios.get("/getReport", { params });
         },
 
-        getRequestParams(searchTitle, page, pageSize, start, end) {
+        getRequestParams(searchTitle, page, pageSize, start, end, paymentType, table) {
             let params = {};
             if (searchTitle) {
                 params["title"] = searchTitle;
@@ -220,6 +219,12 @@ export default {
             if (end) {
                 params["end"] = end;
             }
+            if (paymentType) {
+                params["paymentType"] = paymentType;
+            }
+            if (table) {
+                params["table"] = table;
+            }
             return params;
         },
 
@@ -230,6 +235,8 @@ export default {
                 this.pageSize,
                 this.start,
                 this.end,
+                this.paymentType,
+                this.table,
             );
             this.isLoading = true;
             setTimeout(() => {
@@ -258,6 +265,16 @@ export default {
             this.page = 1;
             this.retrieveReports();
         },
+        handlePaymentChange(event){
+            this.paymentType = event.target.value;
+            this.page = 1;
+            this.retrieveReports();
+        },
+
+        handleTableChange(event){
+            this.table = event.target.value;
+            this.retrieveReports();
+        },
 
         formatDate(value){
             return moment(value).format("LL");
@@ -273,6 +290,16 @@ export default {
                 icon: 'success',
                 title: str1 +' '+ name +' '+ str2
             })
+        },
+
+        retrieveTables(){
+            axios.get("api/loadSeats")
+                .then((response) => {
+                    this.tables = response.data;
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
         },
 
         convertToCurrency(price){
@@ -295,6 +322,7 @@ export default {
     },
 
     mounted() {
+        this.retrieveTables()
         const vm = this
 
         /*=========Date Time Picker=========*/

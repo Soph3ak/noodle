@@ -1,7 +1,7 @@
 <template>
     <div class="container seat" ref="seat">
         <div class="row justify-content-center">
-            <div v-for="(seat,index ) in seats" :key="seat.id" class="col-xl-3 col-lg-3 col-md-6 mb-lg-4 mb-md-3" @click="addSeat(seat.id, seat.name, index)">
+            <div v-for="(seat,index ) in seats" :key="seat.id" class="col-xl-3 col-lg-3 col-md-6 mb-lg-4 mb-md-3" @click="addSeat(seat.id, seat.name, index)" v-show="seat.id !== 7">
                 <div class="rounded shadow-sm seat-card">
                     <img :src="'/icons/tables-white.png'" alt="Seat image" class="rounded" style="width: 100%; height: 100%" v-if="seat.id !==1">
                     <img :src="'/icons/take-away1.png'" alt="Seat image" class="rounded" style="width: 100%; height: 100%" v-else>
