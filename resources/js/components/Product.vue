@@ -240,7 +240,7 @@ export default {
         },
 
         getResults(page = 1) {
-            axios.get('getProduct?page=' + page)
+            axios.get('api/getProduct?page=' + page)
                 .then(response => {
                     this.products = response.data;
                     this.currentPage = page;
@@ -248,7 +248,7 @@ export default {
         },
 
         saveProduct(name){
-            this.form.post('product')
+            this.form.post('api/product')
             .then(response => {
                 this.getResults(this.currentPage)
                 this.alertSuccess('មុខម្ហូបឈ្មោះ',name,'បង្កើតបានជោគជ័យ!');
@@ -259,7 +259,7 @@ export default {
         },
 
         updateProduct(name,id){
-            this.form.put('product/'+id)
+            this.form.put('api/product/'+id)
                 .then(response => {
                     this.getResults(this.currentPage)
                     this.alertSuccess('មុខម្ហូបឈ្មោះ',name,'កែប្រែបានជោគជ័យ!')
@@ -282,7 +282,7 @@ export default {
                 confirmButtonText: 'បាទ/ចាស៎'/*Yes, delete it!*/
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.form.delete('product/'+id)
+                    this.form.delete('api/product/'+id)
                         .then(response => {
                             this.getResults(this.currentPage);
                             this.$refs.myVueDropzone.oldFileRemoveAfterUpdatedOrDeleted(photo)

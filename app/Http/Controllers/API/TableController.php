@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Table;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class TableController extends Controller
@@ -13,6 +13,7 @@ class TableController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
 
@@ -20,8 +21,7 @@ class TableController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'available' => ['required', 'boolean', 'max:20'],
-            'address' => ['nullable', 'string', 'max:255'],
+            'description' => ['nullable','string', 'max:255'],
         ]);
     }
 
@@ -37,7 +37,7 @@ class TableController extends Controller
 
     public function getSeatTable()
     {
-        return $seatTables = Table::orderBy('name', 'asc')
+        return $seatTables = Table::orderBy('id', 'asc')
             ->paginate(10);
     }
 
@@ -54,8 +54,9 @@ class TableController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
@@ -88,24 +89,25 @@ class TableController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     *  @param Table $seatTable
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param Table $seatTable
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, Table $seatTable)
+    public function update(Request $request, Table $seatTable, $id)
     {
         $this->validator($request->all())->validate();
-        $seatTable->update($request->all());
+        $seatTable->findOrFail($id)->update($request->all());
     }
 
     /**
      * Remove the specified resource from storage.
      *@param Table $seatTable
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return void
+     * @throws \Exception
      */
-    public function destroy(Table $seatTable)
+    public function destroy(Table $seatTable, $id)
     {
-        $seatTable->delete();
+        $seatTable->findOrFail($id)->delete();
     }
 }

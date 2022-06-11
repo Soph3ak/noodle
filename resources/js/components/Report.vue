@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-4">
+    <div class="mt-2">
         <div class="card search-block py-2">
             <div class="row">
                 <div class="col-6">
@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label class="col-form-label">Payment</label>
                         <select class="form-control" v-model="paymentType" @change="handlePaymentChange($event)">
-                            <option value="">Show all payment</option>
+                            <option value="">All</option>
                             <option value="1">PAID</option>
                             <option value="2">UNPAID</option>
                             <option value="3">VOID</option>
@@ -23,6 +23,9 @@
                     <div class="form-group">
                         <label class="col-form-label">Table</label>
                         <select v-model="table" @change="handleTableChange($event)" class="form-control">
+                            <option value="0">
+                                All
+                            </option>
                             <option v-for="t in tables" :key="t.id" :value="t.id">
                                 {{ t.name }}
                             </option>
@@ -93,7 +96,7 @@
                                 <th>Date</th>
                                 <th>Customer</th>
                                 <th>Location</th>
-                                <th>Staff</th>
+                                <th>Seller</th>
                                 <th>Table</th>
                                 <th>Payment</th>
                                 <th>Subtotal</th>
@@ -126,7 +129,7 @@
                             <tr v-show="reportCount === 0">
                                 <td class="" colspan="10">
                                     <div class="sc-5kpu8c-5 dcdHhK">
-                                        <div class="sc-5kpu8c-6 fbNBuP mb-2">
+                                        <div class="sc-5kpu8c-6 fbNBuP mb-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" height="24px" width="24px" viewBox="0 0 24 24" class="sc-16r8icm-0 jZwKai">
                                                 <path d="M16.4153 16.4153L20 20M18.5455 11.2727C18.5455 15.2893 15.2894 18.5454 11.2728 18.5454C7.25612 18.5454 4 15.2893 4 11.2727C4 7.2561 7.25612 4 11.2728 4C15.2894 4 18.5455 7.2561 18.5455 11.2727Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                                             </svg>
@@ -187,7 +190,7 @@ export default {
             width: 70,
 
             tables:{},
-            table:7, //To default select All Tables (7 is id in db)
+            table:0, //To default select All Tables
 
         }
     },

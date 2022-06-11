@@ -10,18 +10,13 @@ use Illuminate\Support\Facades\Validator;
 class CustomerController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
-
         return view('customer');
     }
 
@@ -83,9 +78,9 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
+        return $customer;
         $this->validator($request->all())->validate();
         $customer->update($request->all());
-        /*return ['message'=>'Updated success'];*/
 
     }
 

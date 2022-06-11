@@ -258,7 +258,7 @@ return [
         ],
         [
             'text'        => 'ព័ត៌មានតុ',
-            'url'         => 'seatTable',
+            'url'         => 'tables',
             'icon'        => 'fas fa-chair mr-1',
             /*'label'       => 4,*/
             /*'label_color' => 'success',*/

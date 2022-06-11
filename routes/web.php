@@ -32,27 +32,24 @@ Route::get('/test',[ProductController::class, 'test']);
 Auth::routes();
 
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
-
-Route::apiResource('customer',CustomerController::class);
-Route::get('/getCustomer',[CustomerController::class,'getCustomer'])->name('customer.getCustomer');
-
-
-Route::apiResource('seatTable',TableController::class);
-Route::get('/getSeatTable',[TableController::class,'getSeatTable']);
+Route::get('/tables',[TableController::class,'index']);
+Route::get('/customer',[CustomerController::class,'index']);
+Route::get('/product',[ProductController::class,'index']);
 
 
 
-Route::apiResource('product',ProductController::class);
-Route::get('/getProduct',[ProductController::class,'getProduct'])->name('product.getProduct');
+
+
+
+
 
 Route::post('image/upload/store',[ImageUploadController::class, 'fileStore']);
 
 
 Route::get('/sell', [SellController::class, 'index']);
 Route::get('/loadUser', [SellController::class, 'loadUser']);
-Route::post('/invoice', [OrderController::class, 'invoice']);
 
-//Test Invoice=======
+Route::post('/invoice', [OrderController::class, 'invoice']);
 Route::get('/invoice', [OrderController::class, 'invoice']);
 
 //=======

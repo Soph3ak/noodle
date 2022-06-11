@@ -10,14 +10,10 @@ use Illuminate\Support\Facades\Validator;
 class ProductController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
@@ -56,8 +52,6 @@ class ProductController extends Controller
     {
         $this->validator($request->all())->validate();
         Product::create($request->all());
-
-        return ['message'=>'Created successfully'];
     }
 
     /**
@@ -81,10 +75,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        /*dd($request);*/
         $this->validator($request->all())->validate();
         $product->update($request->all());
-        return response()->json($request,'200');
     }
 
     /**
@@ -97,6 +89,5 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        /*return ['message'=>'Deleted success'];*/
     }
 }

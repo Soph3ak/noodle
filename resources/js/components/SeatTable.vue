@@ -16,7 +16,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="seatTable in seatTables.data" :key="seatTable.id" v-show="seatTable.id !== 7">
+                            <tr v-for="seatTable in seatTables.data" :key="seatTable.id">
                                 <td>{{ seatTable.id }}</td>
                                 <td>{{ seatTable.name }}</td>
                                 <td v-if="seatTable.available === 0">កក់</td>
@@ -106,7 +106,7 @@ export default {
             form: new Form({
                 id:"",
                 name: "",
-                available: "0",
+                available: "1",
                 description: "",
                 _token: this.token.value
             })
@@ -136,7 +136,7 @@ export default {
         },
 
         getResults(page = 1) {
-            axios.get('getSeatTable?page=' + page)
+            axios.get('api/getSeatTable?page=' + page)
                 .then(response => {
                     this.seatTables = response.data;
                     this.currentPage = page;
@@ -144,10 +144,10 @@ export default {
         },
 
         saveSeatTable(name){
-            this.form.post('seatTable')
+            this.form.post('api/seat')
             .then(response => {
                 this.getResults(this.currentPage)
-                this.alertSuccess('Table',name,'saved successfully');
+                this.alertSuccess(name,'saved successfully');
                 this.hideModal();
             })
                 .catch(err => console.log(err))
@@ -155,10 +155,10 @@ export default {
         },
 
         updateSeatTable(name,id){
-            this.form.put('seatTable/'+id)
+             this.form.put('api/seat/'+id)
                 .then(response => {
                     this.getResults(this.currentPage)
-                    this.alertSuccess('Table',name,'updated successfully');
+                    this.alertSuccess(name,'updated successfully');
                     this.hideModal();
                 })
                 .catch(err => console.log(err))
@@ -177,7 +177,7 @@ export default {
                 confirmButtonText: 'បាទ/ចាស៎'/*Yes, delete it!*/
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.form.delete('seatTable/'+id)
+                    this.form.delete('api/seat/'+id)
                         .then(response => {
                             this.getResults(this.currentPage);
                             Swal.fire(
@@ -192,10 +192,10 @@ export default {
             })
         },
 
-        alertSuccess(str1,name,str2){
+        alertSuccess(name,str){
             Toast.fire({
                 icon: 'success',
-                title: str1 +' '+ name +' '+ str2
+                title: name +' '+ str
             })
 
         },

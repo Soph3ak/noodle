@@ -143,7 +143,7 @@ export default {
         },
 
         getResults(page = 1) {
-            axios.get('getCustomer?page=' + page)
+            axios.get('api/getCustomer?page=' + page)
                 .then(response => {
                     this.customers = response.data;
                     this.currentPage = page;
@@ -151,7 +151,7 @@ export default {
         },
 
         saveCustomer(name){
-            this.form.post('customer')
+            this.form.post('api/customer')
             .then(response => {
                 this.getResults(this.currentPage)
                 this.alertSuccess('Customer',name,'saved successfully');
@@ -162,7 +162,7 @@ export default {
         },
 
         updateCustomer(name,id){
-            this.form.put('customer/'+id)
+            this.form.put('api/customer/'+id)
                 .then(response => {
                     this.getResults(this.currentPage)
                     this.alertSuccess('Customer',name,'updated successfully');
@@ -184,7 +184,7 @@ export default {
                 confirmButtonText: 'បាទ/ចាស៎'/*Yes, delete it!*/
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.form.delete('customer/'+id)
+                    this.form.delete('api/customer/'+id)
                         .then(response => {
                             this.getResults(this.currentPage);
                             Swal.fire(

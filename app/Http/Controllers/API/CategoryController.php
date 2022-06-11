@@ -84,8 +84,6 @@ class CategoryController extends Controller
     {
         $this->validator($request->all())->validate();
         $category->update($request->all());
-        return ['message'=>"Updated success"];
-
     }
 
     /**

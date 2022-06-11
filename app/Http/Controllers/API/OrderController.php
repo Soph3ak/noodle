@@ -42,15 +42,7 @@ class OrderController extends Controller
                     ->title($ord['name_kh'])
                     ->pricePerUnit($ord['price'])
                     ->quantity($ord['qty']);
-            /*$nest = array();
-            $nest['order_id'] = $order->id;
-            $nest['product_id'] = $ord['id'];
-            $nest['quantity'] = $ord['qty'];
-            $nest['unit_price'] = $ord['price'];
-            $nest['amount'] = $ord['amount'];
-            $nest['sub_discount'] = $ord['discount'];
 
-            $data[] = $nest;*/
             $items[]=$item;
 
         }
