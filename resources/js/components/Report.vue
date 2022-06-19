@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-2">
+    <div class="mt-2 report">
         <div class="card search-block py-2">
             <div class="row">
                 <div class="col-6">
@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <label class="col-form-label">Table</label>
                         <select v-model="table" @change="handleTableChange($event)" class="form-control">
-                            <option value="0">
+                            <option value="0" class="py-4">
                                 All
                             </option>
                             <option v-for="t in tables" :key="t.id" :value="t.id">
@@ -78,7 +78,7 @@
                             </pagination>
                         </div>
                     </div>
-                    <div class="card-body table-responsive p-0 vld-parent" style="">
+                    <div class="card-body table-responsive p-0 vld-parent" style="max-height: 615px;">
                         <div class="">
                             <loading :active.sync="isLoading"
                                      :can-cancel="true"
@@ -89,15 +89,31 @@
                                      :loader="loader"
                                      :background-color="bgColor"></loading>
                         </div>
-                        <table class="table table-head-fixed text-nowrap sell-reports">
+                        <table class="table table-head-fixed table-striped text-nowrap sell-reports">
                             <thead>
-                            <tr>
+                            <tr class="w-100">
                                 <th>Invoice #</th>
                                 <th>Date</th>
                                 <th>Customer</th>
                                 <th>Location</th>
                                 <th>Seller</th>
-                                <th>Table</th>
+                                <th class="position-static">
+                                    <div class="position-relative okk">Table<a href="#" class="ml-3" id="table_filter"><i class="ion-ios-settings-strong"></i></a>
+                                        <div class="filter table-filter px-2 py-4">
+                                            <span class="px-2 pointer"><i class="ion-android-close mr-2"></i>Close</span>
+                                            <hr>
+                                            <p class="sort p-2 pointer">Sort A -> Z</p>
+                                            <p class="sort p-2 pointer">Sort Z -> A</p>
+                                            <hr>
+                                            <div class="form-group px-2">
+                                                <div class="custom-control custom-checkbox py-2" v-for="t in tables" :key="t.id">
+                                                    <input class="custom-control-input" type="checkbox" v-model="selected.tables" :id="t.id" :value="t"/>
+                                                    <label :for="t.id" class="custom-control-label pointer">{{t.name}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
                                 <th>Payment</th>
                                 <th>Subtotal</th>
                                 <th>Discount</th>
@@ -150,6 +166,7 @@
                     <!-- /.card-footer -->
                 </div>
                 <!-- /.card -->
+
             </div>
         </div>
         <!-- /.row -->
@@ -189,8 +206,11 @@ export default {
             height: 70,
             width: 70,
 
-            tables:{},
+            tables:[],
             table:0, //To default select All Tables
+            selected: {
+                tables: []
+            },
 
         }
     },
@@ -319,6 +339,8 @@ export default {
             else return converted = '0.00'
 
         },
+
+
     },
     computed:{
 
@@ -366,6 +388,9 @@ export default {
             cb(start, end);
         });
         /*=========End of Date Time Picker=========*/
+
+
+
     },
 }
 </script>
