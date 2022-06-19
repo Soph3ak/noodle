@@ -22,13 +22,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="068b8d69-0347-4e1a-893c-998d63f273f8" name="Default Changelist" comment="?">
-      <change afterPath="$PROJECT_DIR$/public/icons/more-vertical-alt.svg" afterDir="false" />
+    <list default="true" id="068b8d69-0347-4e1a-893c-998d63f273f8" name="Default Changelist" comment="Add Table filter">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Report.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Report.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -321,7 +318,7 @@
       <workItem from="1655342406737" duration="5149000" />
       <workItem from="1655429112478" duration="16592000" />
       <workItem from="1655517975105" duration="18409000" />
-      <workItem from="1655599993962" duration="21409000" />
+      <workItem from="1655599993962" duration="22560000" />
     </task>
     <task id="LOCAL-00001" summary="12-May-2022">
       <created>1652312510308</created>
@@ -358,7 +355,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654982446332</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add Table filter">
+      <created>1655637967684</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1655637967684</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -392,7 +396,8 @@
     <MESSAGE value="Added global helper.php https://dev.to/kingsconsult/how-to-create-laravel-8-helpers-function-global-function-d8n" />
     <MESSAGE value="Report.vue: doing table filter" />
     <MESSAGE value="?" />
-    <option name="LAST_COMMIT_MESSAGE" value="?" />
+    <MESSAGE value="Add Table filter" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Table filter" />
   </component>
   <component name="WindowStateProjectService">
     <state x="581" y="189" width="1092" height="766" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1653925004169">
@@ -443,10 +448,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="807" y="438" key="VCS.ChangelistChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1654009171056" />
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1654982447420">
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1655637970495">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1654982447420" />
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1655637970495" />
     <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1649778988449">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>

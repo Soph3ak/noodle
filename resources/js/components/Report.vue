@@ -78,7 +78,7 @@
                             </pagination>
                         </div>
                     </div>
-                    <div class="card-body table-responsive p-0 vld-parent" style="max-height: 615px;">
+                    <div class="card-body table-responsive p-0 vld-parent" style="max-height: 82vh;">
                         <div class="">
                             <loading :active.sync="isLoading"
                                      :can-cancel="true"
