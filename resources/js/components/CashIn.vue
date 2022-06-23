@@ -239,15 +239,12 @@ export default {
 
         calculate(){
             if(parseInt(this.KHR) < parseInt(this.toTalToPay)){
-                console.log('up running')
                 this.remain = this.KHR - this.toTalToPay
                 this.change = 0
             }
 
             else {
-                console.log('down running!!!!' +this.change+' '+parseInt(this.KHR)+' '+parseInt(this.toTalToPay))
                 this.change = parseInt(this.KHR) - parseInt(this.toTalToPay)
-                console.log('down running' + parseInt(this.change))
                 this.remain = 0
             }
         },
@@ -257,13 +254,11 @@ export default {
         },
 
         alertSuccess(){
-            console.log('Change: '+this.change)
             Swal.fire(
                 'លុយអាប់: ' + this.convertToCurrency(this.change) +'៛',
                 'ទូរទាត់បានដោយជោគជ័យ!<br>សូមអរគុណ!',
                 'success'
             )
-            console.log('Change: '+this.change)
             this.reset()
             this.clear()
         },
@@ -291,9 +286,7 @@ export default {
 
     watch:{
         receivedMoney(){
-            console.log('Here is watch runing - receivedMoney: '+this.receivedMoney)
             this.moneyExchange()
-            console.log('Here is watch runing'+' - receivedMoney: '+this.receivedMoney+' KHR: '+this.KHR+' after exchange')
             this.calculate()
 
             let selector = $(".received-money")

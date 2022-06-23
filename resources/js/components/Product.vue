@@ -357,9 +357,15 @@ export default {
 
     mounted() {
         this.getResults();
-
         var vm = this; /*TO CALL VUE methods INSIDE JQUERY*/
-        $('#modal-product').on('hidden.bs.modal', function () {
+        let modal_pro = $('#modal-product');
+
+        modal_pro.modal({
+            backdrop: 'static',
+            show: false,
+        })
+
+        modal_pro.on('hidden.bs.modal', function () {
             vm.removeFileIfNotSave()
             vm.resetForm()
         })

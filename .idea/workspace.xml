@@ -23,9 +23,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="068b8d69-0347-4e1a-893c-998d63f273f8" name="Default Changelist" comment="Add Table filter">
+      <change afterPath="$PROJECT_DIR$/public/css/gg-icon.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/TableController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/TableController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/CashIn.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CashIn.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Customer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Customer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Product.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Product.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Report.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Report.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/SeatTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/SeatTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Sell.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Sell.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Shop.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Shop.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/report.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/report.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +51,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -195,6 +207,7 @@
     <property name="js.buildTools.grunt.grunt-cli.package" value="" />
     <property name="js.buildTools.gulp.gulp_package_dir" value="" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -235,8 +248,8 @@
     <option name="myCommands">
       <command value="?" />
       <command value="npm" />
-      <command value="php artisan serve" />
       <command value="npm run watch" />
+      <command value="php artisan serve" />
     </option>
   </component>
   <component name="RunManager">
@@ -318,7 +331,11 @@
       <workItem from="1655342406737" duration="5149000" />
       <workItem from="1655429112478" duration="16592000" />
       <workItem from="1655517975105" duration="18409000" />
-      <workItem from="1655599993962" duration="22560000" />
+      <workItem from="1655599993962" duration="22590000" />
+      <workItem from="1655698484269" duration="13147000" />
+      <workItem from="1655772767196" duration="5777000" />
+      <workItem from="1655862305670" duration="8723000" />
+      <workItem from="1655947307723" duration="18248000" />
     </task>
     <task id="LOCAL-00001" summary="12-May-2022">
       <created>1652312510308</created>
@@ -362,7 +379,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655637967684</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Add Table filter">
+      <created>1655639108414</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1655639108414</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -412,26 +436,30 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="690" y="280" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1650877448701" />
+    <state x="92" y="92" width="1736" height="866" key="DiffContextDialog" timestamp="1655774734264">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="92" y="92" width="1736" height="866" key="DiffContextDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1655774734264" />
     <state x="740" y="280" key="FileChooserDialogImpl" timestamp="1655628733942">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="740" y="280" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1655628733942" />
-    <state width="1877" height="285" key="GridCell.Tab.0.bottom" timestamp="1655600125507">
+    <state width="1877" height="285" key="GridCell.Tab.0.bottom" timestamp="1655949231478">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1655600125507" />
-    <state width="1877" height="285" key="GridCell.Tab.0.center" timestamp="1655600125507">
+    <state width="1877" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1655949231478" />
+    <state width="1877" height="285" key="GridCell.Tab.0.center" timestamp="1655949231478">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="285" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1655600125507" />
-    <state width="1877" height="285" key="GridCell.Tab.0.left" timestamp="1655600125507">
+    <state width="1877" height="285" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1655949231478" />
+    <state width="1877" height="285" key="GridCell.Tab.0.left" timestamp="1655949231477">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="285" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1655600125507" />
-    <state width="1877" height="285" key="GridCell.Tab.0.right" timestamp="1655600125507">
+    <state width="1877" height="285" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1655949231477" />
+    <state width="1877" height="285" key="GridCell.Tab.0.right" timestamp="1655949231478">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="285" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1655600125507" />
+    <state width="1877" height="285" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1655949231478" />
     <state x="794" y="448" key="NewPhpFileDialog" timestamp="1652627135307">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -448,14 +476,14 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="807" y="438" key="VCS.ChangelistChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1654009171056" />
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1655637970495">
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1655639109455">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1655637970495" />
-    <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1649778988449">
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1655639109455" />
+    <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1655639101034">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1050@0.0.1920.1050" timestamp="1649778988449" />
+    <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1050@0.0.1920.1050" timestamp="1655639101034" />
     <state x="667" y="124" width="585" height="801" key="find.popup" timestamp="1650608254858">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -464,14 +492,14 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="760" y="426" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1652379065679" />
-    <state x="614" y="243" width="672" height="677" key="run.anything.popup" timestamp="1655600118852">
+    <state x="614" y="243" width="672" height="677" key="run.anything.popup" timestamp="1655947350521">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="614" y="243" width="672" height="677" key="run.anything.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1655600118852" />
-    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1655364422076">
+    <state x="614" y="243" width="672" height="677" key="run.anything.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1655947350521" />
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1655979584486">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1655364422076" />
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1655979584486" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

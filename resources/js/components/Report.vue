@@ -78,7 +78,7 @@
                             </pagination>
                         </div>
                     </div>
-                    <div class="card-body table-responsive p-0 vld-parent" style="max-height: 82vh;">
+                    <div class="card-body table-responsive p-0 vld-parent" style="max-height: 83.1vh; min-height: 64vh;">
                         <div class="">
                             <loading :active.sync="isLoading"
                                      :can-cancel="true"
@@ -97,18 +97,29 @@
                                 <th>Customer</th>
                                 <th>Location</th>
                                 <th>Seller</th>
-                                <th class="position-static">
-                                    <div class="position-relative okk">Table<a href="#" class="ml-3" id="table_filter"><i class="ion-ios-settings-strong"></i></a>
-                                        <div class="filter table-filter px-2 py-4">
-                                            <span class="px-2 pointer"><i class="ion-android-close mr-2"></i>Close</span>
-                                            <hr>
-                                            <p class="sort p-2 pointer">Sort A -> Z</p>
-                                            <p class="sort p-2 pointer">Sort Z -> A</p>
-                                            <hr>
-                                            <div class="form-group px-2">
-                                                <div class="custom-control custom-checkbox py-2" v-for="t in tables" :key="t.id">
-                                                    <input class="custom-control-input" type="checkbox" v-model="selected.tables" :id="t.id" :value="t"/>
-                                                    <label :for="t.id" class="custom-control-label pointer">{{t.name}}</label>
+                                <th>
+                                    <div class="d-flex align-items-center">
+                                        Table
+                                        <div class="ml-2 position-relative pointer d-inline-block" id="table_filter">
+                                            <span class="gg">
+                                                <span class="text-gray"><i class="gg-swap-vertical"></i></span>
+                                                <span class="text-gray" @click="toggleFilter"><i class="gg-sort-az"></i></span>
+                                            </span>
+                                            <div class="filter table-filter px-2 py-4 d-none">
+                                                <!--<span class="px-2 pointer"><i class="ion-android-close mr-2"></i>Close</span>-->
+                                                <span class="px-2 pointer text-primary" @click="selectAll"><i class="ion-android-done-all mr-2"></i>Select all</span>
+                                                <span class="px-2 pointer text-danger" @click="clearSelect"><i class="ion-android-close mr-2"></i>Clear</span>
+                                                <hr>
+                                                <div class="form-group px-2">
+                                                    <div class="custom-control custom-checkbox py-2" v-for="t in tables" :key="t.id">
+                                                        <input class="custom-control-input" type="checkbox" v-model="selected.tables" :id="t.id" :value="t"/>
+                                                        <label :for="t.id" class="custom-control-label pointer">{{t.name}}</label>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="filter_footer d-flex justify-content-end">
+                                                    <button @click="toggleFilter" type="button" id="close-filter" class="btn btn-sm btn-default mr-2">Cancel</button>
+                                                    <button type="button" class="btn btn-sm btn-success">Apply</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -142,7 +153,7 @@
                                 <td>{{ convertToCurrency(report.discount) }}៛</td>
                                 <td>{{ convertToCurrency(report.total) }}៛</td>
                             </tr>
-                            <tr v-show="reportCount === 0">
+                            <tr v-show="reportCount === 0" class="bg-white">
                                 <td class="" colspan="10">
                                     <div class="sc-5kpu8c-5 dcdHhK">
                                         <div class="sc-5kpu8c-6 fbNBuP mb-3">
@@ -160,9 +171,7 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
-                    <div class="card-footer bg-white">
-
-                    </div>
+                    <!--<div class="card-footer bg-white"></div>-->
                     <!-- /.card-footer -->
                 </div>
                 <!-- /.card -->
@@ -207,7 +216,7 @@ export default {
             width: 70,
 
             tables:[],
-            table:0, //To default select All Tables
+            table:0,
             selected: {
                 tables: []
             },
@@ -283,11 +292,13 @@ export default {
             }
 
         },
+
         handlePageSizeChange(event) {
             this.pageSize = event.target.value;
             this.page = 1;
             this.retrieveReports();
         },
+
         handlePaymentChange(event){
             this.paymentType = event.target.value;
             this.page = 1;
@@ -307,7 +318,6 @@ export default {
             return '/files/' + img
         },
 
-
         alertSuccess(str1,name,str2){
             Toast.fire({
                 icon: 'success',
@@ -319,6 +329,7 @@ export default {
             axios.get("api/loadSeats")
                 .then((response) => {
                     this.tables = response.data;
+                    this.selected.tables = this.tables;
                 })
                 .catch((e) => {
                     console.log(e);
@@ -340,6 +351,18 @@ export default {
 
         },
 
+        toggleFilter(){
+            let filter = $(".table-filter");
+            filter.toggleClass('d-none');
+        },
+
+        clearSelect(){
+            this.selected.tables = [];
+        },
+
+        selectAll(){
+            this.selected.tables = this.tables;
+        },
 
     },
     computed:{
@@ -389,8 +412,6 @@ export default {
         });
         /*=========End of Date Time Picker=========*/
 
-
-
     },
 }
 </script>
@@ -398,4 +419,5 @@ export default {
 .card-footer{
     padding-bottom: 0;
 }
+
 </style>

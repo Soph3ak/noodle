@@ -296,6 +296,14 @@ table.sell-reports .badge{
     box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
     user-select: none;
     display: block;
+    animation-name: filter-box;
+    animation-duration: 200ms;
+
+}
+
+@keyframes filter-box {
+    0% { top:50px; right: 20px; opacity: 0}
+    100% {top:30px; right: 0; opacity: 1}
 }
 
 .report label{
@@ -319,6 +327,7 @@ p.sort:hover{
     max-height: 500px;
     overflow: auto;
 }
+
 
 
 

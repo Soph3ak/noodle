@@ -627,6 +627,11 @@ import Seat from "./Seat";
             this.loadUser()
             this.loadCategoriesSell()
             this.loadAllProducts()
+
+            $('#modal-cashIn').modal({
+                backdrop: 'static',
+                show: false,
+            })
         }
     }
 </script>

@@ -208,6 +208,13 @@ export default {
     mounted() {
         this.getResults();
         const vm = this
+
+        let modal_seatTable = $("#modal-seatTable");
+        modal_seatTable.modal({
+            backdrop: 'static',
+            show: false,
+        })
+
         $("#new-table").on('click',function (){
             vm.newModal()
         })

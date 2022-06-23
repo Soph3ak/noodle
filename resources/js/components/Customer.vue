@@ -215,7 +215,15 @@ export default {
     mounted() {
         this.getResults();
         const vm = this
-        $("#new-customer").on('click',function (){
+
+        let new_cus =  $('#new-customer');
+        let cus_modal = $('#modal-customer');
+        cus_modal.modal({
+            backdrop: 'static',
+            show: false,
+        })
+
+        new_cus.on('click',function (){
             vm.newModal()
         })
     },

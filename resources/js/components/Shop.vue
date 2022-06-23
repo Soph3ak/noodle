@@ -9,7 +9,9 @@
                 <h4>{{email}}</h4><br/>
 
                 <p class="label text-gray">លេខទូរសព្ទ័</p>
-                <h4 v-for="(n,index) in num" :key="n.id">{{num[index]}}</h4><br>
+                <div class="test-anime">
+                    <h4 v-for="(n,index) in num" :key="n.id">{{num[index]}}</h4><br>
+                </div>
 
                 <p class="label text-gray">អាសយដ្ធាន</p>
                 <h4>{{address}}</h4><br/><br/>
@@ -25,7 +27,7 @@
         <!-- modal SeatTable -->
         <div class="modal fade" id="modal-shop" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog">
-                    <form @submit.prevent="editMode ? updateShop(form.id):saveShop() ">
+                    <form @submit.prevent="editMode ? updateShop(form.id):saveShop()">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title" v-if="editMode"><span><i class="fas fa-store mr-2"></i></span>កែប្រែព័ត៌មានអំពីហាង</h4>
@@ -47,7 +49,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">លេខទូរសព្ទ័</label>
-                                    <span class="badge badge-primary ml-2 p-1 add__more" @click="addMoreNumber">ADD MORE NUMBER</span>
+                                    <!--<span class="badge badge-primary ml-2 p-2 add__more" @click="addMoreNumber">ADD NEW NUMBER</span>-->
                                     <div v-for="(phone,index) in form_phone.f_phones" class="form-group">
                                         <div class="input-group input-group">
                                             <input type="text" class="form-control" name="phone" placeholder="លេខទូរសព្ទ័" v-model="form_phone.f_phones[index].phone_number" :class="{ 'is-invalid': form_phone.errors.has('phone_number') }">
@@ -57,6 +59,7 @@
                                             <has-error :form="form_phone" field="phone_number"></has-error>
                                         </div>
                                     </div>
+                                    <button type="button" class="btn btn-success btn-block btn-sm add__more" @click="addMoreNumber"><span class="d-flex justify-content-center align-items-center"><i class="gg-add mr-2"></i><p class="mb-0">Add new number</p></span></button>
                                     <!--<div v-for="(phone,index) in form_phone.f_phones" :key="phone.id" class="form-group">
                                         <input type="text" class="form-control" id="phone" name="phone" placeholder="លេខទូរសព្ទ័" v-model="form_phone.f_phones[index].phone_number" :class="{ 'is-invalid': form.errors.has('phone_number') }">
                                         <has-error :form="form_phone" field="phone_number"></has-error>
@@ -180,17 +183,6 @@ export default {
                 });
         },
 
-        /*saveShop(){
-            this.form.post('shop')
-            .then(response => {
-                this.getShop()
-                this.alertSuccess('Saved successfully');
-                this.hideModal();
-            })
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)
-        },*/
-
         updateShop(id){
             this.form.put('shop/'+id)
                 .then(response => {
@@ -216,7 +208,6 @@ export default {
         },
 
         updatePhone(){
-
             this.form_phone.put('phones')
                 .then(response => {
                     if(this.isHasNum2Delete === true){
@@ -230,33 +221,6 @@ export default {
                 .finally(() => this.loading = false)
 
         },
-
-        /*deleteShop(name,id){
-            Swal.fire({
-                title: 'Are you sure?',
-                html: "តើអ្នកចង់លុបតុឈ្មោះ <strong>" + name +" </strong>មែនទេ?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText:'បោះបង់',
-                confirmButtonText: 'បាទ/ចាស៎'/!*Yes, delete it!*!/
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.form.delete('shop/'+id)
-                        .then(response => {
-                            this.getShop();
-                            Swal.fire(
-                                'Deleted!',
-                                "តុឈ្មោះ <strong>" + name  +" </strong>ត្រូវបានលុបដោយជោគជ័យ!",
-                                'success'
-                            )
-                        })
-                        .catch(err => console.log(err))
-                        .finally(() => this.loading = false)
-                }
-            })
-        },*/
 
         addMoreNumber(){
             this.form_phone.f_phones.push({"id":"","phone_number":"","shop_id":1,"created_at":"","updated_at":""})
@@ -293,13 +257,10 @@ export default {
 
     mounted() {
         this.getShop();
-       /* $("#new-shop").on('click',function (){
-            vm.newModal()
-        })*/
-
-        /*$('#modal-shop').modal({
-            backdrop: 'static'
-        })*/
+        $('#modal-shop').modal({
+            backdrop: 'static',
+            show: false,
+        })
     },
 }
 </script>
@@ -310,5 +271,36 @@ export default {
 .add__more{
     cursor: pointer;
 }
+.gg-add{
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    width: 22px;
+    height: 22px;
+    border: 2px solid;
+    transform: scale(var(--ggs,1));
+    border-radius: 22px
+}
 
+.gg-add::after,
+.gg-add::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 5px;
+    top: 8px;
+    left: 4px
+}
+
+.gg-add::after {
+    width: 2px;
+    height: 10px;
+    top: 4px;
+    left: 8px
+}
 </style>
+

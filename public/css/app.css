@@ -308,6 +308,38 @@ select.show-per-page {
       -ms-user-select: none;
           user-select: none;
   display: block;
+  -webkit-animation-name: filter-box;
+          animation-name: filter-box;
+  -webkit-animation-duration: 200ms;
+          animation-duration: 200ms;
+}
+
+@-webkit-keyframes filter-box {
+  0% {
+    top: 50px;
+    right: 20px;
+    opacity: 0;
+  }
+
+  100% {
+    top: 30px;
+    right: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes filter-box {
+  0% {
+    top: 50px;
+    right: 20px;
+    opacity: 0;
+  }
+
+  100% {
+    top: 30px;
+    right: 0;
+    opacity: 1;
+  }
 }
 
 .report label {

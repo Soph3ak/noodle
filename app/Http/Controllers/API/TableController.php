@@ -32,7 +32,7 @@ class TableController extends Controller
 
     public function loadSeats()
     {
-        return $seats = Table::all();
+        return $seats = Table::select('id', 'name')->get();
     }
 
     public function getSeatTable()
