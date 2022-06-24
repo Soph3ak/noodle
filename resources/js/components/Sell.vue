@@ -426,11 +426,6 @@ import Seat from "./Seat";
             },
 
             saveOrder(){
-                /*if(this.paymentID===1){
-                    this.hideModal()
-                    this.$refs.cashIn.alertSuccess()
-                    this.closeSeat()
-                }*/
                 this.form = new Form({
                     id:"",
                     user_id: this.userID,

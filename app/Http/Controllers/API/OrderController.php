@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -59,10 +60,8 @@ class OrderController extends Controller
 
     public function saveOrder(Request $request){
         /*return $request;*/
-
         $this->validator($request->all())->validate();
         $order = Order::create($request->all());
-
         $data = array();
         foreach ($request->order as $ord){
             $nest = array();

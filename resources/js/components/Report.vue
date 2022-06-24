@@ -103,7 +103,7 @@
                                         <div class="ml-2 position-relative pointer d-inline-block" id="table_filter">
                                             <span class="gg">
                                                 <span class="text-gray"><i class="gg-swap-vertical"></i></span>
-                                                <span class="text-gray" @click="toggleFilter"><i class="gg-sort-az"></i></span>
+                                                <span class="text-gray" @click="toggleFilter(); previousSelect()"><i class="gg-sort-az"></i></span>
                                             </span>
                                             <div class="filter table-filter px-2 py-4 d-none">
                                                 <!--<span class="px-2 pointer"><i class="ion-android-close mr-2"></i>Close</span>-->
@@ -118,8 +118,8 @@
                                                 </div>
                                                 <hr>
                                                 <div class="filter_footer d-flex justify-content-end">
-                                                    <button @click="toggleFilter" type="button" id="close-filter" class="btn btn-sm btn-default mr-2">Cancel</button>
-                                                    <button type="button" class="btn btn-sm btn-success">Apply</button>
+                                                    <button @click="toggleFilter(); previousSelect()" type="button" id="close-filter" class="btn btn-sm btn-default mr-2">Cancel</button>
+                                                    <button @click="applyFilter(); saveSelect()" type="button" class="btn btn-sm btn-success">Apply</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -218,8 +218,12 @@ export default {
             tables:[],
             table:0,
             selected: {
-                tables: []
+                tables: [],
+                tempTables: []
             },
+            tblID:{
+                tablesID: ['all']
+            }
 
         }
     },
@@ -228,10 +232,10 @@ export default {
         /*=========Axios with filter: https://www.bezkoder.com/vue-pagination-axios/========*/
 
         getAll(params) {
-            return axios.get("/getReport", { params });
+            return axios.get("/getReport", {params});
         },
 
-        getRequestParams(searchTitle, page, pageSize, start, end, paymentType, table) {
+        getRequestParams(searchTitle, page, pageSize, start, end, paymentType, tables) {
             let params = {};
             if (searchTitle) {
                 params["title"] = searchTitle;
@@ -254,10 +258,12 @@ export default {
             if (paymentType) {
                 params["paymentType"] = paymentType;
             }
-            if (table) {
-                params["table"] = table;
+            if (tables) {
+                params["tables"] = tables;
             }
+
             return params;
+
         },
 
         retrieveReports() {
@@ -268,7 +274,7 @@ export default {
                 this.start,
                 this.end,
                 this.paymentType,
-                this.table,
+                this.tblID.tablesID,
             );
             this.isLoading = true;
             setTimeout(() => {
@@ -330,6 +336,7 @@ export default {
                 .then((response) => {
                     this.tables = response.data;
                     this.selected.tables = this.tables;
+                    this.selected.tempTables = this.tables;
                 })
                 .catch((e) => {
                     console.log(e);
@@ -358,15 +365,46 @@ export default {
 
         clearSelect(){
             this.selected.tables = [];
+            this.tblID.tablesID = [];
         },
 
         selectAll(){
             this.selected.tables = this.tables;
         },
 
+        previousSelect(){
+            this.selected.tables = this.selected.tempTables;
+        },
+
+        saveSelect(){
+            this.selected.tempTables = this.selected.tables;
+        },
+
+        getSelectedTablesID(){
+            this.tblID.tablesID=[];
+            this.selected.tables.forEach((value, index) => {
+                this.tblID.tablesID.push(value.id);
+            });
+        },
+
+        applyFilter(){
+            this.getSelectedTablesID()
+            this.retrieveReports()
+            this.toggleFilter()
+        },
+
     },
     computed:{
 
+    },
+
+    watch:{
+        /*selected: {
+            handler: function (val, oldVal) {
+                this.getSelectedTablesID()
+            },
+            deep: true
+        },*/
     },
 
     mounted() {
