@@ -102,30 +102,57 @@
                                         Table
                                         <div class="ml-2 position-relative pointer d-inline-block" id="table_filter">
                                             <span class="gg">
-                                                <span class="text-gray"><i class="gg-swap-vertical"></i></span>
-                                                <span class="text-gray" @click="toggleFilter(); previousSelect()"><i class="gg-sort-az"></i></span>
+                                                <span class="text-gray" @click="sort('table')"><i class="gg-swap-vertical"></i></span>
+                                                <span class="text-gray" @click="toggleFilter('table-filter'); previousSelect('table-filter')"><i class="gg-sort-az"></i></span>
                                             </span>
                                             <div class="filter table-filter px-2 py-4 d-none">
                                                 <!--<span class="px-2 pointer"><i class="ion-android-close mr-2"></i>Close</span>-->
-                                                <span class="px-2 pointer text-primary" @click="selectAll"><i class="ion-android-done-all mr-2"></i>Select all</span>
-                                                <span class="px-2 pointer text-danger" @click="clearSelect"><i class="ion-android-close mr-2"></i>Clear</span>
+                                                <span class="px-2 pointer text-primary" @click="selectAll('table-filter')"><i class="ion-android-done-all mr-2"></i>Select all</span>
+                                                <span class="px-2 pointer text-danger" @click="clearSelect('table-filter')"><i class="ion-android-close mr-2"></i>Clear</span>
                                                 <hr>
                                                 <div class="form-group px-2">
                                                     <div class="custom-control custom-checkbox py-2" v-for="t in tables" :key="t.id">
-                                                        <input class="custom-control-input" type="checkbox" v-model="selected.tables" :id="t.id" :value="t"/>
-                                                        <label :for="t.id" class="custom-control-label pointer">{{t.name}}</label>
+                                                        <input class="custom-control-input" type="checkbox" v-model="selected.tables" :id="'table' + t.id" :value="t"/>
+                                                        <label :for="'table' + t.id" class="custom-control-label pointer">{{t.name}}</label>
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="filter_footer d-flex justify-content-end">
-                                                    <button @click="toggleFilter(); previousSelect()" type="button" id="close-filter" class="btn btn-sm btn-default mr-2">Cancel</button>
-                                                    <button @click="applyFilter(); saveSelect()" type="button" class="btn btn-sm btn-success">Apply</button>
+                                                    <button @click="toggleFilter('table-filter'); previousSelect('table-filter')" type="button" id="close-filter" class="btn btn-sm btn-default mr-2">Cancel</button>
+                                                    <button @click="applyFilter('table-filter'); saveSelect('table-filter')" type="button" class="btn btn-sm btn-success">Apply</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </th>
-                                <th>Payment</th>
+                                <th>
+                                    <div class="d-flex align-items-center">
+                                        Payment
+                                        <div class="ml-2 position-relative pointer d-inline-block" id="payment_filter">
+                                            <span class="gg">
+                                                <span class="text-gray" @click="sort('table')"><i class="gg-swap-vertical"></i></span>
+                                                <span class="text-gray" @click="toggleFilter('payment-filter'); previousSelect('payment-filter')"><i class="gg-sort-az"></i></span>
+                                            </span>
+                                            <div class="filter payment-filter px-2 py-4 d-none">
+                                                <!--<span class="px-2 pointer"><i class="ion-android-close mr-2"></i>Close</span>-->
+                                                <span class="px-2 pointer text-primary" @click="selectAll('payment-filter')"><i class="ion-android-done-all mr-2"></i>Select all</span>
+                                                <span class="px-2 pointer text-danger" @click="clearSelect('payment-filter')"><i class="ion-android-close mr-2"></i>Clear</span>
+                                                <hr>
+                                                <div class="form-group px-2">
+                                                    <div class="custom-control custom-checkbox py-2" v-for="p in paymentTypes" :key="p.id">
+                                                        <input class="custom-control-input" type="checkbox" v-model="selected.paymentTypes" :id="'payment' + p.id" :value="p"/>
+                                                        <label :for="'payment' + p.id" class="custom-control-label pointer">{{p.payment}}</label>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="filter_footer d-flex justify-content-end">
+                                                    <button @click="toggleFilter('payment-filter'); previousSelect('payment-filter')" type="button" class="btn btn-sm btn-default mr-2">Cancel</button>
+                                                    <button @click="applyFilter('payment-filter'); saveSelect('payment-filter')" type="button" class="btn btn-sm btn-success">Apply</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
                                 <th>Subtotal</th>
                                 <th>Discount</th>
                                 <th>Total</th>
@@ -219,10 +246,18 @@ export default {
             table:0,
             selected: {
                 tables: [],
-                tempTables: []
+                tempTables: [],
+
+                paymentTypes: [],
+                tempPaymentTypes: [],
             },
             tblID:{
                 tablesID: ['all']
+            },
+
+            paymentTypes:[],
+            paymentID:{
+                paymentsID: ['all']
             }
 
         }
@@ -235,7 +270,7 @@ export default {
             return axios.get("/getReport", {params});
         },
 
-        getRequestParams(searchTitle, page, pageSize, start, end, paymentType, tables) {
+        getRequestParams(searchTitle, page, pageSize, start, end, paymentTypes, tables) {
             let params = {};
             if (searchTitle) {
                 params["title"] = searchTitle;
@@ -255,8 +290,8 @@ export default {
             if (end) {
                 params["end"] = end;
             }
-            if (paymentType) {
-                params["paymentType"] = paymentType;
+            if (paymentTypes) {
+                params["paymentTypes"] = paymentTypes;
             }
             if (tables) {
                 params["tables"] = tables;
@@ -273,7 +308,7 @@ export default {
                 this.pageSize,
                 this.start,
                 this.end,
-                this.paymentType,
+                this.paymentID.paymentsID,
                 this.tblID.tablesID,
             );
             this.isLoading = true;
@@ -358,39 +393,139 @@ export default {
 
         },
 
-        toggleFilter(){
-            let filter = $(".table-filter");
-            filter.toggleClass('d-none');
+        toggleFilter(filter){
+            let filterClass = '.'+filter;
+            let fil = $(filterClass);
+            fil.toggleClass('d-none');
+
+
+
+
+            /*let otherFilters = $('.filter');*/
+
+           /* otherFilters.toggleClass('d-none');*/
+
         },
 
-        clearSelect(){
-            this.selected.tables = [];
-            this.tblID.tablesID = [];
+        clearSelect(filter){
+            switch (filter) {
+                case 'table-filter':
+                    this.selected.tables = [];
+                    break;
+                case 'payment-filter':
+                    this.selected.paymentTypes = [];
+                    break;
+                case  'seller-filter':
+
+                    break;
+                default:
+
+            }
+
         },
 
-        selectAll(){
-            this.selected.tables = this.tables;
+        selectAll(filter){
+            switch (filter) {
+                case 'table-filter':
+                    this.selected.tables = this.tables;
+                    break;
+                case 'payment-filter':
+                    this.selected.paymentTypes = this.paymentTypes;
+                    break;
+                case  'seller-filter':
+
+                    break;
+                default:
+
+            }
+
         },
 
-        previousSelect(){
-            this.selected.tables = this.selected.tempTables;
+        previousSelect(filter){
+            switch (filter) {
+                case 'table-filter':
+                    this.selected.tables = this.selected.tempTables;
+                    break;
+                case 'payment-filter':
+                    this.selected.paymentTypes = this.selected.tempPaymentTypes;
+                    break;
+                case  'seller-filter':
+
+                    break;
+                default:
+
+            }
+
         },
 
-        saveSelect(){
-            this.selected.tempTables = this.selected.tables;
+        saveSelect(filter){
+            switch (filter) {
+                case 'table-filter':
+                    this.selected.tempTables = this.selected.tables;
+                    break;
+                case 'payment-filter':
+                    this.selected.tempPaymentTypes = this.selected.paymentTypes;
+                    break;
+                case  'seller-filter':
+
+                    break;
+                default:
+
+            }
+
         },
 
-        getSelectedTablesID(){
-            this.tblID.tablesID=[];
-            this.selected.tables.forEach((value, index) => {
-                this.tblID.tablesID.push(value.id);
-            });
+        getSelectedID(filter){
+            switch (filter) {
+                case 'table-filter':
+                    this.tblID.tablesID=[];
+                    this.selected.tables.forEach((value, index) => {
+                        this.tblID.tablesID.push(value.id);
+                    });
+                    break;
+                case 'payment-filter':
+                    this.paymentID.paymentsID=[];
+                    this.selected.paymentTypes.forEach((value, index) => {
+                        this.paymentID.paymentsID.push(value.id);
+                    });
+                    break;
+                case  'seller-filter':
+
+                    break;
+                default:
+
+            }
+
         },
 
-        applyFilter(){
-            this.getSelectedTablesID()
+        applyFilter(filter){
+            this.getSelectedID(filter)
             this.retrieveReports()
-            this.toggleFilter()
+            this.toggleFilter(filter)
+        },
+
+        sort(column){
+
+
+
+
+            /*let toggleSort = 'AZ';
+            if (toggleSort === 'AZ'){
+
+            }*/
+
+        },
+
+        retrievePaymentType(){
+            axios.get("getPaymentType")
+                .then((response) => {
+                    this.paymentTypes = response.data;
+                    this.selected.paymentTypes = this.paymentTypes;
+                    this.selected.tempPaymentTypes = this.paymentTypes;
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
         },
 
     },
@@ -409,6 +544,7 @@ export default {
 
     mounted() {
         this.retrieveTables()
+        this.retrievePaymentType()
         const vm = this
 
         /*=========Date Time Picker=========*/

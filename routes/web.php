@@ -63,7 +63,7 @@ Route::delete('/phones',[ShopController::class, 'destroy_phone']);
 
 Route::get('/reports',[ReportController::class,'index'])->name('report.index');
 Route::get('/getReport',[ReportController::class,'getReport'])->name('report.getReport');
-/*Route::post('/getReport',[ReportController::class,'getReport']);*/
+Route::get('/getPaymentType',[ReportController::class,'getPaymentType']);
 
 
 
