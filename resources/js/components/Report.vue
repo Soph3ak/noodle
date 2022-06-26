@@ -1,6 +1,17 @@
 <template>
     <div class="mt-2 report">
-        <div class="card search-block py-2">
+        <div class="content-header">
+            <div class="row">
+                <div class="col-2"><h2>របាយការណ៏លក់</h2></div>
+                <div class="col-5 d-flex align-items-center fa-1x"><i class="gg-sort-az"></i></div>
+                <div class="col-5">
+                    <button type="button" id="er" class="btn btn-primary float-right">
+                        របាយការណ៏លក់
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card search-block py-2 d-none">
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
@@ -9,7 +20,7 @@
                     </div>
                 </div>
                 <div class="col-2">
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label class="col-form-label">Payment</label>
                         <select class="form-control" v-model="paymentType" @change="handlePaymentChange($event)">
                             <option value="">All</option>
@@ -17,11 +28,11 @@
                             <option value="2">UNPAID</option>
                             <option value="3">VOID</option>
                         </select>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="col-2">
                     <div class="form-group">
-                        <label class="col-form-label">Table</label>
+                        <!--<label class="col-form-label">Table</label>
                         <select v-model="table" @change="handleTableChange($event)" class="form-control">
                             <option value="0" class="py-4">
                                 All
@@ -29,7 +40,7 @@
                             <option v-for="t in tables" :key="t.id" :value="t.id">
                                 {{ t.name }}
                             </option>
-                        </select>
+                        </select>-->
                     </div>
                 </div>
                 <div class="col-2">
@@ -100,13 +111,12 @@
                                 <th>
                                     <div class="d-flex align-items-center">
                                         Table
-                                        <div class="ml-2 position-relative pointer d-inline-block" id="table_filter">
+                                        <div class="ml-2 position-relative pointer d-inline-block">
                                             <span class="gg">
                                                 <span class="text-gray" @click="sort('table')"><i class="gg-swap-vertical"></i></span>
-                                                <span class="text-gray" @click="toggleFilter('table-filter'); previousSelect('table-filter')"><i class="gg-sort-az"></i></span>
+                                                <span class="text-gray btn-table-filter" @click="toggleFilter('table-filter'); previousSelect('table-filter'); closeOtherFilter('table-filter');"><i class="gg-sort-az"></i></span>
                                             </span>
                                             <div class="filter table-filter px-2 py-4 d-none">
-                                                <!--<span class="px-2 pointer"><i class="ion-android-close mr-2"></i>Close</span>-->
                                                 <span class="px-2 pointer text-primary" @click="selectAll('table-filter')"><i class="ion-android-done-all mr-2"></i>Select all</span>
                                                 <span class="px-2 pointer text-danger" @click="clearSelect('table-filter')"><i class="ion-android-close mr-2"></i>Clear</span>
                                                 <hr>
@@ -118,7 +128,7 @@
                                                 </div>
                                                 <hr>
                                                 <div class="filter_footer d-flex justify-content-end">
-                                                    <button @click="toggleFilter('table-filter'); previousSelect('table-filter')" type="button" id="close-filter" class="btn btn-sm btn-default mr-2">Cancel</button>
+                                                    <button @click="closeFilter('table-filter'); previousSelect('table-filter')" type="button" id="close-table-filter" class="btn btn-sm btn-default mr-2">Cancel</button>
                                                     <button @click="applyFilter('table-filter'); saveSelect('table-filter')" type="button" class="btn btn-sm btn-success">Apply</button>
                                                 </div>
                                             </div>
@@ -128,10 +138,10 @@
                                 <th>
                                     <div class="d-flex align-items-center">
                                         Payment
-                                        <div class="ml-2 position-relative pointer d-inline-block" id="payment_filter">
+                                        <div class="ml-2 position-relative pointer d-inline-block">
                                             <span class="gg">
                                                 <span class="text-gray" @click="sort('table')"><i class="gg-swap-vertical"></i></span>
-                                                <span class="text-gray" @click="toggleFilter('payment-filter'); previousSelect('payment-filter')"><i class="gg-sort-az"></i></span>
+                                                <span class="text-gray btn-payment-filter" @click="toggleFilter('payment-filter'); previousSelect('payment-filter'); closeOtherFilter('payment-filter')"><i class="gg-sort-az"></i></span>
                                             </span>
                                             <div class="filter payment-filter px-2 py-4 d-none">
                                                 <!--<span class="px-2 pointer"><i class="ion-android-close mr-2"></i>Close</span>-->
@@ -146,7 +156,7 @@
                                                 </div>
                                                 <hr>
                                                 <div class="filter_footer d-flex justify-content-end">
-                                                    <button @click="toggleFilter('payment-filter'); previousSelect('payment-filter')" type="button" class="btn btn-sm btn-default mr-2">Cancel</button>
+                                                    <button @click="closeFilter('payment-filter'); previousSelect('payment-filter')" type="button" id="close-payment-filter" class="btn btn-sm btn-default mr-2">Cancel</button>
                                                     <button @click="applyFilter('payment-filter'); saveSelect('payment-filter')" type="button" class="btn btn-sm btn-success">Apply</button>
                                                 </div>
                                             </div>
@@ -229,7 +239,6 @@ export default {
             count: 0,
             pageSize: 10,
             pageSizes: [10, 25, 50, 100],
-            paymentType: '',
             start: null,
             end: null,
 
@@ -243,7 +252,7 @@ export default {
             width: 70,
 
             tables:[],
-            table:0,
+            tablesCount : 0,
             selected: {
                 tables: [],
                 tempTables: [],
@@ -256,6 +265,7 @@ export default {
             },
 
             paymentTypes:[],
+            paymentCount : 0,
             paymentID:{
                 paymentsID: ['all']
             }
@@ -370,8 +380,10 @@ export default {
             axios.get("api/loadSeats")
                 .then((response) => {
                     this.tables = response.data;
+                    this.tablesCount = this.tables.length
                     this.selected.tables = this.tables;
                     this.selected.tempTables = this.tables;
+
                 })
                 .catch((e) => {
                     console.log(e);
@@ -397,23 +409,41 @@ export default {
             let filterClass = '.'+filter;
             let fil = $(filterClass);
             fil.toggleClass('d-none');
+        },
 
+        closeFilter(filter){
+            let filterClass = '.'+filter;
+            let fil = $(filterClass);
+            fil.addClass('d-none');
+        },
 
+        closeOtherFilter(filter){
+            switch (filter) {
+                case 'table-filter':
+                    let paymentFilter = $('#close-payment-filter');
+                    paymentFilter.trigger('click');
+                    break;
+                case 'payment-filter':
+                    let tableFilter = $('#close-table-filter');
+                    tableFilter.trigger('click');
+                    break;
+                case  'seller-filter':
 
+                    break;
+                default:
 
-            /*let otherFilters = $('.filter');*/
-
-           /* otherFilters.toggleClass('d-none');*/
-
+            }
         },
 
         clearSelect(filter){
             switch (filter) {
                 case 'table-filter':
                     this.selected.tables = [];
+
                     break;
                 case 'payment-filter':
                     this.selected.paymentTypes = [];
+
                     break;
                 case  'seller-filter':
 
@@ -428,9 +458,11 @@ export default {
             switch (filter) {
                 case 'table-filter':
                     this.selected.tables = this.tables;
+
                     break;
                 case 'payment-filter':
                     this.selected.paymentTypes = this.paymentTypes;
+
                     break;
                 case  'seller-filter':
 
@@ -479,16 +511,25 @@ export default {
             switch (filter) {
                 case 'table-filter':
                     this.tblID.tablesID=[];
+                    if (this.selected.tables.length === this.tablesCount)
+                        this.tblID.tablesID = ['all'];
+                    else
                     this.selected.tables.forEach((value, index) => {
                         this.tblID.tablesID.push(value.id);
                     });
+
                     break;
+
                 case 'payment-filter':
                     this.paymentID.paymentsID=[];
+                    if (this.selected.paymentTypes.length === this.paymentCount)
+                        this.paymentID.paymentsID = ['all'];
+                    else
                     this.selected.paymentTypes.forEach((value, index) => {
                         this.paymentID.paymentsID.push(value.id);
                     });
                     break;
+
                 case  'seller-filter':
 
                     break;
@@ -502,6 +543,29 @@ export default {
             this.getSelectedID(filter)
             this.retrieveReports()
             this.toggleFilter(filter)
+
+            switch (filter) {
+                case 'table-filter':
+                    let tblBtn = $('.btn-'+filter);
+                    if (this.selected.tables.length !== this.tablesCount)
+                        tblBtn.addClass('visited');
+                    else
+                        tblBtn.removeClass('visited');
+                    break;
+                case 'payment-filter':
+                    let payBtn = $('.btn-'+filter);
+                    if (this.selected.paymentTypes.length !== this.paymentCount)
+                        payBtn.addClass('visited');
+                    else
+                        payBtn.removeClass('visited');
+
+                    break;
+                case  'seller-filter':
+
+                    break;
+                default:
+
+            }
         },
 
         sort(column){
@@ -520,6 +584,7 @@ export default {
             axios.get("getPaymentType")
                 .then((response) => {
                     this.paymentTypes = response.data;
+                    this.paymentCount = this.paymentTypes.length
                     this.selected.paymentTypes = this.paymentTypes;
                     this.selected.tempPaymentTypes = this.paymentTypes;
                 })
@@ -546,6 +611,7 @@ export default {
         this.retrieveTables()
         this.retrievePaymentType()
         const vm = this
+
 
         /*=========Date Time Picker=========*/
         /*http://www.daterangepicker.com/*/
