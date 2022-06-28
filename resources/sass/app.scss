@@ -278,6 +278,8 @@ input#search{
 .selected-filter{
     background-color: #e4eafa;
     color: deepskyblue;
+    opacity: 1;
+    animation-duration: 3000ms;
 }
 
  .more{
@@ -323,13 +325,13 @@ input#search{
     display: block;
     animation-name: filter-box;
     animation-duration: 200ms;
-
 }
 
 @keyframes filter-box {
     0% { top:50px; right: 20px; opacity: 0}
     100% {top:30px; right: 0; opacity: 1}
 }
+
 
 .report label{
     font-weight: 400 !important;

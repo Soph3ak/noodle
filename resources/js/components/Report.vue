@@ -27,13 +27,16 @@
                                     <i class="fa fa-calendar text-primary"></i>&nbsp;
                                     <span></span> <i class="fa fa-caret-down"></i>
                                 </div>
-                                <div class="d-flex align-items-center" v-show="selected.filters.length>0">
-                                    <span class="badge badge-warning badge-filter text-primary pr-2">
+                                <div class="d-flex align-items-center">
+                                    <span class="badge badge-warning badge-filter text-primary pr-2 animate__animated animate__bounceIn" v-show="selected.filters.length>0">
                                         <i class="fas fa-filter ml-1 mr-1"></i> Filter
                                     </span>
-                                    <span class="badge badge-filter selected-filter ml-1 pointer" v-for="f in selected.filters" :key="f.id">
+                                    <span class="badge badge-filter selected-filter ml-1 pointer animate__animated animate__bounceIn" :id="f+'-filter'" v-for="f in selected.filters" :key="f.id">
                                         <span class="text-lowercase" @click="toggleFilter(f+'-filter'); previousSelect(f+'-filter'); closeOtherFilter(f+'-filter');"><i class="fas fa-filter ml-1 mr-1"></i> {{f}}</span>
                                         <button @click="btnRemoveBadgeFilter(f+'-filter'); " type="button" class="btn btn-tool"><i class="fas fa-times"></i></button>
+                                    </span>
+                                    <span class="badge badge-filter text-danger pr-2 pointer animate__animated animate__bounceIn" v-show="selected.filters.length>1">
+                                        <span @click="btnRemoveBadgeFilter('all')"><i class="fas fa-broom ml-1 mr-1"></i>Clear all filter</span>
                                     </span>
                                 </div>
                             </div>
@@ -77,11 +80,11 @@
                                         <div class="ml-2 position-relative pointer d-inline-block">
                                             <span class="gg">
                                                 <span class="text-gray" @click="sort('table')"><i class="gg-swap-vertical"></i></span>
-                                                <span class="text-gray btn-table-filter" @click="toggleFilter('table-filter'); previousSelect('table-filter'); closeOtherFilter('table-filter');"><i class="gg-sort-az"></i></span>
+                                                <span class="btn-filter text-gray btn-table-filter" @click="toggleFilter('table-filter'); previousSelect('table-filter'); closeOtherFilter('table-filter');"><i class="gg-sort-az"></i></span>
                                             </span>
                                             <div class="filter table-filter px-2 py-4 d-none">
-                                                <span class="px-2 pointer text-primary" @click="selectAll('table-filter')"><i class="ion-android-done-all mr-2"></i>Select all</span>
-                                                <span class="px-2 pointer text-danger" @click="clearSelect('table-filter')"><i class="ion-android-close mr-2"></i>Clear</span>
+                                                <span class="p-2 pointer text-primary" @click="selectAll('table-filter')"><i class="ion-android-done-all mr-2"></i>Select all</span>
+                                                <span class="p-2 pointer text-danger" @click="clearSelect('table-filter')"><i class="ion-android-close mr-2"></i>Clear</span>
                                                 <hr>
                                                 <div class="form-group px-2">
                                                     <div class="custom-control custom-checkbox py-2" v-for="t in tables" :key="t.id">
@@ -104,12 +107,12 @@
                                         <div class="ml-2 position-relative pointer d-inline-block">
                                             <span class="gg">
                                                 <span class="text-gray" @click="sort('table')"><i class="gg-swap-vertical"></i></span>
-                                                <span class="text-gray btn-payment-filter" @click="toggleFilter('payment-filter'); previousSelect('payment-filter'); closeOtherFilter('payment-filter')"><i class="gg-sort-az"></i></span>
+                                                <span class="btn-filter text-gray btn-payment-filter" @click="toggleFilter('payment-filter'); previousSelect('payment-filter'); closeOtherFilter('payment-filter')"><i class="gg-sort-az"></i></span>
                                             </span>
                                             <div class="filter payment-filter px-2 py-4 d-none">
                                                 <!--<span class="px-2 pointer"><i class="ion-android-close mr-2"></i>Close</span>-->
-                                                <span class="px-2 pointer text-primary" @click="selectAll('payment-filter')"><i class="ion-android-done-all mr-2"></i>Select all</span>
-                                                <span class="px-2 pointer text-danger" @click="clearSelect('payment-filter')"><i class="ion-android-close mr-2"></i>Clear</span>
+                                                <span class="p-2 pointer text-primary" @click="selectAll('payment-filter')"><i class="ion-android-done-all mr-2"></i>Select all</span>
+                                                <span class="p-2 pointer text-danger" @click="clearSelect('payment-filter')"><i class="ion-android-close mr-2"></i>Clear</span>
                                                 <hr>
                                                 <div class="form-group px-2">
                                                     <div class="custom-control custom-checkbox py-2" v-for="p in paymentTypes" :key="p.id">
@@ -371,15 +374,19 @@ export default {
         },
 
         toggleFilter(filter){
-            let filterClass = '.'+filter;
-            let fil = $(filterClass);
-            fil.toggleClass('d-none');
+            if(filter!=='all'){ //this if() to skip from btn "Clear all filter"
+                let filterClass = '.'+filter;
+                let fil = $(filterClass);
+                fil.toggleClass('d-none');
+            }
         },
 
         closeFilter(filter){
-            let filterClass = '.'+filter;
-            let fil = $(filterClass);
-            fil.addClass('d-none');
+                if (filter!=='all'){ //this if() to skip from btn "Clear all filter"
+                let filterClass = '.'+filter;
+                let fil = $(filterClass);
+                fil.addClass('d-none');
+            }
         },
 
         btnRemoveBadgeFilter(filter){
@@ -387,6 +394,7 @@ export default {
             this.applyFilter(filter);
             this.saveSelect(filter);
             this.closeFilter(filter);
+            this.closeOtherFilter(filter);
         },
 
         removeBadgeFilter(current){
@@ -396,15 +404,19 @@ export default {
         closeOtherFilter(filter){
             switch (filter) {
                 case 'table-filter':
-                    let paymentFilter = $('#close-payment-filter');
-                    paymentFilter.trigger('click');
+                    let closePaymentFilter = $('#close-payment-filter');
+                    closePaymentFilter.trigger('click');
                     break;
                 case 'payment-filter':
-                    let tableFilter = $('#close-table-filter');
-                    tableFilter.trigger('click');
+                    let closeTableFilter = $('#close-table-filter');
+                    closeTableFilter.trigger('click');
                     break;
                 case  'seller-filter':
 
+                    break;
+                case  'all':
+                    let closeAllFilter = $('div.filter');
+                    closeAllFilter.addClass('d-none');
                     break;
                 default:
 
@@ -434,14 +446,18 @@ export default {
             switch (filter) {
                 case 'table-filter':
                     this.selected.tables = this.tables;
-
                     break;
+
                 case 'payment-filter':
                     this.selected.paymentTypes = this.paymentTypes;
-
                     break;
-                case  'seller-filter':
 
+                case  'seller-filter':
+                    break;
+
+                case  'all':
+                    this.selected.tables = this.tables;
+                    this.selected.paymentTypes = this.paymentTypes;
                     break;
                 default:
 
@@ -477,6 +493,11 @@ export default {
                 case  'seller-filter':
 
                     break;
+
+                case  'all':
+                    this.selected.tempTables = this.selected.tables;
+                    this.selected.tempPaymentTypes = this.selected.paymentTypes;
+                    break;
                 default:
 
             }
@@ -501,95 +522,94 @@ export default {
                     if (this.selected.paymentTypes.length === this.paymentCount)
                         this.paymentID.paymentsID = ['all'];
                     else
-                    this.selected.paymentTypes.forEach((value, index) => {
-                        this.paymentID.paymentsID.push(value.id);
+                        this.selected.paymentTypes.forEach((value, index) => {
+                            this.paymentID.paymentsID.push(value.id);
                     });
                     break;
 
                 case  'seller-filter':
 
                     break;
+                case  'all':
+                        this.tblID.tablesID = ['all'];
+                        this.paymentID.paymentsID = ['all'];
+                    break;
                 default:
+
+
+            }
+
+        },
+
+        styling_BtnFilter_BadgeFilter(filter){
+            let selectedFilterLength = 0;
+            let selectedFilterCount = 0;
+            let text = '';
+            switch (filter) {
+                case 'table-filter':
+                    selectedFilterLength = this.selected.tables.length;
+                    selectedFilterCount = this.tablesCount;
+                    text = 'table';
+                    this.stylingCurrentFilter(filter, selectedFilterLength, selectedFilterCount, text)
+                    break;
+                case 'payment-filter':
+                    selectedFilterLength = this.selected.paymentTypes.length;
+                    selectedFilterCount = this.paymentCount;
+                    text = 'payment';
+                    this.stylingCurrentFilter(filter, selectedFilterLength, selectedFilterCount, text)
+                    break;
+                case  'seller-filter':
+
+                    break;
+                case  'all':
+                    let allBtnFilter = $('.btn-filter');
+                    allBtnFilter.removeClass('visited');
+                    this.selected.filters = [];
+                    break;
+                default:
+
+            }
+        },
+
+        stylingCurrentFilter(filter, length, count, badgeText){
+            let currentFilter ='';
+            let selectedBtnFilter = $('.btn-'+filter);
+            if (length !== count){
+                selectedBtnFilter.addClass('visited');
+
+                if (this.selected.filters.length === 0){
+                    this.selected.filters.push(badgeText);
+                }
+                else
+                {
+                    currentFilter = '';
+                    for (let i = 0; i < this.selected.filters.length; i++) {
+                        currentFilter = this.selected.filters[i];
+                        if (currentFilter === badgeText)
+                            break; //This break in not working (Why javascript??)
+                    }
+                    if (currentFilter !== badgeText)  //this if() to fix not working break
+                        this.selected.filters.push(badgeText);
+                }
+            }
+            else
+            {
+                selectedBtnFilter.removeClass('visited');
+                this.selected.filters.forEach((value, index) => {
+                    if (value === badgeText){
+                        this.removeBadgeFilter(index,1)
+                    }
+                })
 
             }
 
         },
 
         applyFilter(filter){
-            this.getSelectedID(filter)
+            this.getSelectedID(filter) //get only for retrieveReports()
             this.retrieveReports()
             this.toggleFilter(filter)
-
-            let currentFilter ='';
-            switch (filter) {
-                case 'table-filter':
-                    let tblBtn = $('.btn-'+filter);
-                    if (this.selected.tables.length !== this.tablesCount){
-                        tblBtn.addClass('visited');
-
-                        if (this.selected.filters.length === 0){
-                            this.selected.filters.push('table');
-                        }
-                        else
-                        {
-                            currentFilter = '';
-                            for (let i = 0; i < this.selected.filters.length; i++) {
-                                currentFilter = this.selected.filters[i];
-                                if (currentFilter === 'table')
-                                    break; //This break in not working (Why javascript??)
-                            }
-                            if (currentFilter !== 'table')  //this if() to fix not working break
-                                this.selected.filters.push('table');
-                        }
-                    }
-                    else
-                        {
-                            tblBtn.removeClass('visited');
-                            this.selected.filters.forEach((value, index) => {
-                                if (value === 'table')
-                                    this.removeBadgeFilter(index,1)
-                            })
-
-                        }
-
-
-
-                    break;
-                case 'payment-filter':
-                    let payBtn = $('.btn-'+filter);
-                    if (this.selected.paymentTypes.length !== this.paymentCount){
-                        payBtn.addClass('visited');
-                        if (this.selected.filters.length === 0){
-                            this.selected.filters.push('payment');
-                        }
-                        else
-                            currentFilter = '';
-                            for (let i = 0; i < this.selected.filters.length; i++) {
-                                currentFilter = this.selected.filters[i];
-                                if (currentFilter === 'payment')
-                                    break; //This break in not working (Why javascript??)
-                            }
-                            if (currentFilter !== 'payment')  //this if() to fix not working break
-                                this.selected.filters.push('payment');
-                    }
-                    else
-                    {
-                        payBtn.removeClass('visited');
-                        this.selected.filters.forEach((value, index) => {
-                            if (value === 'payment')
-                                this.removeBadgeFilter(index,1)
-                        })
-
-                    }
-
-
-                    break;
-                case  'seller-filter':
-
-                    break;
-                default:
-
-            }
+            this.styling_BtnFilter_BadgeFilter(filter);
         },
 
         sort(column){

@@ -287,6 +287,9 @@ input#search {
 .selected-filter {
   background-color: #e4eafa;
   color: deepskyblue;
+  opacity: 1;
+  -webkit-animation-duration: 3000ms;
+          animation-duration: 3000ms;
 }
 
 .more {
