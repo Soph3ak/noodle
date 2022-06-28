@@ -1,57 +1,11 @@
 <template>
-    <div class="mt-2 report">
-        <div class="content-header">
-            <div class="row">
-                <div class="col-2"><h2>របាយការណ៏លក់</h2></div>
-                <div class="col-5 d-flex align-items-center fa-1x"><i class="gg-sort-az"></i></div>
-                <div class="col-5">
-                    <button type="button" id="er" class="btn btn-primary float-right">
-                        របាយការណ៏លក់
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="card search-block py-2 d-none">
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <label class="col-form-label"> What are you looking for?</label>
-                        <input type="text" class="form-control search" placeholder="Search invoice number here ..." v-model="searchTitle" @keyup.enter="page = 1; retrieveReports()">
-                    </div>
-                </div>
-                <div class="col-2">
-                    <!--<div class="form-group">
-                        <label class="col-form-label">Payment</label>
-                        <select class="form-control" v-model="paymentType" @change="handlePaymentChange($event)">
-                            <option value="">All</option>
-                            <option value="1">PAID</option>
-                            <option value="2">UNPAID</option>
-                            <option value="3">VOID</option>
-                        </select>
-                    </div>-->
-                </div>
-                <div class="col-2">
-                    <div class="form-group">
-                        <!--<label class="col-form-label">Table</label>
-                        <select v-model="table" @change="handleTableChange($event)" class="form-control">
-                            <option value="0" class="py-4">
-                                All
-                            </option>
-                            <option v-for="t in tables" :key="t.id" :value="t.id">
-                                {{ t.name }}
-                            </option>
-                        </select>-->
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="form-group">
-                        <label class="col-form-label text-white">Search...</label>
-                        <button type="button" id="report" class="btn btn-primary float-right form-control" @click="page = 1; retrieveReports()">
-                            ស្វែងរក
-                        </button>
-
-                    </div>
-                </div>
+    <div class="mt-3 report">
+        <div class="search-block d-flex">
+            <div class="form-group">
+                <input type="text" class="form-control search" id="search" placeholder="Search invoice number here ..." v-model="searchTitle" @keyup.enter="page = 1; retrieveReports()">
+                <!--<button type="button" class="btn btn-primary float-right form-control btn-search d-none" @click="page = 1; retrieveReports()">
+                    ស្វែងរក
+                </button>-->
             </div>
         </div>
 
@@ -60,7 +14,7 @@
                 <div class="card table-block">
                     <div class="card-header d-flex align-items-center">
                         <div class="show-page-calendar">
-                            <div class="d-flex" style="width: 620px;">
+                            <div class="d-flex" style="width: 1050px;">
                                 <label for="" class="col-form-label" style="width: 115px">Show records:</label>
                                 <div class="">
                                     <select v-model="pageSize" @change="handlePageSizeChange($event)" class="form-control show-per-page" style="width: 75px">
@@ -69,9 +23,18 @@
                                         </option>
                                     </select>
                                 </div>
-                                <div id="reportrange" style="background: #fff; cursor: pointer; border: 1px solid #ccc; width: 48%" class="form-control text-center ml-2">
+                                <div id="reportrange" style="background: #fff; cursor: pointer; border: 1px solid #ccc; width: 296px" class="form-control text-center ml-2 mr-2">
                                     <i class="fa fa-calendar text-primary"></i>&nbsp;
                                     <span></span> <i class="fa fa-caret-down"></i>
+                                </div>
+                                <div class="d-flex align-items-center" v-show="selected.filters.length>0">
+                                    <span class="badge badge-warning badge-filter text-primary pr-2">
+                                        <i class="fas fa-filter ml-1 mr-1"></i> Filter
+                                    </span>
+                                    <span class="badge badge-filter selected-filter ml-1" v-for="f in selected.filters" :key="f.id">
+                                        <i class="fas fa-filter ml-1 mr-1"></i> <span class="text-lowercase">{{f}}</span>
+                                        <button type="button" class="btn btn-tool"><i class="fas fa-times"></i></button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -89,7 +52,7 @@
                             </pagination>
                         </div>
                     </div>
-                    <div class="card-body table-responsive p-0 vld-parent" style="max-height: 83.1vh; min-height: 64vh;">
+                    <div class="card-body table-responsive p-0 vld-parent" style="max-height: 76vh; min-height: 76vh;">
                         <div class="">
                             <loading :active.sync="isLoading"
                                      :can-cancel="true"
@@ -256,6 +219,7 @@ export default {
             selected: {
                 tables: [],
                 tempTables: [],
+                filters: [],
 
                 paymentTypes: [],
                 tempPaymentTypes: [],
@@ -269,6 +233,7 @@ export default {
             paymentID:{
                 paymentsID: ['all']
             }
+
 
         }
     },
@@ -547,15 +512,55 @@ export default {
             switch (filter) {
                 case 'table-filter':
                     let tblBtn = $('.btn-'+filter);
-                    if (this.selected.tables.length !== this.tablesCount)
+                    let currentFilter ='';
+                    if (this.selected.tables.length !== this.tablesCount){
                         tblBtn.addClass('visited');
+                        if (this.selected.filters.length === 0){
+                            this.selected.filters.push('table');
+                        }
+                        else
+                        {
+                            console.log('else')
+                            for (let i = 0; i < this.selected.filters.length; i++) {
+                                console.log(this.selected.filters[i]);
+                                currentFilter = this.selected.filters[i];
+                                if (currentFilter === 'table') {
+                                    console.log('return False');
+                                    break;
+                                }
+                            }
+                            if (currentFilter !== 'table') {
+                                console.log('Add Table')
+                                this.selected.filters.push('table');
+                            }
+
+
+                        }
+                    }
                     else
                         tblBtn.removeClass('visited');
+
                     break;
                 case 'payment-filter':
                     let payBtn = $('.btn-'+filter);
-                    if (this.selected.paymentTypes.length !== this.paymentCount)
+                    if (this.selected.paymentTypes.length !== this.paymentCount){
                         payBtn.addClass('visited');
+                        if (this.selected.filters.length === 0){
+                            this.selected.filters.push('payment');
+                        }
+                        else
+                        {
+                            console.log('else')
+                            this.selected.filters.forEach((value, index) => {
+                                console.log(value)
+                                if (value === 'payment'){
+                                    return false;
+                                }
+                            });
+                            this.selected.filters.push('payment');
+                        }
+
+                    }
                     else
                         payBtn.removeClass('visited');
 

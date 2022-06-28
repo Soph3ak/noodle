@@ -225,12 +225,12 @@ table.sell-reports .badge{
     color: #DA100B;
 }
 
-.search-block, .table-block{
+.table-block{
     border-radius: 9px !important;
     padding: 0.2rem 20px;
 }
 
-.search-block select, select.show-per-page{
+select.show-per-page{
     cursor: pointer;
 }
 
@@ -240,13 +240,45 @@ table.sell-reports .badge{
 
 .form-control.search{
     border-color: #f2f4f6;
-    background-color: #f2f4f6;
+    /*background-color: #f2f4f6;*/
+    background-color: #ffffff;
     padding-left: 2.25rem;
     background-image: url("/icons/icon-search.svg");
     background-repeat: no-repeat;
-    background-position: left calc(0.45em + 0.1875rem) center;
+    background-position: left calc(0.7em + 0.1875rem) center;
     background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }
+
+input#search{
+    width: 380px;
+    padding: 1.5rem 1.5rem 1.5rem 2.7rem;
+    border-radius: 9px;
+}
+
+.search-block{
+    position: absolute;
+    top:15px;
+    right: 15.5px;
+}
+
+.btn-search{
+    width: 120px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 8px;
+}
+
+.badge-filter{
+    height: 27px;
+    line-height: 23px;
+}
+
+.selected-filter{
+    background-color: #e4eafa;
+    color: deepskyblue;
+}
+
  .more{
      width: 20px;
      height: 0;
