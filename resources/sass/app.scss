@@ -272,6 +272,7 @@ input#search{
 .badge-filter{
     height: 27px;
     line-height: 23px;
+    user-select: none;
 }
 
 .selected-filter{

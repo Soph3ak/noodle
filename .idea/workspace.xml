@@ -24,8 +24,10 @@
   <component name="ChangeListManager">
     <list default="true" id="068b8d69-0347-4e1a-893c-998d63f273f8" name="Default Changelist" comment="Done add badge filter (work with 2 filter)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Report.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Report.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -329,7 +331,7 @@
       <workItem from="1656159214007" duration="19691000" />
       <workItem from="1656249783960" duration="10215000" />
       <workItem from="1656340461952" duration="28211000" />
-      <workItem from="1656421884946" duration="1686000" />
+      <workItem from="1656421884946" duration="9032000" />
     </task>
     <task id="LOCAL-00001" summary="12-May-2022">
       <created>1652312510308</created>
@@ -415,7 +417,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656422921470</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Done add badge filter (work with 2 filter)">
+      <created>1656423636381</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1656423636381</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -511,10 +520,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="807" y="438" key="VCS.ChangelistChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1654009171056" />
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1656422922786">
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1656423636867">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1656422922786" />
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1656423636867" />
     <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1655639101034">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -527,10 +536,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="760" y="426" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1652379065679" />
-    <state x="614" y="243" width="672" height="677" key="run.anything.popup" timestamp="1656421917707">
+    <state x="614" y="243" width="672" height="677" key="run.anything.popup" timestamp="1656430975552">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="614" y="243" width="672" height="677" key="run.anything.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1656421917707" />
+    <state x="614" y="243" width="672" height="677" key="run.anything.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1656430975552" />
     <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1656421999280">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>

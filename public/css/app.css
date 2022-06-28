@@ -278,6 +278,10 @@ input#search {
 .badge-filter {
   height: 27px;
   line-height: 23px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .selected-filter {

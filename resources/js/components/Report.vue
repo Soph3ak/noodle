@@ -31,9 +31,9 @@
                                     <span class="badge badge-warning badge-filter text-primary pr-2">
                                         <i class="fas fa-filter ml-1 mr-1"></i> Filter
                                     </span>
-                                    <span class="badge badge-filter selected-filter ml-1" v-for="f in selected.filters" :key="f.id">
-                                        <i class="fas fa-filter ml-1 mr-1"></i> <span class="text-lowercase">{{f}}</span>
-                                        <button type="button" class="btn btn-tool"><i class="fas fa-times"></i></button>
+                                    <span class="badge badge-filter selected-filter ml-1 pointer" v-for="f in selected.filters" :key="f.id">
+                                        <span class="text-lowercase" @click="toggleFilter(f+'-filter'); previousSelect(f+'-filter'); closeOtherFilter(f+'-filter');"><i class="fas fa-filter ml-1 mr-1"></i> {{f}}</span>
+                                        <button @click="btnRemoveBadgeFilter(f+'-filter'); " type="button" class="btn btn-tool"><i class="fas fa-times"></i></button>
                                     </span>
                                 </div>
                             </div>
@@ -382,6 +382,17 @@ export default {
             fil.addClass('d-none');
         },
 
+        btnRemoveBadgeFilter(filter){
+            this.selectAll(filter);
+            this.applyFilter(filter);
+            this.saveSelect(filter);
+            this.closeFilter(filter);
+        },
+
+        removeBadgeFilter(current){
+            this.selected.filters.splice(current,1);
+        },
+
         closeOtherFilter(filter){
             switch (filter) {
                 case 'table-filter':
@@ -509,38 +520,39 @@ export default {
             this.retrieveReports()
             this.toggleFilter(filter)
 
+            let currentFilter ='';
             switch (filter) {
                 case 'table-filter':
                     let tblBtn = $('.btn-'+filter);
-                    let currentFilter ='';
                     if (this.selected.tables.length !== this.tablesCount){
                         tblBtn.addClass('visited');
+
                         if (this.selected.filters.length === 0){
                             this.selected.filters.push('table');
                         }
                         else
                         {
                             currentFilter = '';
-                            console.log('else')
                             for (let i = 0; i < this.selected.filters.length; i++) {
-                                console.log(this.selected.filters[i]);
                                 currentFilter = this.selected.filters[i];
-                                if (currentFilter === 'table') {
-                                    console.log('return False');
+                                if (currentFilter === 'table')
                                     break; //This break in not working (Why javascript??)
-                                }
                             }
-                            if (currentFilter !== 'table') { //this if() to fix not working break
-                                console.log('Add Table')
+                            if (currentFilter !== 'table')  //this if() to fix not working break
                                 this.selected.filters.push('table');
-
-                            }
-
-
                         }
                     }
                     else
-                        tblBtn.removeClass('visited');
+                        {
+                            tblBtn.removeClass('visited');
+                            this.selected.filters.forEach((value, index) => {
+                                if (value === 'table')
+                                    this.removeBadgeFilter(index,1)
+                            })
+
+                        }
+
+
 
                     break;
                 case 'payment-filter':
@@ -552,24 +564,24 @@ export default {
                         }
                         else
                             currentFilter = '';
-                        console.log('else')
-                        for (let i = 0; i < this.selected.filters.length; i++) {
-                            console.log(this.selected.filters[i]);
-                            currentFilter = this.selected.filters[i];
-                            if (currentFilter === 'payment') {
-                                console.log('return False');
-                                break; //This break in not working (Why javascript??)
+                            for (let i = 0; i < this.selected.filters.length; i++) {
+                                currentFilter = this.selected.filters[i];
+                                if (currentFilter === 'payment')
+                                    break; //This break in not working (Why javascript??)
                             }
-                        }
-                        if (currentFilter !== 'payment') { //this if() to fix not working break
-                            console.log('Add Table')
-                            this.selected.filters.push('payment');
-
-                        }
-
+                            if (currentFilter !== 'payment')  //this if() to fix not working break
+                                this.selected.filters.push('payment');
                     }
                     else
+                    {
                         payBtn.removeClass('visited');
+                        this.selected.filters.forEach((value, index) => {
+                            if (value === 'payment')
+                                this.removeBadgeFilter(index,1)
+                        })
+
+                    }
+
 
                     break;
                 case  'seller-filter':
@@ -604,6 +616,9 @@ export default {
                     console.log(e);
                 });
         },
+        test(){
+            alert('closed')
+        }
 
     },
     computed:{
