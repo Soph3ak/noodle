@@ -520,18 +520,20 @@ export default {
                         }
                         else
                         {
+                            currentFilter = '';
                             console.log('else')
                             for (let i = 0; i < this.selected.filters.length; i++) {
                                 console.log(this.selected.filters[i]);
                                 currentFilter = this.selected.filters[i];
                                 if (currentFilter === 'table') {
                                     console.log('return False');
-                                    break;
+                                    break; //This break in not working (Why javascript??)
                                 }
                             }
-                            if (currentFilter !== 'table') {
+                            if (currentFilter !== 'table') { //this if() to fix not working break
                                 console.log('Add Table')
                                 this.selected.filters.push('table');
+
                             }
 
 
@@ -549,15 +551,20 @@ export default {
                             this.selected.filters.push('payment');
                         }
                         else
-                        {
-                            console.log('else')
-                            this.selected.filters.forEach((value, index) => {
-                                console.log(value)
-                                if (value === 'payment'){
-                                    return false;
-                                }
-                            });
+                            currentFilter = '';
+                        console.log('else')
+                        for (let i = 0; i < this.selected.filters.length; i++) {
+                            console.log(this.selected.filters[i]);
+                            currentFilter = this.selected.filters[i];
+                            if (currentFilter === 'payment') {
+                                console.log('return False');
+                                break; //This break in not working (Why javascript??)
+                            }
+                        }
+                        if (currentFilter !== 'payment') { //this if() to fix not working break
+                            console.log('Add Table')
                             this.selected.filters.push('payment');
+
                         }
 
                     }
