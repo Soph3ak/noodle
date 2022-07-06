@@ -35,8 +35,7 @@ class SellController extends Controller
     public function loadProductsByCategory($id){
         $products = Category::find($id)->products;
         /*$products = Product::where('category_id',$id)->get();*/ /*SAME RESULT*/
-        $cols = collect($products);
-        return $cols;
+        return collect($products);
 
     }
 

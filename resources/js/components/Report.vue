@@ -55,7 +55,7 @@
                             </pagination>
                         </div>
                     </div>
-                    <div class="card-body table-responsive p-0 vld-parent" style="max-height: 76vh; min-height: 76vh;">
+                    <div class="card-body table-responsive p-0" style="max-height: 76vh; min-height: 76vh;">
                         <div class="">
                             <loading :active.sync="isLoading"
                                      :can-cancel="true"
@@ -66,14 +66,43 @@
                                      :loader="loader"
                                      :background-color="bgColor"></loading>
                         </div>
-                        <table class="table table-head-fixed table-striped text-nowrap sell-reports">
+                        <table class="table table-head-fixed text-nowrap sell-reports">
                             <thead>
                             <tr class="w-100">
                                 <th>Invoice #</th>
                                 <th>Date</th>
                                 <th>Customer</th>
                                 <th>Location</th>
-                                <th>Seller</th>
+                                <th>
+                                    <div class="d-flex align-items-center">
+                                        Seller
+                                        <div class="ml-2 position-relative pointer d-inline-block">
+                                            <span class="gg">
+                                                <span class="text-gray" @click="sort('seller')"><i class="gg-swap-vertical"></i></span>
+                                                <span class="btn-filter text-gray btn-seller-filter" @click="toggleFilter('seller-filter'); previousSelect('seller-filter'); closeOtherFilter('seller-filter');"><i class="gg-sort-az"></i></span>
+                                            </span>
+                                            <div class="filter seller-filter px-2 py-4 d-none">
+                                                <span class="p-2 pointer text-primary" @click="selectAll('seller-filter')"><i class="ion-android-done-all mr-2"></i>Select all</span>
+                                                <span class="p-2 pointer text-danger" @click="clearSelect('seller-filter')"><i class="ion-android-close mr-2"></i>Clear</span>
+                                                <hr>
+                                                <div class="form-group">
+                                                    <div class="checkbox-wrapper px-2" v-for="s in sellers" :key="s.id" :id="'seller-wrapper' + s.id">
+                                                        <div class="custom-control custom-checkbox d-flex align-items-center">
+                                                            <input class="custom-control-input" type="checkbox" v-model="selected.sellers" :id="'seller' + s.id" :value="s"/>
+                                                            <label :for="'seller' + s.id" class="custom-control-label pointer">{{s.name_kh}}</label>
+                                                            <span class="filter-avatar ml-auto mt-auto"><img :src="'files/'+s.photo" alt="" class="img-circle staff-image"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="filter_footer d-flex justify-content-end">
+                                                    <button @click="closeFilter('seller-filter'); previousSelect('seller-filter')" type="button" id="close-seller-filter" class="btn btn-sm btn-default mr-2">Cancel</button>
+                                                    <button @click="applyFilter('seller-filter'); saveSelect('seller-filter')" type="button" class="btn btn-sm btn-success">Apply</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
                                 <th>
                                     <div class="d-flex align-items-center">
                                         Table
@@ -87,9 +116,11 @@
                                                 <span class="p-2 pointer text-danger" @click="clearSelect('table-filter')"><i class="ion-android-close mr-2"></i>Clear</span>
                                                 <hr>
                                                 <div class="form-group px-2">
-                                                    <div class="custom-control custom-checkbox py-2" v-for="t in tables" :key="t.id">
-                                                        <input class="custom-control-input" type="checkbox" v-model="selected.tables" :id="'table' + t.id" :value="t"/>
-                                                        <label :for="'table' + t.id" class="custom-control-label pointer">{{t.name}}</label>
+                                                    <div class="checkbox-wrapper px-2" v-for="t in tables" :key="t.id">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input class="custom-control-input" type="checkbox" v-model="selected.tables" :id="'table' + t.id" :value="t"/>
+                                                            <label :for="'table' + t.id" class="custom-control-label pointer">{{t.name}}</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <hr>
@@ -110,14 +141,15 @@
                                                 <span class="btn-filter text-gray btn-payment-filter" @click="toggleFilter('payment-filter'); previousSelect('payment-filter'); closeOtherFilter('payment-filter')"><i class="gg-sort-az"></i></span>
                                             </span>
                                             <div class="filter payment-filter px-2 py-4 d-none">
-                                                <!--<span class="px-2 pointer"><i class="ion-android-close mr-2"></i>Close</span>-->
                                                 <span class="p-2 pointer text-primary" @click="selectAll('payment-filter')"><i class="ion-android-done-all mr-2"></i>Select all</span>
                                                 <span class="p-2 pointer text-danger" @click="clearSelect('payment-filter')"><i class="ion-android-close mr-2"></i>Clear</span>
                                                 <hr>
                                                 <div class="form-group px-2">
-                                                    <div class="custom-control custom-checkbox py-2" v-for="p in paymentTypes" :key="p.id">
-                                                        <input class="custom-control-input" type="checkbox" v-model="selected.paymentTypes" :id="'payment' + p.id" :value="p"/>
-                                                        <label :for="'payment' + p.id" class="custom-control-label pointer">{{p.payment}}</label>
+                                                    <div class="checkbox-wrapper px-2" v-for="p in paymentTypes" :key="p.id">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input class="custom-control-input" type="checkbox" v-model="selected.paymentTypes" :id="'payment' + p.id" :value="p"/>
+                                                            <label :for="'payment' + p.id" class="custom-control-label pointer">{{p.payment}}</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <hr>
@@ -132,15 +164,16 @@
                                 <th>Subtotal</th>
                                 <th>Discount</th>
                                 <th>Total</th>
+                                <th></th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr v-for="report in reports.data" :key="report.id">
+                            <!--<tbody class="vld-parent" id="myTable">
+                            <tr v-for="report in reports.data" :key="report.id" :id="'report'+report.id">
                                 <td><a href="#">{{ report.id }}</a></td>
                                 <td>{{ formatDate(report.created_at) }}</td>
                                 <td>{{ report.customer.name }}</td>
                                 <td>{{ report.shop.name }}</td>
-                                <!--<td>{{ report.user.name_kh }}</td>-->
+                                &lt;!&ndash;<td>{{ report.user.name_kh }}</td>&ndash;&gt;
                                 <td>
                                     <div class="position-relative p-0">
                                         <img :src="getImgUrl(report.user.photo)" alt="Staff Image" class="img-circle staff-image">
@@ -155,6 +188,12 @@
                                 <td>{{ convertToCurrency(report.subtotal) }}៛</td>
                                 <td>{{ convertToCurrency(report.discount) }}៛</td>
                                 <td>{{ convertToCurrency(report.total) }}៛</td>
+                                <td class="text-right toggle-detail">
+                                    <span>
+                                        <button type="button" class="btn btn-detail" @click="showDetail('#report'+report.id)"><i class="ion-code-working"></i></button>
+                                    </span>
+                                </td>
+
                             </tr>
                             <tr v-show="reportCount === 0" class="bg-white">
                                 <td class="" colspan="10">
@@ -169,7 +208,214 @@
                                         <p color="text2" font-size="1" class="sc-1eb5slv-0 bSDVZJ">Try again with a different term.</p></div>
                                 </td>
                             </tr>
+                            <tr class="text-center detail-showing d-none" id="myDetail">
+                                <td colspan="11">NAME</td>
+                            </tr>
+                            </tbody>-->
+                            <tbody v-for="report in reports.data" :key="report.id" :id="'report'+report.id">
+                                <tr>
+                                    <td><a href="#">{{ report.id }}</a></td>
+                                    <td>{{ formatDate(report.created_at) }}</td>
+                                    <td>{{ report.customer.name }}</td>
+                                    <td>{{ report.shop.name }}</td>
+                                    <td>
+                                        <div class="position-relative p-0">
+                                            <img :src="getImgUrl(report.user.photo)" alt="Staff Image" class="img-circle staff-image">
+                                        </div>
+                                    </td>
+                                    <td>{{ report.table.name }}</td>
+                                    <td>
+                                        <span class="badge badge-new-primary" v-if="report.payment.payment === 'UNPAID'">{{report.payment.payment}}</span>
+                                        <span class="badge badge-new-success" v-else-if="report.payment.payment === 'PAID'">{{report.payment.payment}}</span>
+                                        <span class="badge badge-new-danger" v-else>{{report.payment.payment}}</span>
+                                    </td>
+                                    <td class="">{{ convertToCurrency(report.subtotal) }}៛</td>
+                                    <td class="text-danger">-{{ convertToCurrency(report.discount) }}៛</td>
+                                    <td class="text-success">{{ convertToCurrency(report.total) }}៛</td>
+                                    <td class="text-right toggle-detail">
+                                    <span>
+                                        <a type="button" class="btn btn-detail" @click="showDetail('detail'+report.id)">
+                                            <i class="ion-code-working"></i>
+                                        </a>
+                                    </span>
+                                    </td>
+                                </tr>
+                                <tr class="detail-showing d-none" :id="'detail'+report.id">
+                                    <td colspan="11" class="abc">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <!-- The time line -->
+                                                <div class="timeline">
+                                                    <!-- timeline time label -->
+                                                    <!--<div class="time-label">
+                                                        <span class="bg-red">Order #128</span>
+                                                    </div>-->
+                                                    <!-- /.timeline-label -->
 
+                                                    <!-- timeline item -->
+                                                    <div>
+                                                        <i class="fas fa-shopping-cart bg-green"></i>
+                                                        <div class="timeline-item">
+                                                            <h3 class="timeline-header"><a href="#">Order #{{report.id}}</a></h3>
+                                                            <table class="table table-borderless table-valign-middle">
+                                                                <tr>
+                                                                    <td>
+                                                                        <img src="files/1617328576.14828.សម្លម្ជូរត្រកួន.jpg" alt="Product 1" class="mask-squircle mr-2">
+                                                                        Some Product x2
+                                                                    </td>
+                                                                    <td>
+                                                                        <small class="text-success mr-1">
+                                                                            <i class="fas fa-arrow-up"></i>
+                                                                            Unit price
+                                                                        </small>
+                                                                        $13 USD
+                                                                    </td>
+                                                                    <td>
+                                                                        <small class="text-success mr-1">
+                                                                            <i class="fas fa-arrow-up"></i>
+                                                                            Amount
+                                                                        </small>
+                                                                        12,000 Sold
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="#" class="text-muted">
+                                                                            <i class="fas fa-search"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <img src="files/1617328576.14828.សម្លម្ជូរត្រកួន.jpg" alt="Product 1" class="mask-squircle mr-2">
+                                                                        Another Product
+                                                                    </td>
+                                                                    <td>
+                                                                        <small class="text-success mr-1">
+                                                                            <i class="fas fa-arrow-up"></i>
+                                                                            Unit price
+                                                                        </small>
+                                                                        $13 USD
+                                                                    </td>
+                                                                    <td>
+                                                                        <small class="text-success mr-1">
+                                                                            <i class="fas fa-arrow-up"></i>
+                                                                            Amount
+                                                                        </small>
+                                                                        123,234 Sold
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="#" class="text-muted">
+                                                                            <i class="fas fa-search"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <img src="files/1617328576.14828.សម្លម្ជូរត្រកួន.jpg" alt="Product 1" class="mask-squircle mr-2">
+                                                                        Amazing Product
+                                                                    </td>
+                                                                    <td>
+                                                                        <small class="text-success mr-1">
+                                                                            <i class="fas fa-arrow-up"></i>
+                                                                            Unit price
+                                                                        </small>
+                                                                        $13 USD
+                                                                    </td>
+                                                                    <td>
+                                                                        <small class="text-success mr-1">
+                                                                            <i class="fas fa-arrow-up"></i>
+                                                                            Amount
+                                                                        </small>
+                                                                        198 Sold
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="#" class="text-muted">
+                                                                            <i class="fas fa-search"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <img src="files/1617328576.14828.សម្លម្ជូរត្រកួន.jpg" alt="Product 1" class="mask-squircle mr-2">
+                                                                        Perfect Item
+                                                                    </td>
+                                                                    <td>
+                                                                        <small class="text-success mr-1">
+                                                                            <i class="fas fa-arrow-up"></i>
+                                                                            Unit price
+                                                                        </small>
+                                                                        $13 USD
+                                                                    </td>
+                                                                    <td>
+                                                                        <small class="text-success mr-1">
+                                                                            <i class="fas fa-arrow-up"></i>
+                                                                            Amount
+                                                                        </small>
+                                                                        87 Sold
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="#" class="text-muted">
+                                                                            <i class="fas fa-search"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <img src="files/1617328576.14828.សម្លម្ជូរត្រកួន.jpg" alt="Product 1" class="mask-squircle mr-2">
+                                                                        Perfect Item
+                                                                    </td>
+                                                                    <td>
+                                                                        <small class="text-success mr-1">
+                                                                            <i class="fas fa-arrow-up"></i>
+                                                                            Unit price
+                                                                        </small>
+                                                                        $13 USD
+                                                                    </td>
+                                                                    <td>
+                                                                        <small class="text-success mr-1">
+                                                                            <i class="fas fa-arrow-up"></i>
+                                                                            Amount
+                                                                        </small>
+                                                                        87 Sold
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="#" class="text-muted">
+                                                                            <i class="fas fa-search"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+
+                                                            </table>
+                                                            <div class="timeline-footer">
+                                                                <a class="btn btn-primary btn-sm">Show all 12 products</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- END timeline item -->
+
+                                                    <div>
+                                                        <i class="fas fa-angle-double-down bg-gray"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /.col -->
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody v-show="reportCount === 0">
+                            <tr class="bg-white">
+                                <td class="" colspan="10">
+                                    <div class="sc-5kpu8c-5 dcdHhK">
+                                        <div class="sc-5kpu8c-6 fbNBuP mb-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" height="24px" width="24px" viewBox="0 0 24 24" class="sc-16r8icm-0 jZwKai">
+                                                <path d="M16.4153 16.4153L20 20M18.5455 11.2727C18.5455 15.2893 15.2894 18.5454 11.2728 18.5454C7.25612 18.5454 4 15.2893 4 11.2727C4 7.2561 7.25612 4 11.2728 4C15.2894 4 18.5455 7.2561 18.5455 11.2727Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </div>
+                                        <h3 font-size="16px" font-weight="500" color="text" class="sc-1eb5slv-0 ddqQcN" style="text-align: center;">No results found</h3>
+                                        <p color="text2" font-size="1" class="sc-1eb5slv-0 bSDVZJ">We couldn't find anything matching your search.</p>
+                                        <p color="text2" font-size="1" class="sc-1eb5slv-0 bSDVZJ">Try again with a different term.</p></div>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -211,7 +457,7 @@ export default {
             isLoading: false,
             fullPage: false,
             canCancel: true,
-            loader: 'spinner',
+            loader: 'dots',
             color: '#007bff',
             bgColor: '#ffffff',
             height: 70,
@@ -219,14 +465,6 @@ export default {
 
             tables:[],
             tablesCount : 0,
-            selected: {
-                tables: [],
-                tempTables: [],
-                filters: [],
-
-                paymentTypes: [],
-                tempPaymentTypes: [],
-            },
             tblID:{
                 tablesID: ['all']
             },
@@ -235,8 +473,26 @@ export default {
             paymentCount : 0,
             paymentID:{
                 paymentsID: ['all']
-            }
+            },
 
+            sellers:[],
+            sellersCount : 0,
+            sellerID:{
+                sellersID: ['all']
+            },
+
+
+            selected: {
+                filters: [],
+                tables: [],
+                tempTables: [],
+                paymentTypes: [],
+                tempPaymentTypes: [],
+                sellers: [],
+                tempSeller: [],
+            },
+
+            detailShowed: false,
 
         }
     },
@@ -248,7 +504,7 @@ export default {
             return axios.get("/getReport", {params});
         },
 
-        getRequestParams(searchTitle, page, pageSize, start, end, paymentTypes, tables) {
+        getRequestParams(searchTitle, page, pageSize, start, end, paymentTypes, tables, sellers) {
             let params = {};
             if (searchTitle) {
                 params["title"] = searchTitle;
@@ -274,6 +530,9 @@ export default {
             if (tables) {
                 params["tables"] = tables;
             }
+            if (sellers) {
+                params["sellers"] = sellers;
+            }
 
             return params;
 
@@ -288,6 +547,7 @@ export default {
                 this.end,
                 this.paymentID.paymentsID,
                 this.tblID.tablesID,
+                this.sellerID.sellersID,
             );
             this.isLoading = true;
             setTimeout(() => {
@@ -374,7 +634,7 @@ export default {
         },
 
         toggleFilter(filter){
-            if(filter!=='all'){ //this if() to skip from btn "Clear all filter"
+            if(filter!=='all'){ //this if() to skip from btn "Clear all filter" //'all' happened only when btnClearAllBadge clicked
                 let filterClass = '.'+filter;
                 let fil = $(filterClass);
                 fil.toggleClass('d-none');
@@ -382,7 +642,7 @@ export default {
         },
 
         closeFilter(filter){
-                if (filter!=='all'){ //this if() to skip from btn "Clear all filter"
+                if (filter!=='all'){ //this if() to skip from btn "Clear all filter" //'all' happened only when btnClearAllBadge clicked
                 let filterClass = '.'+filter;
                 let fil = $(filterClass);
                 fil.addClass('d-none');
@@ -402,17 +662,21 @@ export default {
         },
 
         closeOtherFilter(filter){
+            let closePaymentFilter = $('#close-payment-filter');
+            let closeTableFilter = $('#close-table-filter');
+            let closeSellerFilter = $('#close-seller-filter');
             switch (filter) {
                 case 'table-filter':
-                    let closePaymentFilter = $('#close-payment-filter');
                     closePaymentFilter.trigger('click');
+                    closeSellerFilter.trigger('click');
                     break;
                 case 'payment-filter':
-                    let closeTableFilter = $('#close-table-filter');
                     closeTableFilter.trigger('click');
+                    closeSellerFilter.trigger('click');
                     break;
                 case  'seller-filter':
-
+                    closePaymentFilter.trigger('click');
+                    closeTableFilter.trigger('click');
                     break;
                 case  'all':
                     let closeAllFilter = $('div.filter');
@@ -423,19 +687,22 @@ export default {
             }
         },
 
+
+
         clearSelect(filter){
             switch (filter) {
                 case 'table-filter':
                     this.selected.tables = [];
-
                     break;
+
                 case 'payment-filter':
                     this.selected.paymentTypes = [];
-
                     break;
+
                 case  'seller-filter':
-
+                    this.selected.sellers = [];
                     break;
+
                 default:
 
             }
@@ -453,11 +720,13 @@ export default {
                     break;
 
                 case  'seller-filter':
+                    this.selected.sellers = this.sellers;
                     break;
 
                 case  'all':
                     this.selected.tables = this.tables;
                     this.selected.paymentTypes = this.paymentTypes;
+                    this.selected.sellers = this.sellers;
                     break;
                 default:
 
@@ -474,7 +743,7 @@ export default {
                     this.selected.paymentTypes = this.selected.tempPaymentTypes;
                     break;
                 case  'seller-filter':
-
+                    this.selected.sellers = this.selected.tempSeller;
                     break;
                 default:
 
@@ -491,12 +760,13 @@ export default {
                     this.selected.tempPaymentTypes = this.selected.paymentTypes;
                     break;
                 case  'seller-filter':
-
+                    this.selected.tempSeller = this.selected.sellers;
                     break;
 
                 case  'all':
                     this.selected.tempTables = this.selected.tables;
                     this.selected.tempPaymentTypes = this.selected.paymentTypes;
+                    this.selected.tempSeller = this.selected.sellers;
                     break;
                 default:
 
@@ -505,34 +775,36 @@ export default {
         },
 
         getSelectedID(filter){
+            let filtersID = [];
+            let filterCount = 0;
+            let selectedFilter = [];
+            let selectedFilterLength = 0;
+
             switch (filter) {
                 case 'table-filter':
-                    this.tblID.tablesID=[];
-                    if (this.selected.tables.length === this.tablesCount)
-                        this.tblID.tablesID = ['all'];
-                    else
-                    this.selected.tables.forEach((value, index) => {
-                        this.tblID.tablesID.push(value.id);
-                    });
-
+                    filterCount = this.tablesCount;
+                    selectedFilter = this.selected.tables
+                    selectedFilterLength = this.selected.tables.length;
+                    this.tblID.tablesID = this.sub_GetSelectedID(filterCount, selectedFilter, selectedFilterLength)
                     break;
 
                 case 'payment-filter':
-                    this.paymentID.paymentsID=[];
-                    if (this.selected.paymentTypes.length === this.paymentCount)
-                        this.paymentID.paymentsID = ['all'];
-                    else
-                        this.selected.paymentTypes.forEach((value, index) => {
-                            this.paymentID.paymentsID.push(value.id);
-                    });
+                    filterCount = this.paymentCount;
+                    selectedFilter = this.selected.paymentTypes
+                    selectedFilterLength = this.selected.paymentTypes.length;
+                    this.paymentID.paymentsID = this.sub_GetSelectedID(filterCount, selectedFilter, selectedFilterLength)
                     break;
 
                 case  'seller-filter':
-
+                    filterCount = this.sellersCount;
+                    selectedFilter = this.selected.sellers
+                    selectedFilterLength = this.selected.sellers.length
+                    this.sellerID.sellersID = this.sub_GetSelectedID(filterCount, selectedFilter, selectedFilterLength);
                     break;
                 case  'all':
                         this.tblID.tablesID = ['all'];
                         this.paymentID.paymentsID = ['all'];
+                        this.sellerID.sellersID = ['all'];
                     break;
                 default:
 
@@ -541,26 +813,43 @@ export default {
 
         },
 
+        sub_GetSelectedID(count, selectedFilters, selectedLength){
+            let IDs = [];
+            if (selectedLength === count)
+                IDs = ['all'];
+            else
+                selectedFilters.forEach((value, index) => {
+                    IDs.push(value.id);
+                });
+            return IDs;
+        },
+
         styling_BtnFilter_BadgeFilter(filter){
             let selectedFilterLength = 0;
-            let selectedFilterCount = 0;
+            let filterCount = 0;
             let text = '';
             switch (filter) {
                 case 'table-filter':
                     selectedFilterLength = this.selected.tables.length;
-                    selectedFilterCount = this.tablesCount;
+                    filterCount = this.tablesCount;
                     text = 'table';
-                    this.stylingCurrentFilter(filter, selectedFilterLength, selectedFilterCount, text)
+                    this.sub_Styling_BtnFilter_BadgeFilter(filter, selectedFilterLength, filterCount, text)
                     break;
+
                 case 'payment-filter':
                     selectedFilterLength = this.selected.paymentTypes.length;
-                    selectedFilterCount = this.paymentCount;
+                    filterCount = this.paymentCount;
                     text = 'payment';
-                    this.stylingCurrentFilter(filter, selectedFilterLength, selectedFilterCount, text)
+                    this.sub_Styling_BtnFilter_BadgeFilter(filter, selectedFilterLength, filterCount, text)
                     break;
-                case  'seller-filter':
 
+                case  'seller-filter':
+                    selectedFilterLength = this.selected.sellers.length;
+                    filterCount = this.sellersCount;
+                    text = 'seller';
+                    this.sub_Styling_BtnFilter_BadgeFilter(filter, selectedFilterLength, filterCount, text)
                     break;
+
                 case  'all':
                     let allBtnFilter = $('.btn-filter');
                     allBtnFilter.removeClass('visited');
@@ -568,10 +857,11 @@ export default {
                     break;
                 default:
 
+
             }
         },
 
-        stylingCurrentFilter(filter, length, count, badgeText){
+        sub_Styling_BtnFilter_BadgeFilter(filter, length, count, badgeText){
             let currentFilter ='';
             let selectedBtnFilter = $('.btn-'+filter);
             if (length !== count){
@@ -606,7 +896,7 @@ export default {
         },
 
         applyFilter(filter){
-            this.getSelectedID(filter) //get only for retrieveReports()
+            this.getSelectedID(filter) //get only for ID
             this.retrieveReports()
             this.toggleFilter(filter)
             this.styling_BtnFilter_BadgeFilter(filter);
@@ -636,9 +926,25 @@ export default {
                     console.log(e);
                 });
         },
-        test(){
-            alert('closed')
-        }
+
+        retrieveSellers(){
+            axios.get("getSellers")
+                .then((response) => {
+                    this.sellers = response.data;
+                    this.sellersCount = this.sellers.length
+                    this.selected.sellers = this.sellers;
+                    this.selected.tempSeller = this.sellers;
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
+        },
+
+        showDetail(rowID){
+            let selector = rowID+":nth-of-type(2)";
+            const list = $("#"+selector);
+            list.toggleClass('d-none')
+        },
 
     },
     computed:{
@@ -646,17 +952,13 @@ export default {
     },
 
     watch:{
-        /*selected: {
-            handler: function (val, oldVal) {
-                this.getSelectedTablesID()
-            },
-            deep: true
-        },*/
+
     },
 
     mounted() {
         this.retrieveTables()
         this.retrievePaymentType()
+        this.retrieveSellers()
         const vm = this
 
 
