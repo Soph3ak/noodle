@@ -12,6 +12,7 @@
                                 <th>ភេទ</th>
                                 <th>លេខទូរសព័្ទ</th>
                                 <th>អាសយដ្ធាន</th>
+                                <th>Last order</th>
                                 <th class="text-center">កែប្រែ | EDIT</th>
                                 <th class="text-center">លុប | DELETE</th>
                             </tr>
@@ -24,6 +25,8 @@
                                 <td v-else>ប្រុស</td>
                                 <td>{{ customer.phone }}</td>
                                 <td>{{ customer.address }}</td>
+                                <td v-if="customer.latest_order !== null">{{convertToCurrency(customer.latest_order.total)}}៛ <br> <small class="text-success">{{ getLatestOrder(customer.latest_order.created_at) }}</small></td>
+                                <td v-else></td>
                                 <td class="text-center">
                                     <button class="btn btn-primary" data-toggle="modal" data-target="#modal-customer" @click="editModal(customer)"><i class="fas fa-pencil-alt"></i></button>
                                 </td>
@@ -38,8 +41,8 @@
                     <!-- /.card-body -->
                     <div class="card-footer">
                         <pagination :data="customers" @pagination-change-page="getResults" :limit="1" align="center">
-                           <!-- <span slot="prev-nav">&lt; Previous</span>
-                            <span slot="next-nav">Next &gt;</span>-->
+                            <!-- <span slot="prev-nav">&lt; Previous</span>
+                             <span slot="next-nav">Next &gt;</span>-->
                         </pagination>
                     </div>
                     <!-- /.card-footer -->
@@ -50,51 +53,51 @@
         <!-- /.row -->
         <!-- modal customer -->
         <div class="modal fade" id="modal-customer" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog">
-                    <form @submit.prevent="editMode ? updateCustomer(form.name,form.id):saveCustomer(form.name) ">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" v-if="editMode"><span><i class="fas fa-user-edit mr-2"></i></span>កែប្រែព័ត៌មានអតិថិជន</h4>
-                                <h4 class="modal-title" v-else><span><i class="fas fa-user-plus mr-2"></i></span>បញ្ចូលព័ត៌មានអតិថិជនថ្មី</h4>
-                                <button type="button" class="close" data-toggle="modal" data-target="#modal-customer" @click="resetForm">
-                                    <span aria-hidden="true">×</span>
-                                </button>
+            <div class="modal-dialog">
+                <form @submit.prevent="editMode ? updateCustomer(form.name,form.id):saveCustomer(form.name) ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" v-if="editMode"><span><i class="fas fa-user-edit mr-2"></i></span>កែប្រែព័ត៌មានអតិថិជន</h4>
+                            <h4 class="modal-title" v-else><span><i class="fas fa-user-plus mr-2"></i></span>បញ្ចូលព័ត៌មានអតិថិជនថ្មី</h4>
+                            <button type="button" class="close" data-toggle="modal" data-target="#modal-customer" @click="resetForm">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="name">ឈ្មោះអតិថិជន</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="ឈ្មោះអតិថិជន" v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }">
+                                <has-error :form="form" field="name"></has-error>
                             </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="name">ឈ្មោះអតិថិជន</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="ឈ្មោះអតិថិជន" v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }">
-                                    <has-error :form="form" field="name"></has-error>
-                                </div>
-                                <div class="form-group">
-                                    <label for="gender">ភេទ</label>
-                                    <select class="custom-select" v-model="form.gender"  name="gender" id="gender">
-                                        <option value="0">ស្រី</option>
-                                        <option value="1">ប្រុស</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="phone">លេខទូរសព្ទ័</label>
-                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="លេខទូរសព្ទ័" v-model="form.phone" :class="{ 'is-invalid': form.errors.has('phone') }">
-                                    <has-error :form="form" field="phone"></has-error>
-                                </div>
-                                <div class="form-group">
-                                    <label for="address">អាសយដ្ធាន</label>
-                                    <input type="text" class="form-control" id="address" name="address" placeholder="អាសយដ្ធាន" v-model="form.address" :class="{ 'is-invalid': form.errors.has('phone') }">
-                                    <has-error :form="form" field="address"></has-error>
-                                </div>
+                            <div class="form-group">
+                                <label for="gender">ភេទ</label>
+                                <select class="custom-select" v-model="form.gender"  name="gender" id="gender">
+                                    <option value="0">ស្រី</option>
+                                    <option value="1">ប្រុស</option>
+                                </select>
                             </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal-customer" @click="resetForm">បោះបង់</button>
-                                <button type="submit" class="btn btn-primary" v-if="editMode">កែប្រែ</button>
-                                <button type="submit" class="btn btn-primary" v-else>រក្សាទុក</button>
+                            <div class="form-group">
+                                <label for="phone">លេខទូរសព្ទ័</label>
+                                <input type="text" class="form-control" id="phone" name="phone" placeholder="លេខទូរសព្ទ័" v-model="form.phone" :class="{ 'is-invalid': form.errors.has('phone') }">
+                                <has-error :form="form" field="phone"></has-error>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">អាសយដ្ធាន</label>
+                                <input type="text" class="form-control" id="address" name="address" placeholder="អាសយដ្ធាន" v-model="form.address" :class="{ 'is-invalid': form.errors.has('phone') }">
+                                <has-error :form="form" field="address"></has-error>
                             </div>
                         </div>
-                        <!-- /.modal-content -->
-                    </form>
-                </div>
-                <!-- /.modal-dialog -->
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal-customer" @click="resetForm">បោះបង់</button>
+                            <button type="submit" class="btn btn-primary" v-if="editMode">កែប្រែ</button>
+                            <button type="submit" class="btn btn-primary" v-else>រក្សាទុក</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </form>
             </div>
+            <!-- /.modal-dialog -->
+        </div>
         <!-- /.modal -->
     </div>
 </template>
@@ -147,16 +150,22 @@ export default {
                 .then(response => {
                     this.customers = response.data;
                     this.currentPage = page;
+                    this.customers.data.forEach(function(currentValue, index){
+                        if(currentValue.latest_order !== null){
+                            console.log(currentValue.latest_order.created_at)
+                        }
+                    });
+
                 });
         },
 
         saveCustomer(name){
             this.form.post('api/customer')
-            .then(response => {
-                this.getResults(this.currentPage)
-                this.alertSuccess('Customer',name,'saved successfully');
-                this.hideModal();
-            })
+                .then(response => {
+                    this.getResults(this.currentPage)
+                    this.alertSuccess('Customer',name,'saved successfully');
+                    this.hideModal();
+                })
                 .catch(err => console.log(err))
                 .finally(() => this.loading = false)
         },
@@ -197,6 +206,25 @@ export default {
                         .finally(() => this.loading = false)
                 }
             })
+        },
+
+        getLatestOrder(date){
+            return moment(date).calendar();
+        },
+
+        convertToCurrency(price){
+            /*https://flaviocopes.com/how-to-format-number-as-currency-javascript/*/
+            let converted
+            const formatter = new Intl.NumberFormat('en-US', {
+                /*style: 'currency',
+                currency: 'USD',*/
+                minimumFractionDigits: 0
+            })
+            if(price > 0){
+                return converted = formatter.format(price)
+            }
+            else return converted = '0.00'
+
         },
 
         alertSuccess(str1,name,str2){

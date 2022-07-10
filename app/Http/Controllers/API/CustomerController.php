@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use phpDocumentor\Reflection\Utils;
 
 class CustomerController extends Controller
 {
@@ -22,9 +23,16 @@ class CustomerController extends Controller
 
     public function getCustomer()
     {
-        return $customers = Customer::orderBy('id', 'desc')->paginate(10);
-    }
 
+        /*return $customers = Customer::orderBy('id', 'desc')->paginate(10);*/
+
+        return $customers = Customer::with('latestOrder')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+
+
+
+    }
 
     public function getCustomerPaginate($paginate)
     {
