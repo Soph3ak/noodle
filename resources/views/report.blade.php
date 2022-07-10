@@ -21,5 +21,13 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script type="text/javascript">
+        $(document).ready(function(){
+
+            $('.card-body').overlayScrollbars({ overflowBehavior : {
+                    x : "hidden",
+                    y : "scroll"
+                }, });
+        });
     </script>
+
 @stop

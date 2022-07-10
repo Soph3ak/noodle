@@ -213,194 +213,94 @@
                             </tr>
                             </tbody>-->
                             <tbody v-for="report in reports.data" :key="report.id" :id="'report'+report.id">
-                                <tr>
-                                    <td><a href="#">{{ report.id }}</a></td>
-                                    <td>{{ formatDate(report.created_at) }}</td>
-                                    <td>{{ report.customer.name }}</td>
-                                    <td>{{ report.shop.name }}</td>
-                                    <td>
-                                        <div class="position-relative p-0">
-                                            <img :src="getImgUrl(report.user.photo)" alt="Staff Image" class="img-circle staff-image">
-                                        </div>
-                                    </td>
-                                    <td>{{ report.table.name }}</td>
-                                    <td>
-                                        <span class="badge badge-new-primary" v-if="report.payment.payment === 'UNPAID'">{{report.payment.payment}}</span>
-                                        <span class="badge badge-new-success" v-else-if="report.payment.payment === 'PAID'">{{report.payment.payment}}</span>
-                                        <span class="badge badge-new-danger" v-else>{{report.payment.payment}}</span>
-                                    </td>
-                                    <td class="">{{ convertToCurrency(report.subtotal) }}៛</td>
-                                    <td class="text-danger">-{{ convertToCurrency(report.discount) }}៛</td>
-                                    <td class="text-success">{{ convertToCurrency(report.total) }}៛</td>
-                                    <td class="text-right toggle-detail">
+                            <tr class="tr-show-sub" @click="showDetail('detail'+report.id, report.id)">
+                                <td><a href="#">{{ report.id }}</a></td>
+                                <td>{{ formatDate(report.created_at) }}</td>
+                                <td>{{ report.customer.name }}</td>
+                                <td>{{ report.shop.name }}</td>
+                                <td>
+                                    <div class="position-relative p-0">
+                                        <img :src="getImgUrl(report.user.photo)" alt="Staff Image" class="img-circle staff-image">
+                                    </div>
+                                </td>
+                                <td>{{ report.table.name }}</td>
+                                <td>
+                                    <span class="badge badge-new-primary" v-if="report.payment.payment === 'UNPAID'">{{report.payment.payment}}</span>
+                                    <span class="badge badge-new-success" v-else-if="report.payment.payment === 'PAID'">{{report.payment.payment}}</span>
+                                    <span class="badge badge-new-danger" v-else>{{report.payment.payment}}</span>
+                                </td>
+                                <td class="">{{ convertToCurrency(report.subtotal) }}៛</td>
+                                <td class="text-danger">-{{ convertToCurrency(report.discount) }}៛</td>
+                                <td class="text-success">{{ convertToCurrency(report.total) }}៛</td>
+                                <td class="text-right toggle-detail">
                                     <span>
-                                        <a type="button" class="btn btn-detail" @click="showDetail('detail'+report.id)">
+                                        <a type="button" class="btn btn-detail">
                                             <i class="ion-code-working"></i>
                                         </a>
                                     </span>
-                                    </td>
-                                </tr>
-                                <tr class="detail-showing d-none" :id="'detail'+report.id">
-                                    <td colspan="11" class="abc">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <!-- The time line -->
-                                                <div class="timeline">
-                                                    <!-- timeline time label -->
-                                                    <!--<div class="time-label">
-                                                        <span class="bg-red">Order #128</span>
-                                                    </div>-->
-                                                    <!-- /.timeline-label -->
+                                </td>
+                            </tr>
+                            <tr class="detail-showing tr-sub" :id="'detail'+report.id">
+                                <td colspan="11" class="abc">
+                                    <div class="row div-sub">
+                                        <div class="col-md-12">
+                                            <!-- The time line -->
+                                            <div class="timeline">
+                                                <div>
+                                                    <i class="fas fa-shopping-cart bg-green"></i>
+                                                    <div class="timeline-item">
+                                                        <h3 class="timeline-header"><a href="#">Order #{{report.id}}</a></h3>
+                                                        <table class="table table-borderless table-valign-middle">
+                                                            <tr v-for="(product,index) in report.products" :key="product.id">
+                                                                <td>
+                                                                    <img :src="'files/'+product.photo" alt="Product 1" class="mask-squircle mr-2">
+                                                                    {{product.name_kh}}
+                                                                </td>
 
-                                                    <!-- timeline item -->
-                                                    <div>
-                                                        <i class="fas fa-shopping-cart bg-green"></i>
-                                                        <div class="timeline-item">
-                                                            <h3 class="timeline-header"><a href="#">Order #{{report.id}}</a></h3>
-                                                            <table class="table table-borderless table-valign-middle">
-                                                                <tr>
-                                                                    <td>
-                                                                        <img src="files/1617328576.14828.សម្លម្ជូរត្រកួន.jpg" alt="Product 1" class="mask-squircle mr-2">
-                                                                        Some Product x2
-                                                                    </td>
-                                                                    <td>
-                                                                        <small class="text-success mr-1">
-                                                                            <i class="fas fa-arrow-up"></i>
-                                                                            Unit price
-                                                                        </small>
-                                                                        $13 USD
-                                                                    </td>
-                                                                    <td>
-                                                                        <small class="text-success mr-1">
-                                                                            <i class="fas fa-arrow-up"></i>
-                                                                            Amount
-                                                                        </small>
-                                                                        12,000 Sold
-                                                                    </td>
-                                                                    <td>
-                                                                        <a href="#" class="text-muted">
-                                                                            <i class="fas fa-search"></i>
-                                                                        </a>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        <img src="files/1617328576.14828.សម្លម្ជូរត្រកួន.jpg" alt="Product 1" class="mask-squircle mr-2">
-                                                                        Another Product
-                                                                    </td>
-                                                                    <td>
-                                                                        <small class="text-success mr-1">
-                                                                            <i class="fas fa-arrow-up"></i>
-                                                                            Unit price
-                                                                        </small>
-                                                                        $13 USD
-                                                                    </td>
-                                                                    <td>
-                                                                        <small class="text-success mr-1">
-                                                                            <i class="fas fa-arrow-up"></i>
-                                                                            Amount
-                                                                        </small>
-                                                                        123,234 Sold
-                                                                    </td>
-                                                                    <td>
-                                                                        <a href="#" class="text-muted">
-                                                                            <i class="fas fa-search"></i>
-                                                                        </a>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        <img src="files/1617328576.14828.សម្លម្ជូរត្រកួន.jpg" alt="Product 1" class="mask-squircle mr-2">
-                                                                        Amazing Product
-                                                                    </td>
-                                                                    <td>
-                                                                        <small class="text-success mr-1">
-                                                                            <i class="fas fa-arrow-up"></i>
-                                                                            Unit price
-                                                                        </small>
-                                                                        $13 USD
-                                                                    </td>
-                                                                    <td>
-                                                                        <small class="text-success mr-1">
-                                                                            <i class="fas fa-arrow-up"></i>
-                                                                            Amount
-                                                                        </small>
-                                                                        198 Sold
-                                                                    </td>
-                                                                    <td>
-                                                                        <a href="#" class="text-muted">
-                                                                            <i class="fas fa-search"></i>
-                                                                        </a>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        <img src="files/1617328576.14828.សម្លម្ជូរត្រកួន.jpg" alt="Product 1" class="mask-squircle mr-2">
-                                                                        Perfect Item
-                                                                    </td>
-                                                                    <td>
-                                                                        <small class="text-success mr-1">
-                                                                            <i class="fas fa-arrow-up"></i>
-                                                                            Unit price
-                                                                        </small>
-                                                                        $13 USD
-                                                                    </td>
-                                                                    <td>
-                                                                        <small class="text-success mr-1">
-                                                                            <i class="fas fa-arrow-up"></i>
-                                                                            Amount
-                                                                        </small>
-                                                                        87 Sold
-                                                                    </td>
-                                                                    <td>
-                                                                        <a href="#" class="text-muted">
-                                                                            <i class="fas fa-search"></i>
-                                                                        </a>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        <img src="files/1617328576.14828.សម្លម្ជូរត្រកួន.jpg" alt="Product 1" class="mask-squircle mr-2">
-                                                                        Perfect Item
-                                                                    </td>
-                                                                    <td>
-                                                                        <small class="text-success mr-1">
-                                                                            <i class="fas fa-arrow-up"></i>
-                                                                            Unit price
-                                                                        </small>
-                                                                        $13 USD
-                                                                    </td>
-                                                                    <td>
-                                                                        <small class="text-success mr-1">
-                                                                            <i class="fas fa-arrow-up"></i>
-                                                                            Amount
-                                                                        </small>
-                                                                        87 Sold
-                                                                    </td>
-                                                                    <td>
-                                                                        <a href="#" class="text-muted">
-                                                                            <i class="fas fa-search"></i>
-                                                                        </a>
-                                                                    </td>
-                                                                </tr>
+                                                                <td>
+                                                                    <small class="text-success mr-1">
+                                                                        Quantity
+                                                                    </small>
+                                                                    {{product.pivot.quantity}}
+                                                                </td>
 
-                                                            </table>
-                                                            <div class="timeline-footer">
-                                                                <a class="btn btn-primary btn-sm">Show all 12 products</a>
-                                                            </div>
+                                                                <td>
+                                                                    <small class="text-success mr-1">
+                                                                        Unit price
+                                                                    </small>
+                                                                    {{convertToCurrency(product.price)}}៛
+                                                                </td>
+                                                                <td>
+                                                                    <small class="text-success mr-1">
+                                                                        Amount
+                                                                    </small>
+                                                                    {{convertToCurrency(product.price * product.pivot.quantity)}}៛
+                                                                </td>
+                                                                <td>
+                                                                        <span class="text-danger">
+                                                                            -{{convertToCurrency(product.pro_discount)}}៛
+                                                                        </span>
+                                                                </td>
+                                                            </tr>
+
+
+                                                        </table>
+                                                        <div class="timeline-footer" v-show="report.products.length>5">
+                                                            <a class="btn btn-primary btn-sm" @click="showAllDetailProduct(report.products.length)">Show all {{report.products.length}} products</a>
                                                         </div>
                                                     </div>
-                                                    <!-- END timeline item -->
+                                                </div>
+                                                <!-- END timeline item -->
 
-                                                    <div>
-                                                        <i class="fas fa-angle-double-down bg-gray"></i>
-                                                    </div>
+                                                <div>
+                                                    <i class="fas fa-angle-double-down bg-gray"></i>
                                                 </div>
                                             </div>
-                                            <!-- /.col -->
                                         </div>
-                                    </td>
-                                </tr>
+                                        <!-- /.col -->
+                                    </div>
+                                </td>
+                            </tr>
                             </tbody>
                             <tbody v-show="reportCount === 0">
                             <tr class="bg-white">
@@ -493,6 +393,9 @@ export default {
             },
 
             detailShowed: false,
+            detailLimit: 5,
+            detailProducts: [],
+
 
         }
     },
@@ -642,7 +545,7 @@ export default {
         },
 
         closeFilter(filter){
-                if (filter!=='all'){ //this if() to skip from btn "Clear all filter" //'all' happened only when btnClearAllBadge clicked
+            if (filter!=='all'){ //this if() to skip from btn "Clear all filter" //'all' happened only when btnClearAllBadge clicked
                 let filterClass = '.'+filter;
                 let fil = $(filterClass);
                 fil.addClass('d-none');
@@ -802,9 +705,9 @@ export default {
                     this.sellerID.sellersID = this.sub_GetSelectedID(filterCount, selectedFilter, selectedFilterLength);
                     break;
                 case  'all':
-                        this.tblID.tablesID = ['all'];
-                        this.paymentID.paymentsID = ['all'];
-                        this.sellerID.sellersID = ['all'];
+                    this.tblID.tablesID = ['all'];
+                    this.paymentID.paymentsID = ['all'];
+                    this.sellerID.sellersID = ['all'];
                     break;
                 default:
 
@@ -896,6 +799,7 @@ export default {
         },
 
         applyFilter(filter){
+            this.page = 1;
             this.getSelectedID(filter) //get only for ID
             this.retrieveReports()
             this.toggleFilter(filter)
@@ -940,11 +844,25 @@ export default {
                 });
         },
 
-        showDetail(rowID){
-            let selector = rowID+":nth-of-type(2)";
-            const list = $("#"+selector);
-            list.toggleClass('d-none')
+        showDetail(rowID, orderID){
+            const selector = $("#"+rowID);
+            const div_sub = selector.find('div.div-sub')
+            div_sub.slideToggle(350)
+            selector.toggleClass('shadowed')
+
+            /*axios.get("getOrderProducts/"+orderID)
+                .then((response) => {
+                    this.detailProducts = response.data
+                })
+                .catch((e) => {
+                    console.log(e);
+                });*/
+
         },
+
+        showAllDetailProduct(number){
+            this.detailList = number;
+        }
 
     },
     computed:{
