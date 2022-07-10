@@ -5,3 +5,9 @@ if(!function_exists('myGlobalFunction')){
         return 'Here is my global function';
     }
 }
+
+
+
+
+
+

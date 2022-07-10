@@ -461,7 +461,7 @@ import Seat from "./Seat";
                 this.form = new Form({
                     id:"",
                     user_id: this.userID,
-                    customer_id: "2",
+                    customer_id: "62",
                     table_id: this.seatID,
                     shop_id: "1",
                     payment_id: this.paymentID,
