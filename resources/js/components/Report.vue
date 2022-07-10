@@ -3,9 +3,6 @@
         <div class="search-block d-flex">
             <div class="form-group">
                 <input type="text" class="form-control search" id="search" placeholder="Search invoice number here ..." v-model="searchTitle" @keyup.enter="page = 1; retrieveReports()">
-                <!--<button type="button" class="btn btn-primary float-right form-control btn-search d-none" @click="page = 1; retrieveReports()">
-                    ស្វែងរក
-                </button>-->
             </div>
         </div>
 
@@ -167,51 +164,7 @@
                                 <th></th>
                             </tr>
                             </thead>
-                            <!--<tbody class="vld-parent" id="myTable">
-                            <tr v-for="report in reports.data" :key="report.id" :id="'report'+report.id">
-                                <td><a href="#">{{ report.id }}</a></td>
-                                <td>{{ formatDate(report.created_at) }}</td>
-                                <td>{{ report.customer.name }}</td>
-                                <td>{{ report.shop.name }}</td>
-                                &lt;!&ndash;<td>{{ report.user.name_kh }}</td>&ndash;&gt;
-                                <td>
-                                    <div class="position-relative p-0">
-                                        <img :src="getImgUrl(report.user.photo)" alt="Staff Image" class="img-circle staff-image">
-                                    </div>
-                                </td>
-                                <td>{{ report.table.name }}</td>
-                                <td>
-                                    <span class="badge badge-new-primary" v-if="report.payment.payment === 'UNPAID'">{{report.payment.payment}}</span>
-                                    <span class="badge badge-new-success" v-else-if="report.payment.payment === 'PAID'">{{report.payment.payment}}</span>
-                                    <span class="badge badge-new-danger" v-else>{{report.payment.payment}}</span>
-                                </td>
-                                <td>{{ convertToCurrency(report.subtotal) }}៛</td>
-                                <td>{{ convertToCurrency(report.discount) }}៛</td>
-                                <td>{{ convertToCurrency(report.total) }}៛</td>
-                                <td class="text-right toggle-detail">
-                                    <span>
-                                        <button type="button" class="btn btn-detail" @click="showDetail('#report'+report.id)"><i class="ion-code-working"></i></button>
-                                    </span>
-                                </td>
 
-                            </tr>
-                            <tr v-show="reportCount === 0" class="bg-white">
-                                <td class="" colspan="10">
-                                    <div class="sc-5kpu8c-5 dcdHhK">
-                                        <div class="sc-5kpu8c-6 fbNBuP mb-3">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" height="24px" width="24px" viewBox="0 0 24 24" class="sc-16r8icm-0 jZwKai">
-                                                <path d="M16.4153 16.4153L20 20M18.5455 11.2727C18.5455 15.2893 15.2894 18.5454 11.2728 18.5454C7.25612 18.5454 4 15.2893 4 11.2727C4 7.2561 7.25612 4 11.2728 4C15.2894 4 18.5455 7.2561 18.5455 11.2727Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            </svg>
-                                        </div>
-                                        <h3 font-size="16px" font-weight="500" color="text" class="sc-1eb5slv-0 ddqQcN" style="text-align: center;">No results found</h3>
-                                        <p color="text2" font-size="1" class="sc-1eb5slv-0 bSDVZJ">We couldn't find anything matching your search.</p>
-                                        <p color="text2" font-size="1" class="sc-1eb5slv-0 bSDVZJ">Try again with a different term.</p></div>
-                                </td>
-                            </tr>
-                            <tr class="text-center detail-showing d-none" id="myDetail">
-                                <td colspan="11">NAME</td>
-                            </tr>
-                            </tbody>-->
                             <tbody v-for="report in reports.data" :key="report.id" :id="'report'+report.id">
                             <tr class="tr-show-sub" @click="showDetail('detail'+report.id, report.id)">
                                 <td><a href="#">{{ report.id }}</a></td>
