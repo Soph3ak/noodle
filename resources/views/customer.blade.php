@@ -6,8 +6,11 @@
     <div class="row">
         <div class="col-6"><h1>ព័ត៌មានអតិថិជន</h1></div>
         <div class="col-6">
-            <button type="button" id="new-customer" class="btn btn-primary float-right" data-toggle="modal" data-target="#modal-customer">
-                បង្កើតអតិថិជនថ្មី
+            <button data-v-e1ea323e="" type="button" id="new-customer" class="btn btn-primary float-right add__more" data-toggle="modal" data-target="#modal-customer">
+                <span data-v-e1ea323e="" class="d-flex justify-content-center align-items-center">
+                    <i data-v-e1ea323e="" class="gg-add mr-2"></i>
+                    បង្កើតអតិថិជនថ្មី
+                </span>
             </button>
         </div>
     </div>

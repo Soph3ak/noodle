@@ -12,6 +12,7 @@
                                 <th>ភេទ</th>
                                 <th>លេខទូរសព័្ទ</th>
                                 <th>អាសយដ្ធាន</th>
+                                <th>Last order</th>
                                 <th class="text-center">កែប្រែ | EDIT</th>
                                 <th class="text-center">លុប | DELETE</th>
                             </tr>
@@ -24,6 +25,8 @@
                                 <td v-else>ប្រុស</td>
                                 <td>{{ customer.phone }}</td>
                                 <td>{{ customer.address }}</td>
+                                <td v-if="customer.latest_order !== null">{{convertToCurrency(customer.latest_order.total)}}៛ <br> <small class="text-success">{{ getLatestOrder(customer.latest_order.created_at) }}</small></td>
+                                <td v-else></td>
                                 <td class="text-center">
                                     <button class="btn btn-primary" data-toggle="modal" data-target="#modal-customer" @click="editModal(customer)"><i class="fas fa-pencil-alt"></i></button>
                                 </td>
@@ -147,6 +150,12 @@ export default {
                 .then(response => {
                     this.customers = response.data;
                     this.currentPage = page;
+                    this.customers.data.forEach(function(currentValue, index){
+                        if(currentValue.latest_order !== null){
+                            console.log(currentValue.latest_order.created_at)
+                        }
+                    });
+
                 });
         },
 
@@ -197,6 +206,25 @@ export default {
                         .finally(() => this.loading = false)
                 }
             })
+        },
+
+        getLatestOrder(date){
+            return moment(date).calendar();
+        },
+
+        convertToCurrency(price){
+            /*https://flaviocopes.com/how-to-format-number-as-currency-javascript/*/
+            let converted
+            const formatter = new Intl.NumberFormat('en-US', {
+                /*style: 'currency',
+                currency: 'USD',*/
+                minimumFractionDigits: 0
+            })
+            if(price > 0){
+                return converted = formatter.format(price)
+            }
+            else return converted = '0.00'
+
         },
 
         alertSuccess(str1,name,str2){

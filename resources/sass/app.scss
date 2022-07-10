@@ -312,7 +312,7 @@ input#search{
 }
 
 tr.detail-showing{
-    height: 300px;
+
 }
 
 .btn-detail{
@@ -407,6 +407,7 @@ p.sort:hover{
 
 .abc{
     white-space: normal;
+    padding: 0 !important;
 }
 
 .timeline>div>.timeline-item{
@@ -432,6 +433,22 @@ p.sort:hover{
 .timeline-item td>img{
     width: 40px;
     height: 40px;
+}
+
+table .tr-show-sub {
+    cursor: pointer;
+}
+
+table .tr-sub td {
+    display: table-cell;
+}
+
+table .tr-sub td .div-sub {
+    display: none;
+}
+
+.shadowed{
+    box-shadow: 0px 1.2612903118133545px 2.522580623626709px 0px #61616133;
 }
 
 
