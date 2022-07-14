@@ -204,7 +204,86 @@
                                                     <div class="timeline-item">
                                                         <h3 class="timeline-header"><a href="#">Order #{{report.id}}</a></h3>
                                                         <table class="table table-borderless table-valign-middle">
-                                                            <tr v-for="(product,index) in report.products" :key="product.id">
+                                                            <!--<tr v-for="(product,index) in report.products" :key="product.id">
+                                                                <td>
+                                                                    <img :src="'files/'+product.photo" alt="Product 1" class="mask-squircle mr-2">
+                                                                    {{product.name_kh}}
+                                                                </td>
+
+                                                                <td>
+                                                                    <small class="text-success mr-1">
+                                                                        Quantity
+                                                                    </small>
+                                                                    {{product.pivot.quantity}}
+                                                                </td>
+
+                                                                <td>
+                                                                    <small class="text-success mr-1">
+                                                                        Unit price
+                                                                    </small>
+                                                                    {{convertToCurrency(product.price)}}៛
+                                                                </td>
+                                                                <td>
+                                                                    <small class="text-success mr-1">
+                                                                        Amount
+                                                                    </small>
+                                                                    {{convertToCurrency(product.price * product.pivot.quantity)}}៛
+                                                                </td>
+                                                                <td>
+                                                                        <span class="text-danger">
+                                                                            -{{convertToCurrency(product.pro_discount)}}៛
+                                                                        </span>
+                                                                </td>
+                                                            </tr>-->
+                                                            <tbody v-if="l === true || report.products.length<=0" class="skeleton">
+                                                                <tr>
+                                                                    <td>
+                                                                        <span class="mask-squircle mr-2 placeholder avatar mr-2"> </span>
+                                                                        <span class="placeholder line"></span>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <span class="placeholder line"></span>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <span class="placeholder line"></span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span class="placeholder line"></span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span class="text-danger">
+                                                                            <span class="placeholder line"></span>
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <span class="mask-squircle mr-2 placeholder avatar"> </span>
+                                                                        <span class="placeholder line"></span>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <span class="placeholder line"></span>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <span class="placeholder line"></span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span class="placeholder line"></span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span class="text-danger">
+                                                                            <span class="placeholder line"></span>
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+
+                                                            <tr v-for="(product,index) in report.products" :key="product.id" v-if="index < report.products.length-1">
+
                                                                 <td>
                                                                     <img :src="'files/'+product.photo" alt="Product 1" class="mask-squircle mr-2">
                                                                     {{product.name_kh}}
@@ -238,8 +317,8 @@
 
 
                                                         </table>
-                                                        <div class="timeline-footer" v-show="report.products.length>5">
-                                                            <a class="btn btn-primary btn-sm" @click="showAllDetailProduct(report.products.length)">Show all {{report.products.length}} products</a>
+                                                        <div class="timeline-footer" v-show="report.products.length-1 > 1">
+                                                            <a class="btn btn-primary btn-sm" @click="showAllDetailProduct(report.products.length)">Show all {{report.products[report.products.length-1]}} products</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -291,7 +370,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
     props: ['token'],
-    components:{Loading},
+    components:{Loading },
     data () {
         return {
             currentPage:'1',
@@ -347,9 +426,8 @@ export default {
 
             detailShowed: false,
             detailLimit: 5,
-            detailProducts: [],
 
-
+            l: false,
         }
     },
     methods:{
@@ -410,8 +488,26 @@ export default {
                 this.getAll(params)
                     .then((response) => {
                         this.isLoading = false
-                        this.reports = response.data;
+                        /*let arr = [];
+                        arr.push(response.data)
+                        console.log('======arr')
+                        console.log(arr[0].data)*/
+
+
+                        /*arr[0].data.forEach((value, index) => {
+                            console.log(value.id);
+                            const arrayFailed = Object.entries(failed).map((arr) => ({
+                                fieldName: arr[0],
+                                message: arr[1],
+                            }));
+                            }
+                        )*/
+
+
+                        this.reports = response.data
                         this.reportCount = (this.reports.data).length
+
+
                     })
                     .catch((e) => {
                         console.log(e);
@@ -803,13 +899,34 @@ export default {
             div_sub.slideToggle(350)
             selector.toggleClass('shadowed')
 
-            /*axios.get("getOrderProducts/"+orderID)
-                .then((response) => {
-                    this.detailProducts = response.data
+            if (this.l === false) {//THIS IF() TO PREVENT FROM FAST DOUBLE CLICK (CUZ PULL REQUEST TWO TIMES)
+                this.reports.data.forEach((value1, index1) => {
+                    if (value1.products.length <= 0) {//PUSH IF EMPTY ONLY
+                        if (value1.id === orderID) { //CHECK TO PUSH TO CORRECT ORDER ID
+                            this.l = true
+                            setTimeout(() => {
+                                axios.get("getOrderProducts/" + orderID)
+                                    .then((response) => {
+                                        this.l = true
+                                        let arr = [];
+                                        arr = response.data[0]
+
+                                        arr.forEach((value, index) => {
+                                            value1.products.push(arr[index])
+                                        })
+                                        value1.products.push(response.data['total']);
+
+                                    })
+                                    .catch((e) => {
+                                        console.log(e);
+                                    });
+                            }, 500);
+                        }
+                    }
                 })
-                .catch((e) => {
-                    console.log(e);
-                });*/
+            }
+
+
 
         },
 

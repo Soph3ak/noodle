@@ -280,7 +280,7 @@ return [
 
         ['header' => 'ADMINISTRATOR'],
         [
-            'text' => 'Users',
+            'text' => 'Users Management',
             'url'  => 'sell',
             'icon' => 'fas fa-fw fa-user-cog mr-1',
         ],

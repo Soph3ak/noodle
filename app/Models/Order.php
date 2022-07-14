@@ -31,8 +31,12 @@ class Order extends Model
             Product::class,
             'order_product',
             'order_id',
-            'product_id')->withPivot('quantity')->take(5);
+            'product_id')->withPivot('quantity');
+
+
     }
+
+
 
     public function table(){
         return $this->belongsTo(Table::class);

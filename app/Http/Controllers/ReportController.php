@@ -33,6 +33,7 @@ class ReportController extends Controller
         $searchTitle = $request->title;
         $tables = $request->tables;
         $sellers = $request->sellers;
+
         $reports = Order::whereDate('created_at', '>=', Carbon::createFromDate($request->start))
             ->whereDate('created_at', '<=', Carbon::createFromDate($request->end))
             ->with('user:id,name_kh,photo')
@@ -40,11 +41,9 @@ class ReportController extends Controller
             ->with('table:id,name')
             ->with('shop:id,name') /*(user, customer, table, shop) is function's name in their modal*/
             ->with('payment:id,payment')
-            ->with('products:id,name,name_kh,price,pro_discount,photo')
-
-               /*->with(['products' => function($query) {
-                   $query->where('price','>',0)->limit(5)->get();
-               }])*/
+            ->with('products' , function($query){
+                $query->where('id',0);//To select nothing
+            })
 
             ->orderBy('id', 'desc');
             /*TABLE SORT*/
@@ -109,7 +108,15 @@ class ReportController extends Controller
     }
 
     public function getOrderProducts($id){
-        return $order = Order::where('id',$id)->with('products')->get();
+        $order = Order::find($id);
+
+        $limit = 5;
+        $collector = collect();
+        foreach ($order->products as $product){
+            $collector->push($product);
+        }
+        $count = $collector->count();
+        return [$collector->take($limit), 'total' => $count];
 
     }
 }

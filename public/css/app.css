@@ -480,4 +480,85 @@ table .tr-sub td .div-sub {
   box-shadow: 0px 1.2612903118px 2.5225806236px 0px rgba(97, 97, 97, 0.2);
 }
 
+.placeholder {
+  /*background-color: red;
+  width: 100px;*/
+}
+
+.skeleton td {
+  padding-left: 0.75rem !important;
+}
+
+.skeleton .avatar {
+  float: left;
+  width: 40px;
+  height: 40px;
+  background-color: #ccc;
+  border-radius: 25%;
+  background-image: linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px);
+  background-size: 600px;
+  -webkit-animation: shine-avatar 1.6s infinite linear;
+          animation: shine-avatar 1.6s infinite linear;
+}
+
+.skeleton .line {
+  float: left;
+  width: 140px;
+  height: 16px;
+  border-radius: 7px;
+  background-image: linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px);
+  background-size: 600px;
+  -webkit-animation: shine-lines 1.6s infinite linear;
+          animation: shine-lines 1.6s infinite linear;
+}
+
+.skeleton .avatar + .line {
+  margin-top: 11px;
+  width: 100px;
+}
+
+.skeleton .line ~ .line {
+  background-color: #ddd;
+}
+
+@-webkit-keyframes shine-lines {
+  0% {
+    background-position: -100px;
+  }
+
+  40%, 100% {
+    background-position: 140px;
+  }
+}
+
+@keyframes shine-lines {
+  0% {
+    background-position: -100px;
+  }
+
+  40%, 100% {
+    background-position: 140px;
+  }
+}
+
+@-webkit-keyframes shine-avatar {
+  0% {
+    background-position: -32px;
+  }
+
+  40%, 100% {
+    background-position: 208px;
+  }
+}
+
+@keyframes shine-avatar {
+  0% {
+    background-position: -32px;
+  }
+
+  40%, 100% {
+    background-position: 208px;
+  }
+}
+
 
