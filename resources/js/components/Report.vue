@@ -182,9 +182,9 @@
                                     <span class="badge badge-new-success" v-else-if="report.payment.payment === 'PAID'">{{report.payment.payment}}</span>
                                     <span class="badge badge-new-danger" v-else>{{report.payment.payment}}</span>
                                 </td>
-                                <td class="">{{ convertToCurrency(report.subtotal) }}៛</td>
-                                <td class="text-danger">-{{ convertToCurrency(report.discount) }}៛</td>
-                                <td class="text-success">{{ convertToCurrency(report.total) }}៛</td>
+                                <td class="">{{ convertToCurrency(report.subtotal) }}<span class="kh-currency"><span class="kh-currency">៛</span></span></td>
+                                <td class="text-danger">-{{ convertToCurrency(report.discount) }}<span class="kh-currency">៛</span></td>
+                                <td class="text-success">{{ convertToCurrency(report.total) }}<span class="kh-currency">៛</span></td>
                                 <td class="text-right toggle-detail">
                                     <span>
                                         <a type="button" class="btn btn-detail">
@@ -193,7 +193,7 @@
                                     </span>
                                 </td>
                             </tr>
-                            <tr class="detail-showing tr-sub" :id="'detail'+report.id">
+                            <tr class="tr-sub" :id="'detail'+report.id">
                                 <td colspan="11" class="abc">
                                     <div class="row div-sub">
                                         <div class="col-md-12">
@@ -235,7 +235,7 @@
                                                                         </span>
                                                                 </td>
                                                             </tr>-->
-                                                            <tbody v-if="l === true || report.products.length<=0" class="skeleton">
+                                                            <tbody v-if="l === true && report.products.length<=0" class="skeleton">
                                                                 <tr>
                                                                     <td>
                                                                         <span class="mask-squircle mr-2 placeholder avatar mr-2"> </span>
@@ -280,9 +280,32 @@
                                                                         </span>
                                                                     </td>
                                                                 </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <span class="mask-squircle mr-2 placeholder avatar"> </span>
+                                                                        <span class="placeholder line"></span>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <span class="placeholder line"></span>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <span class="placeholder line"></span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span class="placeholder line"></span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span class="text-danger">
+                                                                            <span class="placeholder line"></span>
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+
                                                             </tbody>
 
-                                                            <tr v-for="(product,index) in report.products" :key="product.id" v-if="index < report.products.length-1">
+                                                            <tr v-for="(product,index) in report.products" :key="product.id" v-if="index < report.products.length-1" class="fade-in">
 
                                                                 <td>
                                                                     <img :src="'files/'+product.photo" alt="Product 1" class="mask-squircle mr-2">
@@ -300,24 +323,24 @@
                                                                     <small class="text-success mr-1">
                                                                         Unit price
                                                                     </small>
-                                                                    {{convertToCurrency(product.price)}}៛
+                                                                    {{convertToCurrency(product.price)}}<span class="kh-currency"><span class="kh-currency">៛</span></span>
                                                                 </td>
                                                                 <td>
                                                                     <small class="text-success mr-1">
                                                                         Amount
                                                                     </small>
-                                                                    {{convertToCurrency(product.price * product.pivot.quantity)}}៛
+                                                                    {{convertToCurrency(product.price * product.pivot.quantity)}}<span class="kh-currency"><span class="kh-currency">៛</span></span>
                                                                 </td>
                                                                 <td>
                                                                         <span class="text-danger">
-                                                                            -{{convertToCurrency(product.pro_discount)}}៛
+                                                                            -{{convertToCurrency(product.pro_discount)}}<span class="kh-currency">៛</span>
                                                                         </span>
                                                                 </td>
                                                             </tr>
 
 
                                                         </table>
-                                                        <div class="timeline-footer" v-show="report.products.length-1 > 1">
+                                                        <div class="timeline-footer" v-show="report.products.length-1 >= 5">
                                                             <a class="btn btn-primary btn-sm" @click="showAllDetailProduct(report.products.length)">Show all {{report.products[report.products.length-1]}} products</a>
                                                         </div>
                                                     </div>
@@ -428,6 +451,7 @@ export default {
             detailLimit: 5,
 
             l: false,
+            ordID: 0,
         }
     },
     methods:{
@@ -899,15 +923,16 @@ export default {
             div_sub.slideToggle(350)
             selector.toggleClass('shadowed')
 
-            if (this.l === false) {//THIS IF() TO PREVENT FROM FAST DOUBLE CLICK (CUZ PULL REQUEST TWO TIMES)
+            if (orderID !== this.ordID) {//THIS IF() TO PREVENT FROM FAST DOUBLE CLICK (CUZ PULL REQUEST TWO TIMES)
                 this.reports.data.forEach((value1, index1) => {
                     if (value1.products.length <= 0) {//PUSH IF EMPTY ONLY
                         if (value1.id === orderID) { //CHECK TO PUSH TO CORRECT ORDER ID
                             this.l = true
+                            this.ordID = orderID
                             setTimeout(() => {
                                 axios.get("getOrderProducts/" + orderID)
                                     .then((response) => {
-                                        this.l = true
+                                        this.l = false
                                         let arr = [];
                                         arr = response.data[0]
 
@@ -915,12 +940,11 @@ export default {
                                             value1.products.push(arr[index])
                                         })
                                         value1.products.push(response.data['total']);
-
                                     })
                                     .catch((e) => {
                                         console.log(e);
                                     });
-                            }, 500);
+                            },  250);
                         }
                     }
                 })
