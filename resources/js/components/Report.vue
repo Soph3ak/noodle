@@ -341,7 +341,9 @@
 
                                                         </table>
                                                         <div class="timeline-footer" v-show="report.products.length-1 >= 5">
-                                                            <a class="btn btn-primary btn-sm" @click="showAllDetailProduct(report.products.length)">Show all {{report.products[report.products.length-1]}} products</a>
+                                                            <a class="btn btn-primary btn-sm" @click="showAllDetailProduct(report.id ,report.products[report.products.length-1])">
+                                                                Show all {{report.products[report.products.length-1]}} products
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -512,26 +514,8 @@ export default {
                 this.getAll(params)
                     .then((response) => {
                         this.isLoading = false
-                        /*let arr = [];
-                        arr.push(response.data)
-                        console.log('======arr')
-                        console.log(arr[0].data)*/
-
-
-                        /*arr[0].data.forEach((value, index) => {
-                            console.log(value.id);
-                            const arrayFailed = Object.entries(failed).map((arr) => ({
-                                fieldName: arr[0],
-                                message: arr[1],
-                            }));
-                            }
-                        )*/
-
-
                         this.reports = response.data
                         this.reportCount = (this.reports.data).length
-
-
                     })
                     .catch((e) => {
                         console.log(e);
@@ -944,7 +928,7 @@ export default {
                                     .catch((e) => {
                                         console.log(e);
                                     });
-                            },  250);
+                            },  350);
                         }
                     }
                 })
@@ -954,8 +938,49 @@ export default {
 
         },
 
-        showAllDetailProduct(number){
-            this.detailList = number;
+        showAllDetailProduct(orderID, limit){
+            axios.get("getOrderProducts/" + orderID)
+                .then((response) => {
+                    this.l = false
+                    let arr = [];
+                    arr = response.data[0]
+
+                    arr.forEach((value, index) => {
+                        value1.products.push(arr[index])
+                    })
+                    value1.products.push(response.data['total']);
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
+
+
+            /*if (orderID !== this.ordID) {//THIS IF() TO PREVENT FROM FAST DOUBLE CLICK (CUZ PULL REQUEST TWO TIMES)
+                this.reports.data.forEach((value1, index1) => {
+                    if (value1.products.length <= 0) {//PUSH IF EMPTY ONLY
+                        if (value1.id === orderID) { //CHECK TO PUSH TO CORRECT ORDER ID
+                            this.l = true
+                            this.ordID = orderID
+                            setTimeout(() => {
+                                axios.get("getOrderProducts/" + orderID)
+                                    .then((response) => {
+                                        this.l = false
+                                        let arr = [];
+                                        arr = response.data[0]
+
+                                        arr.forEach((value, index) => {
+                                            value1.products.push(arr[index])
+                                        })
+                                        value1.products.push(response.data['total']);
+                                    })
+                                    .catch((e) => {
+                                        console.log(e);
+                                    });
+                            },  350);
+                        }
+                    }
+                })
+            }*/
         }
 
     },
