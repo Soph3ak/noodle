@@ -107,16 +107,15 @@ class ReportController extends Controller
 
     }
 
-    public function getOrderProducts($id){
-        $order = Order::find($id);
+    public function getOrderProducts(Request $request){
+        $order = Order::find($request->orderID);
 
-        $limit = 5;
         $collector = collect();
         foreach ($order->products as $product){
             $collector->push($product);
         }
         $count = $collector->count();
-        return [$collector->take($limit), 'total' => $count];
+        return [$collector->take($request->limit), 'total' => $count];
 
     }
 }

@@ -166,7 +166,7 @@
                             </thead>
 
                             <tbody v-for="report in reports.data" :key="report.id" :id="'report'+report.id">
-                            <tr class="tr-show-sub" @click="showDetail('detail'+report.id, report.id)">
+                            <tr class="tr-show-sub" @click="toggleSlideTable('detail'+report.id); showDetail(report.id)">
                                 <td><a href="#">{{ report.id }}</a></td>
                                 <td>{{ formatDate(report.created_at) }}</td>
                                 <td>{{ report.customer.name }}</td>
@@ -341,7 +341,10 @@
 
                                                         </table>
                                                         <div class="timeline-footer" v-show="report.products.length-1 >= 5">
-                                                            <a class="btn btn-primary btn-sm" @click="showAllDetailProduct(report.id ,report.products[report.products.length-1])">
+                                                            <a class="btn btn-primary btn-sm" v-if="loadingButton === true && report.id === ordID">
+                                                                <i class="fas fa-spinner mr-2 fa-spin"></i> Loading
+                                                            </a>
+                                                            <a class="btn btn-primary btn-sm" @click="showAllDetailProduct(report.id ,report.products[report.products.length-1])" v-else>
                                                                 Show all {{report.products[report.products.length-1]}} products
                                                             </a>
                                                         </div>
@@ -453,6 +456,7 @@ export default {
             detailLimit: 5,
 
             l: false,
+            loadingButton: false,
             ordID: 0,
         }
     },
@@ -901,20 +905,31 @@ export default {
                 });
         },
 
-        showDetail(rowID, orderID){
+        toggleSlideTable(rowID){
             const selector = $("#"+rowID);
             const div_sub = selector.find('div.div-sub')
             div_sub.slideToggle(350)
             selector.toggleClass('shadowed')
+        },
+
+        showDetail(orderID, limit){
+
+            if (limit) {
+                this.detailLimit = limit
+            }
 
             if (orderID !== this.ordID) {//THIS IF() TO PREVENT FROM FAST DOUBLE CLICK (CUZ PULL REQUEST TWO TIMES)
                 this.reports.data.forEach((value1, index1) => {
-                    if (value1.products.length <= 0) {//PUSH IF EMPTY ONLY
+                    if (value1.products.length <= 0) { //Prevent Error,
                         if (value1.id === orderID) { //CHECK TO PUSH TO CORRECT ORDER ID
                             this.l = true
                             this.ordID = orderID
+                            let params = this.getParamsDetailProduct(
+                                this.ordID,
+                                this.detailLimit,
+                            );
                             setTimeout(() => {
-                                axios.get("getOrderProducts/" + orderID)
+                                axios.get("/getOrderProducts", {params})
                                     .then((response) => {
                                         this.l = false
                                         let arr = [];
@@ -928,7 +943,7 @@ export default {
                                     .catch((e) => {
                                         console.log(e);
                                     });
-                            },  350);
+                            }, 350);
                         }
                     }
                 })
@@ -937,50 +952,52 @@ export default {
 
 
         },
+        getParamsDetailProduct(orderID, limit){
+            let params = {};
+            if (orderID) {
+                params["orderID"] = orderID;
+            }
+
+            if (limit) {
+                params["limit"] = limit;
+            }
+
+            return params;
+        },
 
         showAllDetailProduct(orderID, limit){
-            axios.get("getOrderProducts/" + orderID)
-                .then((response) => {
-                    this.l = false
-                    let arr = [];
-                    arr = response.data[0]
+            if (limit) {
+                this.detailLimit = limit
+            }
 
-                    arr.forEach((value, index) => {
-                        value1.products.push(arr[index])
-                    })
-                    value1.products.push(response.data['total']);
-                })
-                .catch((e) => {
-                    console.log(e);
-                });
-
-
-            /*if (orderID !== this.ordID) {//THIS IF() TO PREVENT FROM FAST DOUBLE CLICK (CUZ PULL REQUEST TWO TIMES)
                 this.reports.data.forEach((value1, index1) => {
-                    if (value1.products.length <= 0) {//PUSH IF EMPTY ONLY
-                        if (value1.id === orderID) { //CHECK TO PUSH TO CORRECT ORDER ID
-                            this.l = true
-                            this.ordID = orderID
-                            setTimeout(() => {
-                                axios.get("getOrderProducts/" + orderID)
-                                    .then((response) => {
-                                        this.l = false
-                                        let arr = [];
-                                        arr = response.data[0]
-
-                                        arr.forEach((value, index) => {
-                                            value1.products.push(arr[index])
-                                        })
-                                        value1.products.push(response.data['total']);
+                    if (value1.id === orderID) { //CHECK TO PUSH TO CORRECT ORDER ID
+                        this.loadingButton = true
+                        this.ordID = orderID
+                        let params = this.getParamsDetailProduct(
+                            this.ordID,
+                            this.detailLimit,
+                        );
+                        setTimeout(() => {
+                            axios.get("/getOrderProducts", {params})
+                                .then((response) => {
+                                    this.loadingButton = false
+                                    let arr = [];
+                                    arr = response.data[0]
+                                    value1.products = []
+                                    arr.forEach((value, index) => {
+                                        value1.products.push(arr[index])
                                     })
-                                    .catch((e) => {
-                                        console.log(e);
-                                    });
-                            },  350);
-                        }
+                                    value1.products.push(response.data['total']);
+                                })
+                                .catch((e) => {
+                                    console.log(e);
+                                });
+                        }, 350);
                     }
+
                 })
-            }*/
+
         }
 
     },
