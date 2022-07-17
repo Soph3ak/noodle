@@ -188,7 +188,7 @@
                                 <td class="text-right toggle-detail">
                                     <span>
                                         <a type="button" class="btn btn-detail">
-                                            <i class="ion-code-working"></i>
+                                            <i class="ion-code-working text-cyan"></i>
                                         </a>
                                     </span>
                                 </td>
@@ -204,37 +204,6 @@
                                                     <div class="timeline-item">
                                                         <h3 class="timeline-header"><a href="#">Order #{{report.id}}</a></h3>
                                                         <table class="table table-borderless table-valign-middle">
-                                                            <!--<tr v-for="(product,index) in report.products" :key="product.id">
-                                                                <td>
-                                                                    <img :src="'files/'+product.photo" alt="Product 1" class="mask-squircle mr-2">
-                                                                    {{product.name_kh}}
-                                                                </td>
-
-                                                                <td>
-                                                                    <small class="text-success mr-1">
-                                                                        Quantity
-                                                                    </small>
-                                                                    {{product.pivot.quantity}}
-                                                                </td>
-
-                                                                <td>
-                                                                    <small class="text-success mr-1">
-                                                                        Unit price
-                                                                    </small>
-                                                                    {{convertToCurrency(product.price)}}៛
-                                                                </td>
-                                                                <td>
-                                                                    <small class="text-success mr-1">
-                                                                        Amount
-                                                                    </small>
-                                                                    {{convertToCurrency(product.price * product.pivot.quantity)}}៛
-                                                                </td>
-                                                                <td>
-                                                                        <span class="text-danger">
-                                                                            -{{convertToCurrency(product.pro_discount)}}៛
-                                                                        </span>
-                                                                </td>
-                                                            </tr>-->
                                                             <tbody v-if="l === true && report.products.length<=0" class="skeleton">
                                                                 <tr>
                                                                     <td>
@@ -340,20 +309,25 @@
 
 
                                                         </table>
-                                                        <div class="timeline-footer" v-show="report.products.length-1 >= 5">
-                                                            <a class="btn btn-primary btn-sm" v-if="loadingButton === true && report.id === ordID">
+                                                        <div class="timeline-footer" v-show="report.products[report.products.length-1] > 5">
+                                                            <a class="btn btn-primary btn-sm px-3" v-if="loadingButton === true && report.id === ordID">
                                                                 <i class="fas fa-spinner mr-2 fa-spin"></i> Loading
                                                             </a>
-                                                            <a class="btn btn-primary btn-sm" @click="showAllDetailProduct(report.id ,report.products[report.products.length-1])" v-else>
+
+                                                            <a class="btn btn-primary btn-sm px-3"
+                                                               @click="showAllDetailProduct(report.id ,report.products[report.products.length-1])"
+                                                               v-else>
                                                                 Show all {{report.products[report.products.length-1]}} products
                                                             </a>
+
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!-- END timeline item -->
 
                                                 <div>
-                                                    <i class="fas fa-angle-double-down bg-gray"></i>
+                                                    <i class="fas fa-ban bg-gray" v-if="report.products[report.products.length-1] <= 5 || report.products.length-1 > 5"></i>
+                                                    <i class="fas fa-angle-double-down bg-gray" :id="'ban'+report.id" v-else></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -457,6 +431,8 @@ export default {
 
             l: false,
             loadingButton: false,
+            showLess: false,
+            showAll: true,
             ordID: 0,
         }
     },
@@ -934,7 +910,7 @@ export default {
                                         this.l = false
                                         let arr = [];
                                         arr = response.data[0]
-
+                                        //value1.products = []
                                         arr.forEach((value, index) => {
                                             value1.products.push(arr[index])
                                         })
@@ -982,6 +958,9 @@ export default {
                             axios.get("/getOrderProducts", {params})
                                 .then((response) => {
                                     this.loadingButton = false
+                                    //this.showLess = true
+                                    this.showAll = false
+                                    this.changeToBanIcon(orderID)
                                     let arr = [];
                                     arr = response.data[0]
                                     value1.products = []
@@ -993,12 +972,23 @@ export default {
                                 .catch((e) => {
                                     console.log(e);
                                 });
-                        }, 350);
+                        }, 250);
                     }
 
                 })
+            this.detailLimit = 5; //reset limit
+        },
 
-        }
+        /*callShowAll(){
+            this.showAll = true
+            this.showLess = false
+            this.ordID = 0
+        },*/
+
+        changeToBanIcon(id){
+            let select = $("i#ban"+id);
+            select.addClass('fas fa-angle-double-down bg-gray')
+        },
 
     },
     computed:{
