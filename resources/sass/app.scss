@@ -419,6 +419,14 @@ p.sort:hover{
     box-shadow: none;
 }
 
+.timeline {
+    margin: 0 0 20px;
+}
+
+.text-lightgray{
+    color: #6c757dad;
+}
+
 .report .table td{
     border-top: none;
 }
@@ -461,6 +469,20 @@ table .tr-sub td .div-sub {
     50%{height: 500px;}
     75%{height: 400px;}
     100%{height: auto;}*/
+}
+
+.animated-down{
+    line-height: 30px;
+    animation-name: animated-down;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes animated-down {
+     0%{line-height: 30px;}
+
+     50%{line-height: 40px;}
+     100%{line-height: 30px;}
 }
 
 .height-auto{

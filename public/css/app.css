@@ -459,6 +459,14 @@ p.sort:hover {
   box-shadow: none;
 }
 
+.timeline {
+  margin: 0 0 20px;
+}
+
+.text-lightgray {
+  color: rgba(108, 117, 125, 0.6784313725);
+}
+
 .report .table td {
   border-top: none;
 }
@@ -509,6 +517,44 @@ table .tr-sub td .div-sub {
    50%{height: 500px;}
    75%{height: 400px;}
    100%{height: auto;}*/}
+
+.animated-down {
+  line-height: 30px;
+  -webkit-animation-name: animated-down;
+          animation-name: animated-down;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes animated-down {
+  0% {
+    line-height: 30px;
+  }
+
+  50% {
+    line-height: 40px;
+  }
+
+  100% {
+    line-height: 30px;
+  }
+}
+
+@keyframes animated-down {
+  0% {
+    line-height: 30px;
+  }
+
+  50% {
+    line-height: 40px;
+  }
+
+  100% {
+    line-height: 30px;
+  }
+}
 
 .height-auto {
   height: auto !important;

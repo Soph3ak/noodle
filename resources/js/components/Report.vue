@@ -203,6 +203,7 @@
                                                     <i class="fas fa-shopping-cart bg-green"></i>
                                                     <div class="timeline-item">
                                                         <h3 class="timeline-header"><a href="#">Order #{{report.id}}</a></h3>
+                                                        <!--<span class="text-xs ml-2 text-success">Showing 5 of 9 products</span>-->
                                                         <table class="table table-borderless table-valign-middle">
                                                             <tbody v-if="l === true && report.products.length<=0" class="skeleton">
                                                                 <tr>
@@ -301,7 +302,10 @@
                                                                     {{convertToCurrency(product.price * product.pivot.quantity)}}<span class="kh-currency"><span class="kh-currency">៛</span></span>
                                                                 </td>
                                                                 <td>
-                                                                        <span class="text-danger">
+                                                                    <small class="text-success mr-1">
+                                                                        Discount
+                                                                    </small>
+                                                                    <span class="text-danger">
                                                                             -{{convertToCurrency(product.pro_discount)}}<span class="kh-currency">៛</span>
                                                                         </span>
                                                                 </td>
@@ -310,13 +314,13 @@
 
                                                         </table>
                                                         <div class="timeline-footer" v-show="report.products[report.products.length-1] > 5">
-                                                            <a class="btn btn-primary btn-sm px-3" v-if="loadingButton === true && report.id === ordID">
+                                                            <a class="text-primary pointer" v-if="loadingButton === true && report.id === ordID">
                                                                 <i class="fas fa-spinner mr-2 fa-spin"></i> Loading
                                                             </a>
 
-                                                            <a class="btn btn-primary btn-sm px-3"
+                                                            <a class="text-primary pointer"
                                                                @click="showAllDetailProduct(report.id ,report.products[report.products.length-1])"
-                                                               v-else>
+                                                               v-else-if="report.products[report.products.length-1] > report.products.length-1">
                                                                 Show all {{report.products[report.products.length-1]}} products
                                                             </a>
 
@@ -327,7 +331,11 @@
 
                                                 <div>
                                                     <i class="fas fa-ban bg-gray" v-if="report.products[report.products.length-1] <= 5 || report.products.length-1 > 5"></i>
-                                                    <i class="fas fa-angle-double-down bg-gray" :id="'ban'+report.id" v-else></i>
+                                                    <i class="fas fa-angle-double-down bg-gray animated-down" :id="'ban'+report.id" v-else></i>
+                                                    <span class="text-xs ml-5 pl-3 text-lightgray">
+                                                        Showing {{report.products.length-1}} of {{report.products[report.products.length-1]}}
+                                                        {{report.products[report.products.length-1]>1 ? 'products':'product'}}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
