@@ -34,10 +34,10 @@ class CustomerController extends Controller
 
     }
 
-    public function getCustomerPaginate($paginate)
+    /*public function getCustomerPaginate($paginate)
     {
         return $customers = Customer::orderBy('id', 'desc')->paginate($paginate);
-    }
+    }*/
 
 
     protected function validator(array $data)

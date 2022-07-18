@@ -68,7 +68,35 @@
                             <tr class="w-100">
                                 <th>Invoice #</th>
                                 <th>Date</th>
-                                <th>Customer</th>
+                                <th>
+                                    <div class="d-flex align-items-center">
+                                        Customer
+                                        <div class="ml-2 position-relative pointer d-inline-block">
+                                            <span class="gg">
+                                                <span class="text-gray" @click="sort('customer')"><i class="gg-swap-vertical"></i></span>
+                                                <span class="btn-filter text-gray btn-customer-filter" @click="toggleFilter('customer-filter'); previousSelect('customer-filter'); closeOtherFilter('customer-filter');"><i class="gg-sort-az"></i></span>
+                                            </span>
+                                            <div class="filter customer-filter px-2 py-4 d-none">
+                                                <span class="p-2 pointer text-primary" @click="selectAll('customer-filter')"><i class="ion-android-done-all mr-2"></i>Select all</span>
+                                                <span class="p-2 pointer text-danger" @click="clearSelect('customer-filter')"><i class="ion-android-close mr-2"></i>Clear</span>
+                                                <hr>
+                                                <div class="form-group">
+                                                    <div class="checkbox-wrapper px-2" v-for="cus in customers" :key="cus.id" :id="'customer-wrapper' + cus.id">
+                                                        <div class="custom-control custom-checkbox d-flex align-items-center">
+                                                            <input class="custom-control-input" type="checkbox" v-model="selected.customers" :id="'customer' + cus.id" :value="cus"/>
+                                                            <label :for="'customer' + cus.id" class="custom-control-label pointer">{{cus.name}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="filter_footer d-flex justify-content-end">
+                                                    <button @click="closeFilter('customer-filter'); previousSelect('customer-filter')" type="button" id="close-customer-filter" class="btn btn-sm btn-default mr-2">Cancel</button>
+                                                    <button @click="applyFilter('customer-filter'); saveSelect('customer-filter')" type="button" class="btn btn-sm btn-success">Apply</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
                                 <th>Location</th>
                                 <th>
                                     <div class="d-flex align-items-center">
@@ -205,7 +233,7 @@
                                                         <h3 class="timeline-header"><a href="#">Order #{{report.id}}</a></h3>
                                                         <!--<span class="text-xs ml-2 text-success">Showing 5 of 9 products</span>-->
                                                         <table class="table table-borderless table-valign-middle">
-                                                            <tbody v-if="l === true && report.products.length<=0" class="skeleton">
+                                                            <tbody v-if="loadingProducts === true && report.products.length<=0" class="skeleton">
                                                                 <tr>
                                                                     <td>
                                                                         <span class="mask-squircle mr-2 placeholder avatar mr-2"> </span>
@@ -313,7 +341,7 @@
 
 
                                                         </table>
-                                                        <div class="timeline-footer" v-show="report.products[report.products.length-1] > 5">
+                                                        <div class="timeline-footer ml-2">
                                                             <a class="text-primary pointer" v-if="loadingButton === true && report.id === ordID">
                                                                 <i class="fas fa-spinner mr-2 fa-spin"></i> Loading
                                                             </a>
@@ -423,6 +451,12 @@ export default {
                 sellersID: ['all']
             },
 
+            customers:[],
+            customersCount : 0,
+            customerID:{
+                customersID: ['all']
+            },
+
 
             selected: {
                 filters: [],
@@ -432,15 +466,15 @@ export default {
                 tempPaymentTypes: [],
                 sellers: [],
                 tempSeller: [],
+                customers:[],
+                tempCustomer:[],
             },
 
             detailShowed: false,
             detailLimit: 5,
 
-            l: false,
+            loadingProducts: false,
             loadingButton: false,
-            showLess: false,
-            showAll: true,
             ordID: 0,
         }
     },
@@ -452,7 +486,7 @@ export default {
             return axios.get("/getReport", {params});
         },
 
-        getRequestParams(searchTitle, page, pageSize, start, end, paymentTypes, tables, sellers) {
+        getRequestParams(searchTitle, page, pageSize, start, end, paymentTypes, tables, sellers, customers) {
             let params = {};
             if (searchTitle) {
                 params["title"] = searchTitle;
@@ -481,6 +515,9 @@ export default {
             if (sellers) {
                 params["sellers"] = sellers;
             }
+            if (customers) {
+                params["customers"] = customers;
+            }
 
             return params;
 
@@ -496,6 +533,7 @@ export default {
                 this.paymentID.paymentsID,
                 this.tblID.tablesID,
                 this.sellerID.sellersID,
+                this.customerID.customersID,
             );
             this.isLoading = true;
             setTimeout(() => {
@@ -626,6 +664,10 @@ export default {
                     closePaymentFilter.trigger('click');
                     closeTableFilter.trigger('click');
                     break;
+                case  'customer-filter':
+                    closePaymentFilter.trigger('click');
+                    closeTableFilter.trigger('click');
+                    break;
                 case  'all':
                     let closeAllFilter = $('div.filter');
                     closeAllFilter.addClass('d-none');
@@ -651,6 +693,10 @@ export default {
                     this.selected.sellers = [];
                     break;
 
+                case  'customer-filter':
+                    this.selected.customers = [];
+                    break;
+
                 default:
 
             }
@@ -670,11 +716,15 @@ export default {
                 case  'seller-filter':
                     this.selected.sellers = this.sellers;
                     break;
+                case  'customer-filter':
+                    this.selected.customers = this.customers;
+                    break;
 
                 case  'all':
                     this.selected.tables = this.tables;
                     this.selected.paymentTypes = this.paymentTypes;
                     this.selected.sellers = this.sellers;
+                    this.selected.customers = this.customers;
                     break;
                 default:
 
@@ -692,6 +742,9 @@ export default {
                     break;
                 case  'seller-filter':
                     this.selected.sellers = this.selected.tempSeller;
+                    break;
+                case  'customer-filter':
+                    this.selected.customers = this.selected.tempCustomer;
                     break;
                 default:
 
@@ -711,10 +764,15 @@ export default {
                     this.selected.tempSeller = this.selected.sellers;
                     break;
 
+                case  'customer-filter':
+                    this.selected.tempCustomer = this.selected.customers;
+                    break;
+
                 case  'all':
                     this.selected.tempTables = this.selected.tables;
                     this.selected.tempPaymentTypes = this.selected.paymentTypes;
                     this.selected.tempSeller = this.selected.sellers;
+                    this.selected.tempCustomer = this.selected.customers;
                     break;
                 default:
 
@@ -749,10 +807,19 @@ export default {
                     selectedFilterLength = this.selected.sellers.length
                     this.sellerID.sellersID = this.sub_GetSelectedID(filterCount, selectedFilter, selectedFilterLength);
                     break;
+
+                case  'customer-filter':
+                    filterCount = this.customersCount;
+                    selectedFilter = this.selected.customers
+                    selectedFilterLength = this.selected.customers.length
+                    this.customerID.customersID = this.sub_GetSelectedID(filterCount, selectedFilter, selectedFilterLength);
+                    break;
+
                 case  'all':
                     this.tblID.tablesID = ['all'];
                     this.paymentID.paymentsID = ['all'];
                     this.sellerID.sellersID = ['all'];
+                    this.customerID.customersID = ['all'];
                     break;
                 default:
 
@@ -795,6 +862,13 @@ export default {
                     selectedFilterLength = this.selected.sellers.length;
                     filterCount = this.sellersCount;
                     text = 'seller';
+                    this.sub_Styling_BtnFilter_BadgeFilter(filter, selectedFilterLength, filterCount, text)
+                    break;
+
+                case  'customer-filter':
+                    selectedFilterLength = this.selected.customers.length;
+                    filterCount = this.customersCount;
+                    text = 'customer';
                     this.sub_Styling_BtnFilter_BadgeFilter(filter, selectedFilterLength, filterCount, text)
                     break;
 
@@ -889,6 +963,19 @@ export default {
                 });
         },
 
+        retrieveCustomers(){
+            axios.get("getCustomers")
+                .then((response) => {
+                    this.customers = response.data;
+                    this.customersCount = this.customers.length
+                    this.selected.customers = this.customers;
+                    this.selected.tempCustomer = this.customers;
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
+        },
+
         toggleSlideTable(rowID){
             const selector = $("#"+rowID);
             const div_sub = selector.find('div.div-sub')
@@ -906,7 +993,7 @@ export default {
                 this.reports.data.forEach((value1, index1) => {
                     if (value1.products.length <= 0) { //Prevent Error,
                         if (value1.id === orderID) { //CHECK TO PUSH TO CORRECT ORDER ID
-                            this.l = true
+                            this.loadingProducts= true
                             this.ordID = orderID
                             let params = this.getParamsDetailProduct(
                                 this.ordID,
@@ -915,7 +1002,7 @@ export default {
                             setTimeout(() => {
                                 axios.get("/getOrderProducts", {params})
                                     .then((response) => {
-                                        this.l = false
+                                        this.loadingProducts = false
                                         let arr = [];
                                         arr = response.data[0]
                                         //value1.products = []
@@ -966,8 +1053,6 @@ export default {
                             axios.get("/getOrderProducts", {params})
                                 .then((response) => {
                                     this.loadingButton = false
-                                    //this.showLess = true
-                                    this.showAll = false
                                     this.changeToBanIcon(orderID)
                                     let arr = [];
                                     arr = response.data[0]
@@ -1011,6 +1096,7 @@ export default {
         this.retrieveTables()
         this.retrievePaymentType()
         this.retrieveSellers()
+        this.retrieveCustomers()
         const vm = this
 
 

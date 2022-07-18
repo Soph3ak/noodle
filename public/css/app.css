@@ -463,6 +463,10 @@ p.sort:hover {
   margin: 0 0 20px;
 }
 
+.timeline > div > .timeline-item > .timeline-footer {
+  padding: 0;
+}
+
 .text-lightgray {
   color: rgba(108, 117, 125, 0.6784313725);
 }

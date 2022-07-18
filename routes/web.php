@@ -65,7 +65,9 @@ Route::get('/reports',[ReportController::class,'index'])->name('report.index');
 Route::get('/getReport',[ReportController::class,'getReport'])->name('report.getReport');
 Route::get('/getPaymentType',[ReportController::class,'getPaymentType']);
 Route::get('/getSellers',[ReportController::class,'getSellers']);
+Route::get('/getCustomers',[ReportController::class,'getCustomers']);
 Route::get('/getOrderProducts',[ReportController::class,'getOrderProducts']);
+
 
 
 

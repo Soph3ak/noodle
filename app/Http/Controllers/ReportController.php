@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\User;
@@ -23,6 +24,14 @@ class ReportController extends Controller
         return $sellers = User::select('id','name_kh', 'photo')->get();
     }
 
+    public function getCustomers(){
+        //Get only customers has orders
+        return $customers = Customer::select('id','name')
+            ->whereHas('orders')
+            ->orderBy('name', 'asc')
+            ->get();
+    }
+
 
     public function getReport(Request $request){
 
@@ -33,6 +42,7 @@ class ReportController extends Controller
         $searchTitle = $request->title;
         $tables = $request->tables;
         $sellers = $request->sellers;
+        $customers = $request->customers;
 
         $reports = Order::whereDate('created_at', '>=', Carbon::createFromDate($request->start))
             ->whereDate('created_at', '<=', Carbon::createFromDate($request->end))
@@ -87,7 +97,7 @@ class ReportController extends Controller
             $reports = $reports->where('table_id','');
         /*END TABLE FILTER*/
 
-        /*TABLE SELLER*/
+        /*SELLER FILTER*/
         if($sellers != ''){
             foreach ($sellers as $seller){
                 if($seller === 'all')
@@ -100,6 +110,21 @@ class ReportController extends Controller
         }
         else
             $reports = $reports->where('user_id','');
+        /*END SELLER FILTER*/
+
+        /*CUSTOMER FILER*/
+        if($customers != ''){
+            foreach ($customers as $customer){
+                if($customer === 'all')
+                    break;
+                else{
+                    $reports = $reports->whereIN('customer_id',$customers); //customer_id is a column in table orders
+                    break;
+                }
+            }
+        }
+        else
+            $reports = $reports->where('customer_id','');
         /*END SELLER FILTER*/
 
 
