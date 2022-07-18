@@ -1,0 +1,19 @@
+1- previousSelect()
+2- closeOtherFilter()->"we must add more other filter .trigger('click')"
+3- selectAll() -> case 'all' 
+4- clearSelect()
+5- applyFilter()->getSelectedID()-> case 'all' 
+		->retrieveReports()->params->getRequestParams()
+		->styling_BtnFilter_BadgeFilter(filter)
+		->saveSelect()-> case 'all' 
+		->ReportController.php
+		
+
+
+
+Ctr+Alt+U: Show class diagram
+Ctrl+Alt+T: To rrap a code block in useful constructs(if, for, while, function...)
+
+
+
+
