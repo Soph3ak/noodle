@@ -651,22 +651,27 @@ export default {
             let closePaymentFilter = $('#close-payment-filter');
             let closeTableFilter = $('#close-table-filter');
             let closeSellerFilter = $('#close-seller-filter');
+            let closeCustomerFilter = $('#close-customer-filter');
             switch (filter) {
                 case 'table-filter':
                     closePaymentFilter.trigger('click');
                     closeSellerFilter.trigger('click');
+                    closeCustomerFilter.trigger('click');
                     break;
                 case 'payment-filter':
                     closeTableFilter.trigger('click');
                     closeSellerFilter.trigger('click');
+                    closeCustomerFilter.trigger('click');
                     break;
                 case  'seller-filter':
                     closePaymentFilter.trigger('click');
                     closeTableFilter.trigger('click');
+                    closeCustomerFilter.trigger('click');
                     break;
                 case  'customer-filter':
                     closePaymentFilter.trigger('click');
                     closeTableFilter.trigger('click');
+                    closeSellerFilter.trigger('click');
                     break;
                 case  'all':
                     let closeAllFilter = $('div.filter');
