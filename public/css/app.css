@@ -326,11 +326,16 @@ input#search {
 .btn-detail {
   padding: 8px 12px;
   background-color: white;
-  /*box-shadow: 0px 8px 16px 0px rgba(15, 86, 179, 0.14);*/
-  box-shadow: 4px 0px 8px 0px rgba(15, 86, 179, 0.1803921569);
   color: #8AB9F6;
   font-weight: 600;
-  transform: rotate(90deg);
+  transform: rotate(0deg);
+  transition: all 0.6s;
+  /*box-shadow: 4px 0px 8px 0px #0F56B32E;
+  transform: rotate(90deg);*/
+}
+
+.btn-detail.rotate_up {
+  transform: rotate(180deg);
 }
 
 .dropdown-toggle::after {

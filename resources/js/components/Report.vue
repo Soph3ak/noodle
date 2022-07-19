@@ -216,7 +216,8 @@
                                 <td class="text-right toggle-detail">
                                     <span>
                                         <a type="button" class="btn btn-detail">
-                                            <i class="ion-code-working text-cyan"></i>
+                                            <!--<i class="ion-code-working text-cyan"></i>-->
+                                            <i class="ion-chevron-down text-cyan"></i>
                                         </a>
                                     </span>
                                 </td>
@@ -986,6 +987,10 @@ export default {
             const div_sub = selector.find('div.div-sub')
             div_sub.slideToggle(350)
             selector.toggleClass('shadowed')
+
+            let btn_detail = selector.parent('tbody').find('a.btn-detail')
+            btn_detail.toggleClass('rotate_up')
+
         },
 
         showDetail(orderID, limit){
