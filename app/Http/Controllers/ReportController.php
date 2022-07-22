@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\Table;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -21,7 +22,9 @@ class ReportController extends Controller
     }
 
     public function getSellers(){
-        return $sellers = User::select('id','name_kh', 'photo')->get();
+        return $sellers = User::select('id','name_kh', 'photo')
+            ->orderBy('name', 'asc')
+            ->get();
     }
 
     public function getCustomers(){
@@ -43,6 +46,7 @@ class ReportController extends Controller
         $tables = $request->tables;
         $sellers = $request->sellers;
         $customers = $request->customers;
+        $orderBy = $request->orderBy;
 
         $reports = Order::whereDate('created_at', '>=', Carbon::createFromDate($request->start))
             ->whereDate('created_at', '<=', Carbon::createFromDate($request->end))
@@ -52,14 +56,61 @@ class ReportController extends Controller
             ->with('shop:id,name') /*(user, customer, table, shop) is function's name in their modal*/
             ->with('payment:id,payment')
             ->with('products' , function($query){
-                $query->where('id',0);//To select nothing
-            })
+                //To select nothing, We need only empty products[] in reports to push data in later
+                $query->where('id',0);
 
-            ->orderBy('id', 'desc');
-            /*TABLE SORT*/
+            });
+
+        if($orderBy != ''){
+            $sort_by = $orderBy[0];
+            $direction = $orderBy[1];
+            switch ($sort_by){
+                case 'id':
+                    $reports = $reports->orderBy('id', $direction);
+                    break;
+
+                case 'date':
+                    $reports = $reports->orderBy('created_at', $direction);
+                    break;
+
+                case 'customer':
+                    $reports = $reports->orderBy(Customer::select('name')->whereColumn('customers.id','orders.customer_id'),$direction);
+                    break;
+
+                case 'seller':
+                    $reports = $reports->orderBy(User::select('name')->whereColumn('users.id','orders.user_id'),$direction);
+                    break;
 
 
-            /*END TABLE SORT*/
+
+                case 'table':
+                    $reports = $reports->orderBy(Table::select('name')->whereColumn('tables.id','orders.table_id'),$direction);
+                    break;
+
+                case 'payment':
+                    $reports = $reports->orderBy(Payment::select('payment')->whereColumn('payments.id','orders.payment_id'),$direction);
+                    break;
+
+                case 'subtotal':
+                    $reports = $reports->orderBy('subtotal', $direction);
+                    break;
+
+                case 'discount':
+                    $reports = $reports->orderBy('discount', $direction);
+                    break;
+
+                case 'total':
+                    $reports = $reports->orderBy('total', $direction);
+                    break;
+
+
+                default:
+
+            }
+
+
+        }
+
         /*Payment FILTER*/
         if($payments != ''){
             foreach ($payments as $pay){

@@ -5,7 +5,9 @@
                 <input type="text" class="form-control search" id="search" placeholder="Search invoice number here ..." v-model="searchTitle" @keyup.enter="page = 1; retrieveReports()">
             </div>
         </div>
-
+        <div class="recordShowing text-lightgray" v-show="reportCount>0">
+            <small>Showing {{ showingFrom() }}-{{ showingTo() }} of {{ totalRecords }} {{ totalRecords > 1 ? 'records':'record' }}</small>
+        </div>
         <div class="row">
             <div class="col-12">
                 <div class="card table-block">
@@ -66,14 +68,26 @@
                         <table class="table table-head-fixed text-nowrap sell-reports">
                             <thead>
                             <tr class="w-100">
-                                <th>Invoice #</th>
-                                <th>Date</th>
+                                <th>
+                                    <span class="gg pointer"  @click="sortBy('id')">
+                                        Invoice #
+                                        <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class="gg pointer" @click="sortBy('date')">
+                                        Date
+                                        <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                    </span>
+                                </th>
                                 <th>
                                     <div class="d-flex align-items-center">
-                                        Customer
-                                        <div class="ml-2 position-relative pointer d-inline-block">
+                                        <span class="gg pointer" @click="sortBy('customer')">
+                                            Customer
+                                            <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                        </span>
+                                        <div class="position-relative pointer d-inline-block">
                                             <span class="gg">
-                                                <span class="text-gray" @click="sort('customer')"><i class="gg-swap-vertical"></i></span>
                                                 <span class="btn-filter text-gray btn-customer-filter" @click="toggleFilter('customer-filter'); previousSelect('customer-filter'); closeOtherFilter('customer-filter');"><i class="gg-sort-az"></i></span>
                                             </span>
                                             <div class="filter customer-filter px-2 py-4 d-none">
@@ -100,10 +114,12 @@
                                 <th>Location</th>
                                 <th>
                                     <div class="d-flex align-items-center">
-                                        Seller
-                                        <div class="ml-2 position-relative pointer d-inline-block">
-                                            <span class="gg">
-                                                <span class="text-gray" @click="sort('seller')"><i class="gg-swap-vertical"></i></span>
+                                        <span class="gg pointer" @click="sortBy('seller')">
+                                            Seller
+                                            <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                        </span>
+                                        <div class="position-relative pointer d-inline-block">
+                                            <span class="gg pointer">
                                                 <span class="btn-filter text-gray btn-seller-filter" @click="toggleFilter('seller-filter'); previousSelect('seller-filter'); closeOtherFilter('seller-filter');"><i class="gg-sort-az"></i></span>
                                             </span>
                                             <div class="filter seller-filter px-2 py-4 d-none">
@@ -130,10 +146,13 @@
                                 </th>
                                 <th>
                                     <div class="d-flex align-items-center">
-                                        Table
-                                        <div class="ml-2 position-relative pointer d-inline-block">
+                                        <span class="gg pointer" @click="sortBy('table')">
+                                            Table
+                                            <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                        </span>
+
+                                        <div class="position-relative pointer d-inline-block">
                                             <span class="gg">
-                                                <span class="text-gray" @click="sort('table')"><i class="gg-swap-vertical"></i></span>
                                                 <span class="btn-filter text-gray btn-table-filter" @click="toggleFilter('table-filter'); previousSelect('table-filter'); closeOtherFilter('table-filter');"><i class="gg-sort-az"></i></span>
                                             </span>
                                             <div class="filter table-filter px-2 py-4 d-none">
@@ -159,10 +178,12 @@
                                 </th>
                                 <th>
                                     <div class="d-flex align-items-center">
-                                        Payment
-                                        <div class="ml-2 position-relative pointer d-inline-block">
+                                        <span class="gg pointer" @click="sortBy('payment')">
+                                            Payment
+                                            <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                        </span>
+                                        <div class="position-relative pointer d-inline-block">
                                             <span class="gg">
-                                                <span class="text-gray" @click="sort('table')"><i class="gg-swap-vertical"></i></span>
                                                 <span class="btn-filter text-gray btn-payment-filter" @click="toggleFilter('payment-filter'); previousSelect('payment-filter'); closeOtherFilter('payment-filter')"><i class="gg-sort-az"></i></span>
                                             </span>
                                             <div class="filter payment-filter px-2 py-4 d-none">
@@ -186,9 +207,24 @@
                                         </div>
                                     </div>
                                 </th>
-                                <th>Subtotal</th>
-                                <th>Discount</th>
-                                <th>Total</th>
+                                <th>
+                                    <span class="gg pointer" @click="sortBy('subtotal')">
+                                        Subtotal
+                                        <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class="gg pointer" @click="sortBy('discount')">
+                                        Discount
+                                        <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class="gg pointer" @click="sortBy('total')">
+                                        Total
+                                        <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                    </span>
+                                </th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -422,6 +458,7 @@ export default {
             count: 0,
             pageSize: 10,
             pageSizes: [10, 25, 50, 100],
+            totalRecords: 0,
             start: null,
             end: null,
 
@@ -443,24 +480,27 @@ export default {
             paymentTypes:[],
             paymentCount : 0,
             paymentID:{
+                //for request filters
                 paymentsID: ['all']
             },
 
             sellers:[],
             sellersCount : 0,
             sellerID:{
+                //for request filters
                 sellersID: ['all']
             },
 
             customers:[],
             customersCount : 0,
             customerID:{
+                //for request filters
                 customersID: ['all']
             },
 
 
             selected: {
-                filters: [],
+                filters: [], //for render filters badge
                 tables: [],
                 tempTables: [],
                 paymentTypes: [],
@@ -477,6 +517,11 @@ export default {
             loadingProducts: false,
             loadingButton: false,
             ordID: 0,
+            // orderBy: [{'orderBy': 'id', 'direction':'DESC'}], //sortBy
+            orderBy: ['id', 'desc'],
+            sort_by_column: '',
+            sort_direction: 'asc',
+
         }
     },
     methods:{
@@ -487,7 +532,7 @@ export default {
             return axios.get("/getReport", {params});
         },
 
-        getRequestParams(searchTitle, page, pageSize, start, end, paymentTypes, tables, sellers, customers) {
+        getRequestParams(searchTitle, page, pageSize, start, end, paymentTypes, tables, sellers, customers, orderBy) {
             let params = {};
             if (searchTitle) {
                 params["title"] = searchTitle;
@@ -520,6 +565,10 @@ export default {
                 params["customers"] = customers;
             }
 
+            if (orderBy) {
+                params["orderBy"] = orderBy;
+            }
+
             return params;
 
         },
@@ -535,6 +584,7 @@ export default {
                 this.tblID.tablesID,
                 this.sellerID.sellersID,
                 this.customerID.customersID,
+                this.orderBy,
             );
             this.isLoading = true;
             setTimeout(() => {
@@ -543,12 +593,22 @@ export default {
                         this.isLoading = false
                         this.reports = response.data
                         this.reportCount = (this.reports.data).length
+                        this.totalRecords = this.reports.total
                     })
                     .catch((e) => {
                         console.log(e);
                     });
             }, 1)
 
+        },
+
+        showingFrom(){
+            return this.pageSize*(this.page-1)+1;
+        },
+
+        showingTo(){
+            let showUntil = this.pageSize*this.page;
+            return (showUntil < this.totalRecords ? showUntil:this.totalRecords);
         },
 
         handlePageChange(value) {
@@ -933,14 +993,6 @@ export default {
 
         sort(column){
 
-
-
-
-            /*let toggleSort = 'AZ';
-            if (toggleSort === 'AZ'){
-
-            }*/
-
         },
 
         retrievePaymentType(){
@@ -993,8 +1045,17 @@ export default {
 
         },
 
-        showDetail(orderID, limit){
+        closeOpenedTable(){
+            this.ordID = 0 //let row click can retrieve products again
+            const selector = $('.shadowed');
+            selector.removeClass('shadowed').addClass('detailClosed')
 
+            let btn_detail = selector.parent('tbody').find('a.btn-detail')
+            btn_detail.toggleClass('rotate_up')
+
+        },
+
+        showDetail(orderID, limit){
             if (limit) {
                 this.detailLimit = limit
             }
@@ -1024,15 +1085,13 @@ export default {
                                     .catch((e) => {
                                         console.log(e);
                                     });
-                            }, 350);
+                            }, 250);
                         }
                     }
                 })
             }
-
-
-
         },
+
         getParamsDetailProduct(orderID, limit){
             let params = {};
             if (orderID) {
@@ -1082,15 +1141,24 @@ export default {
             this.detailLimit = 5; //reset limit
         },
 
-        /*callShowAll(){
-            this.showAll = true
-            this.showLess = false
-            this.ordID = 0
-        },*/
-
         changeToBanIcon(id){
             let select = $("i#ban"+id);
             select.addClass('fas fa-angle-double-down bg-gray')
+        },
+
+        sortBy(byColumn){
+            if(this.sort_direction === 'asc' || this.sort_by_column !== byColumn){
+                this.sort_direction = 'desc'
+            }
+            else
+                this.sort_direction = 'asc'
+            this.sort_by_column = byColumn
+
+            this.closeOpenedTable()
+            this.orderBy=[]
+            this.orderBy[0] = byColumn
+            this.orderBy[1] = this.sort_direction
+            this.retrieveReports();
         },
 
     },
@@ -1122,7 +1190,6 @@ export default {
                 /*vm.getResults(vm.currentPage,(start.format('MMMM D, YYYY')), (end.format('MMMM D, YYYY')));*/
                 vm.start = start.format('MMMM D, YYYY');
                 vm.end = end.format('MMMM D, YYYY');
-                console.log(vm.start + ' - ' + vm.end);
                 vm.page = 1;
                 vm.retrieveReports();
             }

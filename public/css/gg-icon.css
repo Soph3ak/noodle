@@ -6,7 +6,8 @@ span.gg span{
     display: inline-block;
     padding: 0.75rem 0.5rem;
 }
-span.gg span:hover{
+
+span.gg span.btn-filter:hover{
     background-color: aquamarine;
 }
 
