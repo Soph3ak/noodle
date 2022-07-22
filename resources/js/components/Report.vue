@@ -230,7 +230,7 @@
                             </thead>
 
                             <tbody v-for="report in reports.data" :key="report.id" :id="'report'+report.id">
-                            <tr class="tr-show-sub" @click="toggleSlideTable('detail'+report.id); showDetail(report.id)">
+                            <tr class="tr-show-sub" @click="toggleSlideTable(report.id); showDetail(report.id)">
                                 <td><a href="#">{{ report.id }}</a></td>
                                 <td>{{ formatDate(report.created_at) }}</td>
                                 <td>{{ report.customer.name }}</td>
@@ -521,6 +521,8 @@ export default {
             orderBy: ['id', 'desc'],
             sort_by_column: '',
             sort_direction: 'asc',
+
+            openedRows:[''],
 
         }
     },
@@ -1035,23 +1037,23 @@ export default {
         },
 
         toggleSlideTable(rowID){
-            const selector = $("#"+rowID);
+            const selector = $("#detail"+rowID);
             const div_sub = selector.find('div.div-sub')
             div_sub.slideToggle(350)
             selector.toggleClass('shadowed')
-
             let btn_detail = selector.parent('tbody').find('a.btn-detail')
             btn_detail.toggleClass('rotate_up')
-
         },
 
-        closeOpenedTable(){
+        closeOpenedTable(rowID){
             this.ordID = 0 //let row click can retrieve products again
-            const selector = $('.shadowed');
-            selector.removeClass('shadowed').addClass('detailClosed')
+
+            const selector = $(".shadowed");
+            const div_sub = selector.find('div.div-sub').slideUp(0)
+            selector.removeClass('shadowed')
 
             let btn_detail = selector.parent('tbody').find('a.btn-detail')
-            btn_detail.toggleClass('rotate_up')
+            btn_detail.removeClass('rotate_up')
 
         },
 
@@ -1154,7 +1156,7 @@ export default {
                 this.sort_direction = 'asc'
             this.sort_by_column = byColumn
 
-            this.closeOpenedTable()
+            this.closeOpenedTable(this.ordID)
             this.orderBy=[]
             this.orderBy[0] = byColumn
             this.orderBy[1] = this.sort_direction
