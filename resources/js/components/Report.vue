@@ -69,22 +69,25 @@
                             <thead>
                             <tr class="w-100">
                                 <th>
-                                    <span class="gg pointer"  @click="sortBy('id')">
+                                    <span class="gg pointer"  @click="sortBy('id')" id="column_id">
                                         Invoice #
-                                        <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                        <!--<span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>-->
+                                        <span class="sort sort-default ml-1"></span>
                                     </span>
                                 </th>
                                 <th>
-                                    <span class="gg pointer" @click="sortBy('date')">
+                                    <span class="gg pointer" @click="sortBy('date')" id="column_date">
                                         Date
-                                        <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                       <!-- <span class="text-gray ml-2"><i class="gg-swap-vertical"></i></span>-->
+                                        <span class="sort sort-default ml-1"></span>
                                     </span>
                                 </th>
                                 <th>
                                     <div class="d-flex align-items-center">
-                                        <span class="gg pointer" @click="sortBy('customer')">
+                                        <span class="gg pointer" @click="sortBy('customer')" id="column_customer">
                                             Customer
-                                            <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                            <!--<span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>-->
+                                            <span class="sort sort-default ml-1"></span>
                                         </span>
                                         <div class="position-relative pointer d-inline-block">
                                             <span class="gg">
@@ -114,9 +117,10 @@
                                 <th>Location</th>
                                 <th>
                                     <div class="d-flex align-items-center">
-                                        <span class="gg pointer" @click="sortBy('seller')">
+                                        <span class="gg pointer" @click="sortBy('seller')" id="column_seller">
                                             Seller
-                                            <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                            <!--<span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>-->
+                                            <span class="sort sort-default ml-1"></span>
                                         </span>
                                         <div class="position-relative pointer d-inline-block">
                                             <span class="gg pointer">
@@ -146,9 +150,10 @@
                                 </th>
                                 <th>
                                     <div class="d-flex align-items-center">
-                                        <span class="gg pointer" @click="sortBy('table')">
+                                        <span class="gg pointer" @click="sortBy('table')" id="column_table">
                                             Table
-                                            <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                            <!--<span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>-->
+                                            <span class="sort sort-default ml-1"></span>
                                         </span>
 
                                         <div class="position-relative pointer d-inline-block">
@@ -178,9 +183,10 @@
                                 </th>
                                 <th>
                                     <div class="d-flex align-items-center">
-                                        <span class="gg pointer" @click="sortBy('payment')">
+                                        <span class="gg pointer" @click="sortBy('payment')" id="column_payment">
                                             Payment
-                                            <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                            <!--<span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>-->
+                                            <span class="sort sort-default ml-1"></span>
                                         </span>
                                         <div class="position-relative pointer d-inline-block">
                                             <span class="gg">
@@ -208,21 +214,24 @@
                                     </div>
                                 </th>
                                 <th>
-                                    <span class="gg pointer" @click="sortBy('subtotal')">
+                                    <span class="gg pointer" @click="sortBy('subtotal')" id="column_subtotal">
                                         Subtotal
-                                        <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                        <!--<span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>-->
+                                        <span class="sort sort-default ml-1"></span>
                                     </span>
                                 </th>
                                 <th>
-                                    <span class="gg pointer" @click="sortBy('discount')">
+                                    <span class="gg pointer" @click="sortBy('discount')" id="column_discount">
                                         Discount
-                                        <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                        <!--<span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>-->
+                                        <span class="sort sort-default ml-1"></span>
                                     </span>
                                 </th>
                                 <th>
-                                    <span class="gg pointer" @click="sortBy('total')">
+                                    <span class="gg pointer" @click="sortBy('total')" id="column_total">
                                         Total
-                                        <span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>
+                                        <!--<span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>-->
+                                        <span class="sort sort-default ml-1"></span>
                                     </span>
                                 </th>
                                 <th></th>
@@ -576,6 +585,7 @@ export default {
         },
 
         retrieveReports() {
+            this.closeOpenedRows()
             const params = this.getRequestParams(
                 this.searchTitle,
                 this.page,
@@ -1045,11 +1055,11 @@ export default {
             btn_detail.toggleClass('rotate_up')
         },
 
-        closeOpenedTable(rowID){
+        closeOpenedRows(){
             this.ordID = 0 //let row click can retrieve products again
 
             const selector = $(".shadowed");
-            const div_sub = selector.find('div.div-sub').slideUp(0)
+            selector.find('div.div-sub').slideUp(0)
             selector.removeClass('shadowed')
 
             let btn_detail = selector.parent('tbody').find('a.btn-detail')
@@ -1151,17 +1161,37 @@ export default {
         sortBy(byColumn){
             if(this.sort_direction === 'asc' || this.sort_by_column !== byColumn){
                 this.sort_direction = 'desc'
+                this.switchSortIcon(byColumn, 'desc')
             }
             else
+            {
                 this.sort_direction = 'asc'
+                this.switchSortIcon(byColumn,'asc')
+            }
+
             this.sort_by_column = byColumn
 
-            this.closeOpenedTable(this.ordID)
             this.orderBy=[]
             this.orderBy[0] = byColumn
             this.orderBy[1] = this.sort_direction
             this.retrieveReports();
+
         },
+
+        switchSortIcon(byColumn, direction){
+            let selector = $("#column_"+byColumn)
+            let selectorActiveIcon = $("span.sort.active")
+            let sort = selector.find('span.sort')
+
+            selectorActiveIcon.addClass('default')
+            selectorActiveIcon.removeClass('active sort-asc sort-desc')
+
+            if (direction === 'asc')
+                sort.addClass('sort-asc active')
+            else if (direction === 'desc')
+                sort.addClass('sort-desc active')
+
+        }
 
     },
     computed:{

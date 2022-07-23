@@ -701,7 +701,20 @@ table .tr-sub td .div-sub {
 
 .recordShowing {
   position: absolute;
-  top: 50px;
+  top: 23px;
+  left: 220px;
+}
+
+.sort-asc.active {
+  background: url("/icons/asc.svg") no-repeat center;
+}
+
+.sort-desc.active {
+  background: url("/icons/desc.svg") no-repeat center;
+}
+
+.sort-default {
+  background: url("/icons/default.svg") no-repeat center;
 }
 
 

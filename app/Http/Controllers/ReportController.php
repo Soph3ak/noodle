@@ -81,8 +81,6 @@ class ReportController extends Controller
                     $reports = $reports->orderBy(User::select('name')->whereColumn('users.id','orders.user_id'),$direction);
                     break;
 
-
-
                 case 'table':
                     $reports = $reports->orderBy(Table::select('name')->whereColumn('tables.id','orders.table_id'),$direction);
                     break;
