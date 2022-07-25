@@ -234,7 +234,9 @@
                                         <span class="sort sort-default ml-1"></span>
                                     </span>
                                 </th>
-                                <th></th>
+                                <th class="text-center">
+                                    <span class="text-danger pointer text-xs" @click="resetTable"><i class="ion-refresh mr-2"></i>Reset table</span>
+                                </th>
                             </tr>
                             </thead>
 
@@ -480,7 +482,7 @@ export default {
             height: 70,
             width: 70,
 
-            tables:[],
+            tables:[], // Only for render to checkbox filter card
             tablesCount : 0,
             tblID:{
                 tablesID: ['all']
@@ -509,9 +511,10 @@ export default {
 
 
             selected: {
-                filters: [], //for render filters badge
-                tables: [],
-                tempTables: [],
+                filters: [], // For render filters badge
+                tables: [], //  Related to checkbox filters had selected or hadn't selected
+                tempTables: [], //  Keep latest checkbox selected values, if in case the user playing around filters checkbox
+                                //  then CANCEL instead of APPLY so we will show the latest selected values after latest apply
                 paymentTypes: [],
                 tempPaymentTypes: [],
                 sellers: [],
@@ -527,9 +530,9 @@ export default {
             loadingButton: false,
             ordID: 0,
             // orderBy: [{'orderBy': 'id', 'direction':'DESC'}], //sortBy
-            orderBy: ['id', 'desc'],
-            sort_by_column: '',
-            sort_direction: 'asc',
+            orderBy: ['id', 'desc'],    // For sort in server
+            sort_by_column: '',         // Help in condition
+            sort_direction: 'asc',      //Help in condition
 
             openedRows:[''],
 
@@ -585,7 +588,7 @@ export default {
         },
 
         retrieveReports() {
-            this.closeOpenedRows()
+            this.closeOpenedRows() // To slide up all rows which opened products detail *Error case #1
             const params = this.getRequestParams(
                 this.searchTitle,
                 this.page,
@@ -709,7 +712,7 @@ export default {
         },
 
         btnRemoveBadgeFilter(filter){
-            this.selectAll(filter);
+            this.selectAll(filter); // = all filter clicked select all
             this.applyFilter(filter);
             this.saveSelect(filter);
             this.closeFilter(filter);
@@ -831,6 +834,8 @@ export default {
         },
 
         saveSelect(filter){
+            // "saveSelect" paste value to tmp coz after save, user might select or de-select more then cancel
+            // so we had to paste previous value after filter had applied
             switch (filter) {
                 case 'table-filter':
                     this.selected.tempTables = this.selected.tables;
@@ -1191,7 +1196,16 @@ export default {
             else if (direction === 'desc')
                 sort.addClass('sort-desc active')
 
-        }
+        },
+
+        resetTable(){
+            this.page = 1
+            this.orderBy = ['id','desc']
+            this.sort_by_column = ''
+            this.sort_direction = 'asc'
+            this.switchSortIcon('id', 'default')
+            this.btnRemoveBadgeFilter('all') // already has retrieveReports()
+        },
 
     },
     computed:{

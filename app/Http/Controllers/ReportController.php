@@ -101,9 +101,8 @@ class ReportController extends Controller
                     $reports = $reports->orderBy('total', $direction);
                     break;
 
-
                 default:
-
+                    $reports = $reports->orderBy('id', 'desc');
             }
 
 

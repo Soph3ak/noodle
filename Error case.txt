@@ -1,0 +1,4 @@
+Case #1:    "Report.vue" When rows opening products detail then we do sort or do any action that call retrieveReports()
+            it will cause all those products detail will be whipped out from the table.
+            Cause:  Because retrieveReports() will get only reports join with empty products[]
+            Fixed:  Must close all opened products detail first
