@@ -235,7 +235,11 @@
                                     </span>
                                 </th>
                                 <th class="text-center">
-                                    <span class="text-danger pointer text-xs" @click="resetTable"><i class="ion-refresh mr-2"></i>Reset table</span>
+                                    <span class="text-danger pointer text-xs" @click="resetTable">
+                                        <i v-if="btnResetTableLoading === true" class="fas fa-spinner mr-2 fa-spin"></i>
+                                        <i v-else class="fas fa-undo mr-2s mr-2"></i>
+                                        Reset table
+                                    </span>
                                 </th>
                             </tr>
                             </thead>
@@ -535,6 +539,8 @@ export default {
             sort_direction: 'asc',      //Help in condition
 
             openedRows:[''],
+
+            btnResetTableLoading: false,
 
         }
     },
@@ -864,7 +870,6 @@ export default {
         },
 
         getSelectedID(filter){
-            let filtersID = [];
             let filterCount = 0;
             let selectedFilter = [];
             let selectedFilterLength = 0;
@@ -1199,12 +1204,17 @@ export default {
         },
 
         resetTable(){
-            this.page = 1
-            this.orderBy = ['id','desc']
-            this.sort_by_column = ''
-            this.sort_direction = 'asc'
-            this.switchSortIcon('id', 'default')
-            this.btnRemoveBadgeFilter('all') // already has retrieveReports()
+            this.btnResetTableLoading = true
+            setTimeout(()=>{
+                this.page = 1
+                this.orderBy = ['id','desc']
+                this.sort_by_column = ''
+                this.sort_direction = 'asc'
+                this.switchSortIcon('id', 'default')
+                this.btnRemoveBadgeFilter('all') // = "Remove all filters" clicked (already has retrieveReports() inside)
+                this.btnResetTableLoading = false
+            },250)
+
         },
 
     },
