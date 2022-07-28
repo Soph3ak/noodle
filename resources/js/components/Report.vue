@@ -234,8 +234,8 @@
                                         <span class="sort sort-default ml-1"></span>
                                     </span>
                                 </th>
-                                <th class="text-center">
-                                    <span class="text-danger pointer text-xs" @click="resetTable">
+                                <th class="text-center reset-table">
+                                    <span v-show="showingBtnResetTable === true || selected.filters.length > 0"  @click="resetTable" class="text-danger pointer text-xs animate__animated animate__bounceIn">
                                         <i v-if="btnResetTableLoading === true" class="fas fa-spinner mr-2 fa-spin"></i>
                                         <i v-else class="fas fa-undo mr-2s mr-2"></i>
                                         Reset table
@@ -533,13 +533,14 @@ export default {
             loadingProducts: false,
             loadingButton: false,
             ordID: 0,
-            // orderBy: [{'orderBy': 'id', 'direction':'DESC'}], //sortBy
+
             orderBy: ['id', 'desc'],    // For sort in server
             sort_by_column: '',         // Help in condition
             sort_direction: 'asc',      //Help in condition
 
             openedRows:[''],
 
+            showingBtnResetTable: false,
             btnResetTableLoading: false,
 
         }
@@ -655,6 +656,7 @@ export default {
         handleTableChange(event){
             this.table = event.target.value;
             this.retrieveReports();
+
         },
 
         formatDate(value){
@@ -1169,6 +1171,7 @@ export default {
         },
 
         sortBy(byColumn){
+            this.showingBtnResetTable = true
             if(this.sort_direction === 'asc' || this.sort_by_column !== byColumn){
                 this.sort_direction = 'desc'
                 this.switchSortIcon(byColumn, 'desc')
@@ -1213,6 +1216,7 @@ export default {
                 this.switchSortIcon('id', 'default')
                 this.btnRemoveBadgeFilter('all') // = "Remove all filters" clicked (already has retrieveReports() inside)
                 this.btnResetTableLoading = false
+                this.showingBtnResetTable = false
             },250)
 
         },

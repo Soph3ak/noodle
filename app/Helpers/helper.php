@@ -6,6 +6,12 @@ if(!function_exists('myGlobalFunction')){
     }
 }
 
+if(!function_exists('getImgUrl')){
+    function getImgUrl($fileName){
+        return '/files/' . $fileName;
+    }
+}
+
 
 
 

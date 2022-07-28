@@ -15,9 +15,10 @@
                                 <th>Last order</th>
                                 <th class="text-center">កែប្រែ | EDIT</th>
                                 <th class="text-center">លុប | DELETE</th>
+                                <th class="text-center reset-table"></th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <!--<tbody>
                             <tr v-for="customer in customers.data" :key="customer.id">
                                 <td>{{ customer.id }}</td>
                                 <td>{{ customer.name }}</td>
@@ -35,7 +36,8 @@
                                 </td>
                             </tr>
 
-                            </tbody>
+                            </tbody>-->
+
                         </table>
                     </div>
                     <!-- /.card-body -->

@@ -228,7 +228,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-        'Invoice' => LaravelDaily\Invoices\Facades\Invoice::class
+        'Invoice' => LaravelDaily\Invoices\Facades\Invoice::class,
+
+
+        'Helper' => App\Helpers\helper::class
 
     ],
 

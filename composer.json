@@ -50,7 +50,7 @@
             "JeroenNoten\\LaravelAdminLte\\": "src"
         },
         "files": [
-            "app/helper.php"
+            "app/Helpers/helper.php"
         ]
     },
     "autoload-dev": {
