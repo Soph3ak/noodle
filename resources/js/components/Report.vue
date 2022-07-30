@@ -257,9 +257,9 @@
                                 </td>
                                 <td>{{ report.table.name }}</td>
                                 <td>
-                                    <span class="badge badge-new-primary" v-if="report.payment.payment === 'UNPAID'">{{report.payment.payment}}</span>
-                                    <span class="badge badge-new-success" v-else-if="report.payment.payment === 'PAID'">{{report.payment.payment}}</span>
-                                    <span class="badge badge-new-danger" v-else>{{report.payment.payment}}</span>
+                                    <span class="badge badge-new-primary" v-if="report.payment.payment === 'UNPAID'">UNPAID</span>
+                                    <span class="badge badge-new-success" v-else-if="report.payment.payment === 'PAID'">PAID</span>
+                                    <span class="badge badge-new-danger" v-else>VOID</span>
                                 </td>
                                 <td class="">{{ convertToCurrency(report.subtotal) }}<span class="kh-currency"><span class="kh-currency">៛</span></span></td>
                                 <td class="text-danger">-{{ convertToCurrency(report.discount) }}<span class="kh-currency">៛</span></td>
@@ -527,7 +527,6 @@ export default {
                 tempCustomer:[],
             },
 
-            detailShowed: false,
             detailLimit: 5,
 
             loadingProducts: false,

@@ -1,10 +1,15 @@
 <template>
-    <div>
+    <div class="mt-3 customer">
+        <div class="search-block d-flex">
+            <div class="form-group">
+                <input type="text" class="form-control search" id="search" placeholder="Search customer's name here ..." v-model="searchTitle" @keyup.enter="page = 1; retrieveCustomers()">
+            </div>
+        </div>
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body table-responsive p-0" style="">
-                        <table class="table table-head-fixed text-nowrap">
+                    <div class="card-body table-responsive p-0" style="max-height: 76vh; min-height: 76vh;">
+                        <table class="table table-head-fixed text-nowrap customer-reports">
                             <thead>
                             <tr>
                                 <th>លេខរៀង</th>
@@ -15,11 +20,17 @@
                                 <th>Last order</th>
                                 <th class="text-center">កែប្រែ | EDIT</th>
                                 <th class="text-center">លុប | DELETE</th>
-                                <th class="text-center reset-table"></th>
+                                <th class="text-center reset-table">
+                                    <span v-show="showingBtnResetTable === true"  @click="resetTable" class="text-danger pointer text-xs animate__animated animate__bounceIn">
+                                        <i v-if="btnResetTableLoading === true" class="fas fa-spinner mr-2 fa-spin"></i>
+                                        <i v-else class="fas fa-undo mr-2s mr-2"></i>
+                                        Reset table
+                                    </span>
+                                </th>
                             </tr>
                             </thead>
-                            <!--<tbody>
-                            <tr v-for="customer in customers.data" :key="customer.id">
+                            <tbody v-for="customer in customers.data" :key="customer.id" :id="'customer'+customer.id">
+                            <tr class="tr-show-sub" @click="toggleSlideTable(customer.id); showDetail(customer.id)">
                                 <td>{{ customer.id }}</td>
                                 <td>{{ customer.name }}</td>
                                 <td v-if="customer.gender === 0">ស្រី</td>
@@ -34,18 +45,203 @@
                                 <td class="text-center">
                                     <button class="btn btn-danger" @click="deleteCustomer(customer.name, customer.id)"><i class="far fa-trash-alt"></i></button>
                                 </td>
+                                <td class="text-right toggle-detail">
+                                    <span v-show="customer.latest_order !== null">
+                                        <a type="button" class="btn btn-detail">
+                                            <!--<i class="ion-code-working text-cyan"></i>-->
+                                            <i class="ion-chevron-down text-cyan"></i>
+                                        </a>
+                                    </span>
+                                </td>
                             </tr>
+                            <tr class="tr-sub" :id="'detail'+customer.id">
+                                <td colspan="11" class="abc">
+                                    <div class="row div-sub">
+                                        <div class="col-md-12">
+                                            <!-- The time line -->
+                                            <div class="timeline">
+                                                <div>
+                                                    <i class="fas fa-shopping-cart bg-green"></i>
+                                                    <div class="timeline-item">
+                                                        <h3 v-if="customer.latest_order !== null" class="timeline-header"><a href="#">Last {{customer.orders.length-1}} orders</a></h3>
+                                                        <h3 v-else class="timeline-header"><a href="#">Don't has any orders yet</a></h3>
+                                                        <!--<span class="text-xs ml-2 text-success">Showing 5 of 9 orders</span>-->
+                                                        <table class="table table-hover table-borderless table-valign-middle">
+                                                            <tbody v-if="loadingOrders === true && customer.orders.length<=0" class="skeleton">
+                                                            <tr>
+                                                                <td>
+                                                                    <span class="mask-squircle mr-2 placeholder avatar mr-2"> </span>
+                                                                    <span class="placeholder line"></span>
+                                                                </td>
 
-                            </tbody>-->
+                                                                <td>
+                                                                    <span class="placeholder line"></span>
+                                                                </td>
+
+                                                                <td>
+                                                                    <span class="placeholder line"></span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="placeholder line"></span>
+                                                                </td>
+                                                                <td>
+                                                                        <span class="text-danger">
+                                                                            <span class="placeholder line"></span>
+                                                                        </span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <span class="mask-squircle mr-2 placeholder avatar"> </span>
+                                                                    <span class="placeholder line"></span>
+                                                                </td>
+
+                                                                <td>
+                                                                    <span class="placeholder line"></span>
+                                                                </td>
+
+                                                                <td>
+                                                                    <span class="placeholder line"></span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="placeholder line"></span>
+                                                                </td>
+                                                                <td>
+                                                                        <span class="text-danger">
+                                                                            <span class="placeholder line"></span>
+                                                                        </span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <span class="mask-squircle mr-2 placeholder avatar"> </span>
+                                                                    <span class="placeholder line"></span>
+                                                                </td>
+
+                                                                <td>
+                                                                    <span class="placeholder line"></span>
+                                                                </td>
+
+                                                                <td>
+                                                                    <span class="placeholder line"></span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="placeholder line"></span>
+                                                                </td>
+                                                                <td>
+                                                                        <span class="text-danger">
+                                                                            <span class="placeholder line"></span>
+                                                                        </span>
+                                                                </td>
+                                                            </tr>
+
+                                                            </tbody>
+
+                                                            <tr v-for="(order,index) in customer.orders" :key="order.id" v-if="index < customer.orders.length-1" class="fade-in">
+
+                                                                <td class="text-gray">
+                                                                    Order#{{order.id}}
+                                                                </td>
+
+                                                                <td>
+                                                                    <span class="text-success mr-1 text-xs">
+                                                                        Date
+                                                                    </span>
+                                                                    {{formatDate(order.created_at)}}
+                                                                </td>
+
+                                                                <td>
+                                                                    <span class="text-success mr-1 text-xs">
+                                                                        Table
+                                                                    </span>
+                                                                    {{order.table.name}}
+                                                                </td>
+                                                                <td>
+                                                                    <!--<div class="position-relative p-0">
+                                                                        <img :src="getImgUrl(order.user.photo)" alt="Staff Image" class="img-circle staff-image">
+                                                                    </div>-->
+                                                                    <span class="text-success mr-1 text-xs">
+                                                                        Seller
+                                                                    </span>
+                                                                    {{order.user.name_kh}}
+                                                                </td>
+                                                                <td>
+                                                                    <span class="badge badge-new-primary" v-if="order.payment.payment === 'UNPAID'">UNPAID</span>
+                                                                    <span class="badge badge-new-success" v-else-if="order.payment.payment === 'PAID'">PAID</span>
+                                                                    <span class="badge badge-new-danger" v-else>VOID</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="text-success mr-1 text-xs">
+                                                                        Subtotal
+                                                                    </span>
+                                                                    {{convertToCurrency(order.subtotal)}}<span class="kh-currency"><span class="kh-currency">៛</span></span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="text-success mr-1 text-xs">
+                                                                        Discount
+                                                                    </span>
+                                                                    <span class="text-danger">
+                                                                            -{{convertToCurrency(order.discount)}}<span class="kh-currency">៛</span>
+                                                                        </span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="text-success mr-1 text-xs">
+                                                                        Total
+                                                                    </span>
+                                                                    {{convertToCurrency(order.total)}}<span class="kh-currency"><span class="kh-currency">៛</span></span>
+                                                                </td>
+                                                            </tr>
+
+
+                                                        </table>
+                                                        <div class="timeline-footer ml-2">
+                                                            <a class="text-primary pointer" v-if="loadingButton === true && customer.id === cusID">
+                                                                <i class="fas fa-spinner mr-2 fa-spin"></i> Loading
+                                                            </a>
+
+                                                            <a class="text-primary pointer"
+                                                               @click="showAllDetailProduct(customer.id ,customer.orders[customer.orders.length-1])"
+                                                               v-else-if="customer.orders[customer.orders.length-1] > customer.orders.length-1">
+                                                                Show all {{customer.orders[customer.orders.length-1]}} orders
+                                                            </a>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- END timeline item -->
+
+                                                <div>
+                                                    <i class="fas fa-ban bg-gray" v-if="customer.orders[customer.orders.length-1] <= 5 || customer.orders.length-1 > 5"></i>
+                                                    <i class="fas fa-angle-double-down bg-gray animated-down" :id="'ban'+customer.id" v-else></i>
+                                                    <span class="text-xs ml-5 pl-3 text-lightgray">
+                                                        Showing {{customer.orders.length-1}} of {{customer.orders[customer.orders.length-1]}}
+                                                        {{customer.orders[customer.orders.length-1]>1 ? 'orders':'order'}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.col -->
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
 
                         </table>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <pagination :data="customers" @pagination-change-page="getResults" :limit="1" align="center">
-                            <!-- <span slot="prev-nav">&lt; Previous</span>
-                             <span slot="next-nav">Next &gt;</span>-->
-                        </pagination>
+                        <div class="paginate ml-auto">
+                            <pagination :data="customers"
+                                        @pagination-change-page="handlePageChange"
+                                        :limit="1"
+                                        :show-disabled="true"
+                                        :total-rows="count"
+                                        :per-page="pageSize"
+                                        align="center">
+                                <span slot="prev-nav" class="p-2">Previous</span>
+                                <span slot="next-nav" class="p-2">Next</span>
+                            </pagination>
+                        </div>
                     </div>
                     <!-- /.card-footer -->
                 </div>
@@ -121,10 +317,83 @@ export default {
                 phone: "",
                 address:"",
                 _token: this.token.value
-            })
+            }),
+
+
+            searchTitle: "",
+            page : 1,
+            pageSize: 10,
+            pageSizes: [10, 25, 50, 100],
+            count: 0,
+            customerCount:1,
+            totalRecords: 0,
+
+            cusID : 0, //let row click can retrieve orders again
+            detailLimit: 5,
+
+            isLoading: false,
+            loadingOrders: false,
+            loadingButton: false,
+
+            orderBy: ['id', 'desc'],    // For sort in server
+            sort_by_column: '',         // Help in condition
+            sort_direction: 'asc',      //Help in condition
+
+            showingBtnResetTable: false,
+            btnResetTableLoading: false,
+
         }
     },
     methods:{
+
+        getAll(params) {
+            return axios.get("api/getCustomers", {params});
+        },
+
+        getRequestParams(searchTitle, page, pageSize, orderBy) {
+            let params = {};
+            if (searchTitle) {
+                params["title"] = searchTitle;
+            }
+
+            if (page) {
+                params["page"] = page;
+            }
+
+            if (pageSize) {
+                params["size"] = pageSize;
+            }
+
+            if (orderBy) {
+                params["orderBy"] = orderBy;
+            }
+
+            return params;
+
+        },
+
+        retrieveCustomers() {
+            this.closeOpenedRows()
+            const params = this.getRequestParams(
+                this.searchTitle,
+                this.page,
+                this.pageSize,
+                this.orderBy,
+            );
+            this.isLoading = true;
+            setTimeout(() => {
+                this.getAll(params)
+                    .then((response) => {
+                        this.isLoading = false
+                        this.customers = response.data;
+                        this.customerCount = (this.customers.data).length
+                        this.totalRecords = this.customers.total
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                    });
+            }, 1)
+        },
 
         newModal(){
             this.editMode=false
@@ -147,24 +416,10 @@ export default {
             this.form.reset()
         },
 
-        getResults(page = 1) {
-            axios.get('api/getCustomer?page=' + page)
-                .then(response => {
-                    this.customers = response.data;
-                    this.currentPage = page;
-                    this.customers.data.forEach(function(currentValue, index){
-                        if(currentValue.latest_order !== null){
-                            console.log(currentValue.latest_order.created_at)
-                        }
-                    });
-
-                });
-        },
-
         saveCustomer(name){
             this.form.post('api/customer')
                 .then(response => {
-                    this.getResults(this.currentPage)
+                    this.retrieveCustomers(this.currentPage)
                     this.alertSuccess('Customer',name,'saved successfully');
                     this.hideModal();
                 })
@@ -175,7 +430,7 @@ export default {
         updateCustomer(name,id){
             this.form.put('api/customer/'+id)
                 .then(response => {
-                    this.getResults(this.currentPage)
+                    this.retrieveCustomers(this.currentPage)
                     this.alertSuccess('Customer',name,'updated successfully');
                     this.hideModal();
                 })
@@ -197,7 +452,7 @@ export default {
                 if (result.isConfirmed) {
                     this.form.delete('api/customer/'+id)
                         .then(response => {
-                            this.getResults(this.currentPage);
+                            this.retrieveCustomers(this.currentPage);
                             Swal.fire(
                                 'Deleted!',
                                 "អតិថិជនឈ្មោះ <strong>" + name  +" </strong>ត្រូវបានលុបដោយជោគជ័យ!",
@@ -237,13 +492,168 @@ export default {
 
         },
 
+
+
+
+
+        handlePageChange(value) {
+            if (this.page !== value){
+                this.page = value;
+                this.retrieveCustomers();
+            }
+        },
+
+        toggleSlideTable(rowID){
+            const selector = $("#detail"+rowID);
+            const div_sub = selector.find('div.div-sub')
+            div_sub.slideToggle(350)
+            selector.toggleClass('shadowed')
+            let btn_detail = selector.parent('tbody').find('a.btn-detail')
+            btn_detail.toggleClass('rotate_up')
+        },
+
+        showDetail(cusID, limit){
+            if (limit) {
+                this.detailLimit = limit
+            }
+
+            if (cusID !== this.cusID) {//THIS IF() TO PREVENT FROM FAST DOUBLE CLICK (CUZ PULL REQUEST TWO TIMES)
+                this.customers.data.forEach((value1, index1) => {
+                    if (value1.orders.length <= 0) { //Prevent Error,
+                        if (value1.id === cusID) { //CHECK TO PUSH TO CORRECT ORDER ID
+                            this.loadingOrders= true
+                            this.cusID = cusID
+                            let params = this.getParamsDetailOrders(
+                                this.cusID,
+                                this.detailLimit,
+                            );
+                            setTimeout(() => {
+                                axios.get("api/getCustomerOrders", {params})
+                                    .then((response) => {
+                                        this.loadingOrders = false
+                                        let arr = [];
+                                        arr = response.data[0]
+                                        //value1.orders = []
+                                        arr.forEach((value, index) => {
+                                            value1.orders.push(arr[index])
+                                        })
+                                        value1.orders.push(response.data['total']);
+                                    })
+                                    .catch((e) => {
+                                        console.log(e);
+                                    });
+                            }, 250);
+                        }
+                    }
+                })
+            }
+        },
+
+        showAllDetailProduct(orderID, limit){
+            if (limit) {
+                this.detailLimit = limit
+            }
+
+            this.customers.data.forEach((value1, index1) => {
+                if (value1.id === orderID) { //CHECK TO PUSH TO CORRECT ORDER ID
+                    this.loadingButton = true
+                    this.ordID = orderID
+                    let params = this.getParamsDetailOrders(
+                        this.ordID,
+                        this.detailLimit,
+                    );
+                    setTimeout(() => {
+                        axios.get("api/getCustomerOrders", {params})
+                            .then((response) => {
+                                this.loadingButton = false
+                                //this.changeToBanIcon(orderID) //Later will do
+                                let arr = [];
+                                arr = response.data[0]
+                                value1.orders = []
+                                arr.forEach((value, index) => {
+                                    value1.orders.push(arr[index])
+                                })
+                                value1.orders.push(response.data['total']);
+                            })
+                            .catch((e) => {
+                                console.log(e);
+                            });
+                    }, 250);
+                }
+
+            })
+            this.detailLimit = 5; //reset limit
+        },
+
+        getParamsDetailOrders(orderID, limit){
+            let params = {};
+            if (orderID) {
+                params["cusID"] = orderID;
+            }
+
+            if (limit) {
+                params["limit"] = limit;
+            }
+
+            return params;
+        },
+
+        closeOpenedRows(){
+            this.cusID = 0 //let row click can retrieve orders again
+
+            const selector = $(".shadowed");
+            selector.find('div.div-sub').slideUp(0)
+            selector.removeClass('shadowed')
+
+            let btn_detail = selector.parent('tbody').find('a.btn-detail')
+            btn_detail.removeClass('rotate_up')
+
+        },
+
+        resetTable(){
+            this.btnResetTableLoading = true
+            setTimeout(()=>{
+                this.page = 1
+                this.orderBy = ['id','desc']
+                this.sort_by_column = ''
+                this.sort_direction = 'asc'
+                this.switchSortIcon('id', 'default')
+                this.btnResetTableLoading = false
+                this.showingBtnResetTable = false
+            },250)
+
+        },
+
+        switchSortIcon(byColumn, direction){
+            let selector = $("#column_"+byColumn)
+            let selectorActiveIcon = $("span.sort.active")
+            let sort = selector.find('span.sort')
+
+            selectorActiveIcon.addClass('default')
+            selectorActiveIcon.removeClass('active sort-asc sort-desc')
+
+            if (direction === 'asc')
+                sort.addClass('sort-asc active')
+            else if (direction === 'desc')
+                sort.addClass('sort-desc active')
+        },
+
+        formatDate(value){
+            return moment(value).format("LL");
+        },
+
+        getImgUrl(img) {
+            return '/files/' + img
+        },
+
+
     },
     computed:{
 
     },
 
     mounted() {
-        this.getResults();
+        this.retrieveCustomers();
         const vm = this
 
         let new_cus =  $('#new-customer');

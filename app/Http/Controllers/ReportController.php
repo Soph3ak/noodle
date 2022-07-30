@@ -30,7 +30,7 @@ class ReportController extends Controller
     public function getCustomers(){
         //Get only customers has orders
         return $customers = Customer::select('id','name')
-            ->whereHas('orders')
+            ->has('orders')
             ->orderBy('name', 'asc')
             ->get();
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use phpDocumentor\Reflection\Utils;
@@ -21,24 +22,53 @@ class CustomerController extends Controller
         return view('customer');
     }
 
-    public function getCustomer()
+    public function getCustomers(Request $request)
     {
+        $searchTitle = $request->title;
+        $limit = $request->limit;
+        $orderBy = $request->orderBy;
 
-        /*return $customers = Customer::orderBy('id', 'desc')->paginate(10);*/
+        $customers = Customer::with('latestOrder')
+            ->with('orders' , function($query){
+                //To select nothing, We need only empty orders[] in customer to push data in later
+                $query->where('id',0);
+            });
 
-        return $customers = Customer::with('latestOrder')
-            ->orderBy('id', 'desc')
-            ->paginate(10);
+        if($orderBy != ''){
+            $sort_by = $orderBy[0];
+            $direction = $orderBy[1];
+            switch ($sort_by){
+                case 'id':
+                    $customers = $customers->orderBy('id', $direction);
+                    break;
 
+                case 'name':
+                    $customers = $customers->orderBy('name', $direction);
+                    break;
 
-
+                default:
+                    $customers = $customers->orderBy('id', 'desc');
+            }
+        }
+        return $customers->paginate($request->size);
     }
 
-    /*public function getCustomerPaginate($paginate)
+    protected function getCustomerOrders(Request $request)
     {
-        return $customers = Customer::orderBy('id', 'desc')->paginate($paginate);
-    }*/
+         $orders = Customer::find($request->cusID)->orders()
+            ->with('user:id,name_kh,photo')
+            ->with('table:id,name')
+            ->with('payment:id,payment')
+            ->orderBy('created_at','desc')
+            ->get();
 
+        $collector = collect();
+        foreach ($orders as $order){
+            $collector->push($order);
+        }
+        $count = $collector->count();
+        return [$collector->take($request->limit), 'total' => $count];
+    }
 
     protected function validator(array $data)
     {

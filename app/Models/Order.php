@@ -32,8 +32,6 @@ class Order extends Model
             'order_product',
             'order_id',
             'product_id')->withPivot('quantity');
-
-
     }
 
 

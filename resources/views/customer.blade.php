@@ -25,6 +25,13 @@
 @stop
 
 @section('js')
-    <script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $('.card-body').overlayScrollbars({ overflowBehavior : {
+                    x : "hidden",
+                    y : "scroll"
+                }, });
+        });
     </script>
 @stop

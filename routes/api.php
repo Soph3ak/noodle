@@ -31,7 +31,9 @@ Route::get('/getCategoriesSelect2',[CategoryController::class,'getCategoriesSele
 
 //-------------/ CustomerController /----------------//
 Route::apiResource('customer',CustomerController::class); //Customer.vue
-Route::get('/getCustomer',[CustomerController::class,'getCustomer'])->name('customer.getCustomer'); //Customer.vue
+Route::get('/getCustomers',[CustomerController::class,'getCustomers'])->name('customer.getCustomer'); //Customer.vue
+Route::get('/getCustomerOrders',[CustomerController::class,'getCustomerOrders']); //Customer.vue
+
 
 //-------------/ OrderController /----------------//
 /*Route::post('/invoice', [OrderController::class, 'invoice']);

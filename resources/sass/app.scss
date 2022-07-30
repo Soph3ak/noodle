@@ -207,9 +207,9 @@ span.select2-container{
     background-color: rgb(239, 242, 245);
 }
 
-table.sell-reports .badge{
-    width: 60% !important;
-    padding: 6px 10px;
+table.sell-reports .badge, table.customer-reports .badge{
+   // width: 60% !important;
+    padding: 6px 25px;
     border-radius: 24px;
     font-weight: 400;
 }
@@ -435,7 +435,7 @@ p.sort:hover{
     color: #6c757dad;
 }
 
-.report .table td{
+.report .table td, .customer .table td{
     border-top: none;
 }
 
@@ -443,7 +443,7 @@ p.sort:hover{
     border-bottom: 1px solid #dee2e6 !important;
 }
 
-.report .table tbody+tbody {
+.report .table tbody+tbody, .customer .table tbody+tbody {
     border-top: 1px solid #dee2e6;
 }
 
@@ -602,6 +602,26 @@ table .tr-sub td .div-sub {
     max-width: 100px;
 }
 
+tr.fade-in{
+    position: relative;
+}
+
+tr.fade-in::before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -26px;
+    background-color: #dee2e6;
+    width: 25px;
+    height: 3px;
+}
+
+.shadowed > td > div > div > div > div:nth-child(1) > div > table > tr:hover{
+    background-color: #f7f7f7;
+    color: #0F56B3;
+    cursor: default;
+}
 
 
 
