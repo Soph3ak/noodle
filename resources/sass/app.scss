@@ -547,6 +547,17 @@ table .tr-sub td .div-sub {
         background-size: 600px;
         animation: shine-avatar 1.6s infinite linear;
     }
+
+    .category-loading-box {
+        width: 100%;
+        height: 50px;
+        background-color: #ccc;
+        border-radius: 25%;
+        background-image: linear-gradient(90deg, rgb(40 29 29) 0px, rgb(35 35 35) 70px, rgb(35 35 35) 80px);
+        background-size: 600px;
+        animation: shine-avatar 1.6s infinite linear;
+    }
+
     .line {
         float: left;
         width: 140px;

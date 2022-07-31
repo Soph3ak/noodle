@@ -32,11 +32,11 @@ body {
   color: #4a4848 !important;
 }
 
-#sell #sell-category img {
+#sell .sell-category img {
   filter: brightness(30%);
 }
 
-#sell #sell-category img:hover {
+#sell .sell-category img:hover {
   filter: brightness(80%);
 }
 

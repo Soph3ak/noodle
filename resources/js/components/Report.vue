@@ -286,70 +286,13 @@
                                                         <!--<span class="text-xs ml-2 text-success">Showing 5 of 9 products</span>-->
                                                         <table class="table table-borderless table-valign-middle">
                                                             <tbody v-if="loadingProducts === true && report.products.length<=0" class="skeleton">
-                                                                <tr>
+                                                                <tr v-for="i in 3">
                                                                     <td>
                                                                         <span class="mask-squircle mr-2 placeholder avatar mr-2"> </span>
                                                                         <span class="placeholder line"></span>
                                                                     </td>
-
-                                                                    <td>
+                                                                    <td v-for="j in 4">
                                                                         <span class="placeholder line"></span>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <span class="placeholder line"></span>
-                                                                    </td>
-                                                                    <td>
-                                                                        <span class="placeholder line"></span>
-                                                                    </td>
-                                                                    <td>
-                                                                        <span class="text-danger">
-                                                                            <span class="placeholder line"></span>
-                                                                        </span>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        <span class="mask-squircle mr-2 placeholder avatar"> </span>
-                                                                        <span class="placeholder line"></span>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <span class="placeholder line"></span>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <span class="placeholder line"></span>
-                                                                    </td>
-                                                                    <td>
-                                                                        <span class="placeholder line"></span>
-                                                                    </td>
-                                                                    <td>
-                                                                        <span class="text-danger">
-                                                                            <span class="placeholder line"></span>
-                                                                        </span>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        <span class="mask-squircle mr-2 placeholder avatar"> </span>
-                                                                        <span class="placeholder line"></span>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <span class="placeholder line"></span>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <span class="placeholder line"></span>
-                                                                    </td>
-                                                                    <td>
-                                                                        <span class="placeholder line"></span>
-                                                                    </td>
-                                                                    <td>
-                                                                        <span class="text-danger">
-                                                                            <span class="placeholder line"></span>
-                                                                        </span>
                                                                     </td>
                                                                 </tr>
 
@@ -386,7 +329,7 @@
                                                                         Discount
                                                                     </small>
                                                                     <span class="text-danger">
-                                                                            -{{convertToCurrency(product.pro_discount)}}<span class="kh-currency">៛</span>
+                                                                            -{{convertToCurrency(product.pro_discount * product.pivot.quantity)}}<span class="kh-currency">៛</span>
                                                                         </span>
                                                                 </td>
                                                             </tr>

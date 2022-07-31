@@ -9,6 +9,16 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body table-responsive p-0" style="max-height: 76vh; min-height: 76vh;">
+                        <div class="">
+                            <loading :active.sync="isLoading"
+                                     :can-cancel="true"
+                                     :is-full-page="fullPage"
+                                     :height="height"
+                                     :width="width"
+                                     :color="color"
+                                     :loader="loader"
+                                     :background-color="bgColor"></loading>
+                        </div>
                         <table class="table table-head-fixed text-nowrap customer-reports">
                             <thead>
                             <tr>
@@ -40,10 +50,10 @@
                                 <td v-if="customer.latest_order !== null">{{convertToCurrency(customer.latest_order.total)}}៛ <br> <small class="text-success">{{ getLatestOrder(customer.latest_order.created_at) }}</small></td>
                                 <td v-else></td>
                                 <td class="text-center">
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-customer" @click="editModal(customer)"><i class="fas fa-pencil-alt"></i></button>
+                                    <button class="btn btn-primary" @click="editModal(customer); $event.stopPropagation();"><i class="fas fa-pencil-alt"></i></button>
                                 </td>
                                 <td class="text-center">
-                                    <button class="btn btn-danger" @click="deleteCustomer(customer.name, customer.id)"><i class="far fa-trash-alt"></i></button>
+                                    <button class="btn btn-danger" @click="deleteCustomer(customer.name, customer.id); $event.stopPropagation();"><i class="far fa-trash-alt"></i></button>
                                 </td>
                                 <td class="text-right toggle-detail">
                                     <span v-show="customer.latest_order !== null">
@@ -68,72 +78,17 @@
                                                         <!--<span class="text-xs ml-2 text-success">Showing 5 of 9 orders</span>-->
                                                         <table class="table table-hover table-borderless table-valign-middle">
                                                             <tbody v-if="loadingOrders === true && customer.orders.length<=0" class="skeleton">
-                                                            <tr>
+                                                            <tr v-for="i in 3">
                                                                 <td>
                                                                     <span class="mask-squircle mr-2 placeholder avatar mr-2"> </span>
                                                                     <span class="placeholder line"></span>
                                                                 </td>
 
-                                                                <td>
+                                                                <td v-for="j in 4">
                                                                     <span class="placeholder line"></span>
-                                                                </td>
-
-                                                                <td>
-                                                                    <span class="placeholder line"></span>
-                                                                </td>
-                                                                <td>
-                                                                    <span class="placeholder line"></span>
-                                                                </td>
-                                                                <td>
-                                                                        <span class="text-danger">
-                                                                            <span class="placeholder line"></span>
-                                                                        </span>
                                                                 </td>
                                                             </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <span class="mask-squircle mr-2 placeholder avatar"> </span>
-                                                                    <span class="placeholder line"></span>
-                                                                </td>
 
-                                                                <td>
-                                                                    <span class="placeholder line"></span>
-                                                                </td>
-
-                                                                <td>
-                                                                    <span class="placeholder line"></span>
-                                                                </td>
-                                                                <td>
-                                                                    <span class="placeholder line"></span>
-                                                                </td>
-                                                                <td>
-                                                                        <span class="text-danger">
-                                                                            <span class="placeholder line"></span>
-                                                                        </span>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <span class="mask-squircle mr-2 placeholder avatar"> </span>
-                                                                    <span class="placeholder line"></span>
-                                                                </td>
-
-                                                                <td>
-                                                                    <span class="placeholder line"></span>
-                                                                </td>
-
-                                                                <td>
-                                                                    <span class="placeholder line"></span>
-                                                                </td>
-                                                                <td>
-                                                                    <span class="placeholder line"></span>
-                                                                </td>
-                                                                <td>
-                                                                        <span class="text-danger">
-                                                                            <span class="placeholder line"></span>
-                                                                        </span>
-                                                                </td>
-                                                            </tr>
 
                                                             </tbody>
 
@@ -301,10 +256,12 @@
 </template>
 
 <script>
-
+/*https://github.com/ankurk91/vue-loading-overlay/tree/v3.x*/
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 export default {
-
     props: ['token'],
+    components:{Loading },
     data () {
         return {
             currentPage:'1',
@@ -334,6 +291,14 @@ export default {
             isLoading: false,
             loadingOrders: false,
             loadingButton: false,
+
+            fullPage: false,
+            canCancel: true,
+            loader: 'dots',
+            color: '#007bff',
+            bgColor: '#ffffff',
+            height: 70,
+            width: 70,
 
             orderBy: ['id', 'desc'],    // For sort in server
             sort_by_column: '',         // Help in condition
@@ -401,6 +366,7 @@ export default {
         },
 
         editModal(customer){
+            $('#modal-customer').modal('show')
             this.form.clear()
             this.editMode=true
             this.form.fill(customer)
@@ -444,10 +410,10 @@ export default {
                 html: "តើអ្នកចង់លុបអតិថិជនឈ្មោះ <strong>" + name +" </strong>មែនទេ?",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText:'បោះបង់',
-                confirmButtonText: 'បាទ/ចាស៎'/*Yes, delete it!*/
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText:'Cancel',
+                confirmButtonText: '<i class="far fa-trash-alt mr-2"></i>បាទ/ចាស៎'/*Yes, delete it!*/
             }).then((result) => {
                 if (result.isConfirmed) {
                     this.form.delete('api/customer/'+id)
@@ -491,10 +457,6 @@ export default {
             })
 
         },
-
-
-
-
 
         handlePageChange(value) {
             if (this.page !== value){

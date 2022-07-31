@@ -2,7 +2,6 @@
     <div>
         <div class="row px-5">
             <div class="col-6">
-                <p class="label text-gray">ឈ្មោះហាង</p>
                 <h1 class="text-blue">{{name}}</h1><br/>
 
                 <p class="label text-gray">Email</p>

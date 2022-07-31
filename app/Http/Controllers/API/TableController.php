@@ -91,7 +91,8 @@ class TableController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param Table $seatTable
-     * @return \Illuminate\Http\JsonResponse
+     * @param $id
+     * @return void
      * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, Table $seatTable, $id)

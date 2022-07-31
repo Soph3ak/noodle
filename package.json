@@ -27,7 +27,7 @@
     "dependencies": {
         "laravel-vue-pagination": "^2.3.1",
         "moment": "^2.29.1",
-        "sweetalert2": "^10.15.5",
+        "sweetalert2": "^10.16.9",
         "v-select2-component": "^0.4.7",
         "vform": "^1.0.1",
         "vue-currency-input": "^1.22.6",

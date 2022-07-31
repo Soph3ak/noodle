@@ -11,16 +11,36 @@
                                         <h2>Categories</h2>
                                     </div>
                                     <!-- Gallery item -->
-                                    <div @click="loadAllProducts" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3">
+                                    <div @click="loadAllProducts" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3 sell-category" id="sell-category0">
                                         <div class="bg-gradient-danger rounded shadow-sm sell-card d-flex flex-column">
+                                            <div class="d-none category-loading">
+                                                <loading :active.sync="isLoading"
+                                                         :can-cancel="true"
+                                                         :is-full-page="fullPage"
+                                                         :height="height"
+                                                         :width="width"
+                                                         :color="color"
+                                                         :loader="loader"
+                                                         :background-color="bgColor"></loading>
+                                            </div>
                                             <div class="cate-text p-lg-4 p-md-2">
                                                 <h4>ទំនិញគ្រប់មុខ</h4>
                                                 <span>All Products</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div v-for="category in categories" :key="category.id" @click="loadProductsByCategory(category.id, category.name_kh)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3" id="sell-category">
+                                    <div v-for="category in categories" :key="category.id" @click="loadProductsByCategory(category.id, category.name_kh)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3 sell-category" :id="'sell-category'+category.id">
                                         <div class="bg-success rounded shadow-sm sell-card d-flex flex-column">
+                                            <div class="d-none category-loading">
+                                                <loading :active.sync="isLoading"
+                                                         :can-cancel="true"
+                                                         :is-full-page="fullPage"
+                                                         :height="height"
+                                                         :width="width"
+                                                         :color="color"
+                                                         :loader="loader"
+                                                         :background-color="bgColor"></loading>
+                                            </div>
                                             <img :src="'/icons/'+category.name+'.jpg'" class="rounded">
                                             <div class="cate-text p-lg-4 p-md-2">
                                                 <h4>{{ category.name_kh }}</h4>
@@ -35,11 +55,14 @@
                                 <div class="row">
                                     <div class="header pl-3 d-flex align-items-center">
                                         <a class="mr-auto">{{currentCate}}</a>
-                                        <!--<h5 class="mr-4">{{ date }}</h5>-->
-                                        <!--<h5 class="mr-4">{{ time }}</h5>-->
                                         <Clock></Clock>
                                     </div>
-                                    <div v-for="(product,index ) in products" :key="product.id" @click="operation(index, product.id, 'increase', 0)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3" id="sell-product">
+                                    <div v-for="i in 9" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3 sell-category skeleton" v-show="isLoading === true">
+                                        <div class="rounded shadow-sm sell-card category-loading-box">
+
+                                        </div>
+                                    </div>
+                                    <div v-for="(product,index ) in products" :key="product.id" @click="operation(index, product.id, 'increase', 0)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3 fade-in" id="sell-product" v-show="isLoading===false">
                                         <div class="rounded shadow-sm sell-card">
                                             <img :src="'/files/'+product.photo" alt="Product Image" class="rounded" style="width: 100%; height: 100%">
                                             <img v-if="product.pro_discount>0" :src="'/icons/discount.png'" alt="Discount Image" class="rounded dis-img">
@@ -64,10 +87,6 @@
                 <div class="col-lg-3 col-md-5 col-sm-5 pr-lg-5 d-flex flex-column">
                     <div class="banner">
                         <div class="header d-flex justify-content-between align-items-center">
-                            <!--<h2 style="width: 100%">Current Orders</h2>
-                            <p class="">Sopheak</p>-->
-
-
                                 <div class="products-list add-seat" style="padding-left: 6px">
                                     <div class="product-img">
                                         <img src="/icons/tables-white.png" class="img-size-50 rounded" alt="Image"/>
@@ -194,9 +213,11 @@
 import CashIn from "./CashIn";
 import Clock from "./Clock";
 import Seat from "./Seat";
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
     export default {
         props: ['token'],
-        components:{CashIn, Clock, Seat},
+        components:{CashIn, Clock, Seat, Loading},
         data () {
             return{
                 form : new Form(),
@@ -222,7 +243,16 @@ import Seat from "./Seat";
                 seatName:'Take away',
                 invoice:[],
 
-                /*file:[],*/
+                isLoading: false,
+                loadingProducts: false,
+
+                fullPage: false,
+                canCancel: true,
+                loader: 'dots',
+                color: '#fcd535d9',
+                bgColor: 'rgba(0, 0, 0, 0.7)',
+                height: 70,
+                width: 70,
             }
         },
         methods:{
@@ -277,48 +307,70 @@ import Seat from "./Seat";
                     });
             },
 
-            loadAllProducts(){
-                this.currentCate = 'ទំនិញគ្រប់មុខ'
-                axios.get('api/loadAllProducts')
-                    .then(response => {
-                        this.products = response.data;
-                        this.ifOrdersExist()
-                        this.tmp = 0
-                    });
-            },
-
             ifOrdersExist(){
                 /*GET QTY FROM ORDERS IF EXIST, TO PREVENT USER MAKE ORDER THEN GO TO ANOTHER CATEGORY THEN QTY CHANGE TO 0*/
-                    let orderLength = this.order.length
-                    let proLength = this.products.length
-                    if (orderLength > 0){
-                        for(let i=0; i < orderLength; i++){
-                            let orderProID = this.order[i].id
-                            let orderProQty = this.order[i].qty
-                            for(let j=0; j < proLength; j++){
-                                if(this.products[j].id === orderProID){
-                                    this.products[j].qty = orderProQty
-                                    setTimeout(() => this.changeColorQty(j,orderProQty), 0.1); /*COZ PRODUCTS LOAD TO PAGE WAS DELAY LATE THEN CODE*/
-                                    break
-                                }
+                let orderLength = this.order.length
+                let proLength = this.products.length
+                if (orderLength > 0){
+                    for(let i=0; i < orderLength; i++){
+                        let orderProID = this.order[i].id
+                        let orderProQty = this.order[i].qty
+                        for(let j=0; j < proLength; j++){
+                            if(this.products[j].id === orderProID){
+                                this.products[j].qty = orderProQty
+                                setTimeout(() => this.changeColorQty(j,orderProQty), 0.1); /*COZ PRODUCTS LOAD TO PAGE WAS DELAY LATE THEN CODE*/
+                                break
                             }
                         }
                     }
+                }
+            },
+
+            loadAllProducts(){
+                this.currentCate = 'ទំនិញគ្រប់មុខ'
+                this.removeDisplayNone(0)
+                this.isLoading = true;
+                setTimeout(() => {
+                    axios.get('api/loadAllProducts')
+                        .then((response) => {
+                            this.isLoading = false
+                            this.products = response.data;
+                            this.ifOrdersExist()
+                            this.tmp = 0
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                        });
+                }, 350)
+
             },
 
             loadProductsByCategory(cateID, cateName){
                 this.currentCate = cateName
                 if(cateID !== this.tmp){
-                    axios.get('api/loadProductsByCategory/'+cateID)
-                        .then(response => {
-                            this.products = response.data
-                            this.ifOrdersExist()
-                        })
-                        .catch(error => console.log(error))
-                        .finally(() => this.loading = false)
-                    this.tmp = cateID
+                    this.removeDisplayNone(cateID)
+                    this.isLoading = true;
+                    setTimeout(() => {
+                        axios.get('api/loadProductsByCategory/'+cateID)
+                            .then((response) => {
+                                this.isLoading = false
+                                this.products = response.data
+                                this.ifOrdersExist()
+                            })
+                            .catch((e) => {
+                                console.log(e);
+                            });
+                        this.tmp = cateID
+                    }, 350)
                 }
 
+            },
+
+            removeDisplayNone(id){
+                let selector = $('.category-loading')
+                let selector1 = $('#sell-category'+id+' div.category-loading')
+                selector.addClass('d-none')
+                selector1.removeClass('d-none')
             },
 
             operation(productIndex, proID, oper, orderIndex){
@@ -429,7 +481,7 @@ import Seat from "./Seat";
                 this.form = new Form({
                     id:"",
                     user_id: this.userID,
-                    customer_id: "56",
+                    customer_id: "53",
                     table_id: this.seatID,
                     shop_id: "1",
                     payment_id: this.paymentID,
@@ -461,7 +513,7 @@ import Seat from "./Seat";
                 this.form = new Form({
                     id:"",
                     user_id: this.userID,
-                    customer_id: "62",
+                    customer_id: "53",
                     table_id: this.seatID,
                     shop_id: "1",
                     payment_id: this.paymentID,

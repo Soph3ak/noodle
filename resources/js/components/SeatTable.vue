@@ -171,9 +171,9 @@ export default {
                 html: "តើអ្នកចង់លុបតុឈ្មោះ <strong>" + name +" </strong>មែនទេ?",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText:'បោះបង់',
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText:'Cancel',
                 confirmButtonText: 'បាទ/ចាស៎'/*Yes, delete it!*/
             }).then((result) => {
                 if (result.isConfirmed) {
