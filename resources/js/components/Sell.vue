@@ -62,7 +62,7 @@
 
                                         </div>
                                     </div>
-                                    <div v-for="(product,index ) in products" :key="product.id" @click="operation(index, product.id, 'increase', 0)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3 fade-in" id="sell-product" v-show="isLoading===false">
+                                    <div v-for="(product,index ) in products" :key="product.id" @click="operation(index, product.id, 'increase', 0)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3 scale-up-center" id="sell-product" v-show="isLoading===false">
                                         <div class="rounded shadow-sm sell-card">
                                             <img :src="'/files/'+product.photo" alt="Product Image" class="rounded" style="width: 100%; height: 100%">
                                             <img v-if="product.pro_discount>0" :src="'/icons/discount.png'" alt="Discount Image" class="rounded dis-img">
@@ -76,6 +76,16 @@
 
                                             </div>
                                         </div>
+                                    </div>
+                                    <div v-show="productsCount===0" class="sc-5kpu8c-5 dcdHhK sell-products-not-found scale-up-center">
+                                        <div class="sc-5kpu8c-6 fbNBuP mb-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" height="24px" width="24px" viewBox="0 0 24 24" class="sc-16r8icm-0 jZwKai">
+                                                <path d="M16.4153 16.4153L20 20M18.5455 11.2727C18.5455 15.2893 15.2894 18.5454 11.2728 18.5454C7.25612 18.5454 4 15.2893 4 11.2727C4 7.2561 7.25612 4 11.2728 4C15.2894 4 18.5455 7.2561 18.5455 11.2727Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </div>
+                                        <h3 font-size="16px" font-weight="500" color="text" class="sc-1eb5slv-0 ddqQcN" style="text-align: center;">No results found</h3>
+                                        <p color="text2" font-size="1" class="sc-1eb5slv-0 bSDVZJ">We couldn't find anything matching your search.</p>
+                                        <p color="text2" font-size="1" class="sc-1eb5slv-0 bSDVZJ">Try again with a different term.</p>
                                     </div>
                                     <Seat v-show="showSeat" ref="seat" @closeSeat="closeSeat()" @addSeat="addSeat1" @payment="payment"></Seat>
                                 </div>
@@ -170,13 +180,6 @@
                                 <h5>PAY</h5>
                                 <h4 class="to-pay">{{convertToCurrency(total)}}.00៛</h4>
                             </div>
-                            <!--<div class="small-icon d-flex justify-content-between mt-auto">
-                                <a href="#" class="btn btn-outline-warning"><i class="fas fa-percent"></i></a>
-                                <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
-                                <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
-                                <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
-                                <a href="#" class="btn btn-outline-warning"><i class="ion-beer"></i></a>
-                            </div>-->
                         </div>
                     </div>
 
@@ -226,6 +229,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                 userName: 'Cashier1',
                 categories:{},
                 products:[],
+                productsCount: 1,
                 tmp:0,
                 order: [],
                 paymentID:0,
@@ -328,6 +332,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 
             loadAllProducts(){
                 this.currentCate = 'ទំនិញគ្រប់មុខ'
+                this.productsCount = 1 //   prevent bug: if = 0, no result string will show up
                 this.removeDisplayNone(0)
                 this.isLoading = true;
                 setTimeout(() => {
@@ -335,6 +340,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                         .then((response) => {
                             this.isLoading = false
                             this.products = response.data;
+                            this.productsCount = this.products.length
                             this.ifOrdersExist()
                             this.tmp = 0
                         })
@@ -348,6 +354,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
             loadProductsByCategory(cateID, cateName){
                 this.currentCate = cateName
                 if(cateID !== this.tmp){
+                    this.productsCount = 1 //   prevent bug: if = 0, no result string will show up
                     this.removeDisplayNone(cateID)
                     this.isLoading = true;
                     setTimeout(() => {
@@ -355,6 +362,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                             .then((response) => {
                                 this.isLoading = false
                                 this.products = response.data
+                                this.productsCount = this.products.length
                                 this.ifOrdersExist()
                             })
                             .catch((e) => {
@@ -689,9 +697,6 @@ import 'vue-loading-overlay/dist/vue-loading.css';
         top: 0;
         right: 0;
         transform: rotate(35deg);
-    }
-    .btn-pay{
-        background-color: dodgerblue;
     }
 
 </style>
