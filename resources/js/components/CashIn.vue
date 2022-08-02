@@ -98,7 +98,19 @@
                         <button type="button" value="00" class="btn btn-secondary">00</button>
                         <button type="button" class="all-clear function btn btn-danger btn-sm" value="all-clear" ref="ac">AC</button>
 
-                        <button type="button" class="equal-sign operator btn btn-success" v-if="toTalToPay <= KHR" @click="pay()">PAY</button>
+                        <button type="button" class="equal-sign operator btn btn-success position-relative" id="cash-in-pay" v-if="toTalToPay <= KHR" @click="pay()">
+                            <div class="category-loading">
+                                <loading :active.sync="isLoading"
+                                         :can-cancel="true"
+                                         :is-full-page="fullPage"
+                                         :height="height"
+                                         :width="width"
+                                         :color="color"
+                                         :loader="loader"
+                                         :background-color="bgColor"></loading>
+                            </div>
+                            PAY
+                        </button>
                         <button type="button" class="equal-sign operator btn btn-warning" disabled v-else>PAY</button>
 
                     </div>
@@ -111,8 +123,10 @@
 </template>
 
 <script>
-
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 export default {
+    components:{Loading },
     data(){
         return{
             url:'/icons/KHR.png',
@@ -129,6 +143,17 @@ export default {
             thbRate: 130.58,
             cnyRate: 636.14,
             khrRate: 1,
+
+            isLoading: false,
+            loadingProducts: false,
+
+            fullPage: false,
+            canCancel: true,
+            loader: 'dots',
+            color: '#fcd535d9',
+            bgColor: 'rgba(0, 0, 0, 0.7)',
+            height: 70,
+            width: 70,
 
         }
     },
@@ -250,14 +275,36 @@ export default {
         },
 
         pay(){
-            this.$emit("paySuccess");
+            this.isLoading = true
+            this.clickablePay()
+            setTimeout(() => {
+                this.$emit("paySuccess")
+            }, 250);
+
+        },
+
+        clickablePay(){
+            // Fixed Error Case #2: User can save multiple time during Pay button loading
+            let pay = $("#cash-in-pay")
+            if (this.isLoading === true)
+                pay.addClass('not-clickable')
+             else
+                 pay.removeClass('not-clickable')
         },
 
         alertSuccess(){
-            Swal.fire(
-                'លុយអាប់: ' + this.convertToCurrency(this.change) +'៛',
-                'ទូរទាត់បានដោយជោគជ័យ!<br>សូមអរគុណ!',
-                'success'
+            this.isLoading = false
+            this.clickablePay()
+            Swal.fire({
+                title: 'លុយអាប់: ' + this.convertToCurrency(this.change) +'៛',
+                html: "ទូរទាត់បានដោយជោគជ័យ!<br>សូមអរគុណ!",
+                icon: 'success',
+                allowOutsideClick: false,
+            }
+
+
+
+
             )
             this.reset()
             this.clear()

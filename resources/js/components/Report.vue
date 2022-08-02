@@ -1191,6 +1191,7 @@ export default {
             function cb(start, end) {
                 $('#reportrange span').html(start.format('MMM D, YYYY') + ' - ' + end.format('MMM D, YYYY'));
                 /*vm.getResults(vm.currentPage,(start.format('MMMM D, YYYY')), (end.format('MMMM D, YYYY')));*/
+                console.log(moment().subtract(1, 'year').startOf('year'))
                 vm.start = start.format('MMMM D, YYYY');
                 vm.end = end.format('MMMM D, YYYY');
                 vm.page = 1;
@@ -1208,7 +1209,8 @@ export default {
                     'This Month': [moment().startOf('month'), moment().endOf('month')],
                     'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
                     'This Year': [moment().startOf('year'), moment().endOf('year')],
-                    'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
+                    'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
+                    'All Times': [moment('2021-05-01T00:00:00.0000000Z'), moment()]
                 },
                 "showCustomRangeLabel": false,
                 "alwaysShowCalendars": true,

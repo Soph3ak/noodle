@@ -101,10 +101,15 @@
                 return converted = formatter.format(price)
             },
             alertSuccess(){
-                Swal.fire(
-                    'Hold Success!',
-                    'ទូរទាត់ប្រាក់ពេលក្រោយ!<br>សូមអរគុណ!',
-                    'success'
+                Swal.fire({
+                    title: 'Hold Success!',
+                    html: 'ទូរទាត់ប្រាក់ពេលក្រោយ!<br>សូមអរគុណ!',
+                    icon: 'success',
+                    allowOutsideClick: false,
+                }
+
+
+
                 )
                 this.clearSelected()
                 this.closeSeat()
@@ -142,21 +147,7 @@
     .seat-card.selected{
         background-color: darkred;
     }
-    /*.btn-close{
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 50px;
-        font-size: 1.5rem;
-        position: absolute;
-        right: 30px;
-        bottom: 50px;
-        opacity: 1;
-        background-color: dodgerblue;
-        cursor: pointer;
-        animation: btnClose .5s linear;
-    }*/
+
     .btn-close{
         animation-duration: 1.5s;
         transform-origin: bottom;
@@ -169,7 +160,7 @@
         position: absolute;
         right: 20px;
         bottom: 58px;
-        background-color: dodgerblue;
+        background: linear-gradient(90deg, hsl(192deg, 95%, 50%) 0%, hsl(225deg, 89%, 47%) 100%);
         cursor: pointer;
         animation-name: bounce-5;
         animation-timing-function: ease;
@@ -188,7 +179,7 @@
         cursor: pointer;
         animation: btnPay .5s linear;
         transform: translateX(-50%);
-        background-color: dodgerblue;
+        background: linear-gradient(90deg, hsl(192deg, 95%, 50%) 0%, hsl(225deg, 89%, 47%) 100%);
     }
     /*@keyframes btnClose {
         0%   {opacity:0; bottom: 0px;}

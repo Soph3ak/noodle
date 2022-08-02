@@ -278,6 +278,7 @@ export default {
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
+                allowOutsideClick: false,
                 cancelButtonText:'បោះបង់',
                 confirmButtonText: 'បាទ/ចាស៎'/*Yes, delete it!*/
             }).then((result) => {
@@ -286,11 +287,12 @@ export default {
                         .then(response => {
                             this.getResults(this.currentPage);
                             this.$refs.myVueDropzone.oldFileRemoveAfterUpdatedOrDeleted(photo)
-                            Swal.fire(
-                                'Deleted!',
-                                "មុខម្ហូបឈ្មោះ <strong>" + name  +" </strong>ត្រូវបានលុបដោយជោគជ័យ!",
-                                'success'
-                            )
+                            Swal.fire({
+                                title: 'Deleted!',
+                                html: "មុខម្ហូបឈ្មោះ <strong>" + name  +" </strong>ត្រូវបានលុបដោយជោគជ័យ!",
+                                icon: 'success',
+                                allowOutsideClick: false,
+                            })
                         })
                         .catch(err => console.log(err))
                         .finally(() => this.loading = false)

@@ -1,4 +1,10 @@
 Case #1:    "Report.vue" When rows opening products detail then we do sort or do any action that call retrieveReports()
             it will cause all those products detail will be whipped out from the table.
             Cause:  Because retrieveReports() will get only reports join with empty products[]
-            Fixed:  Must close all opened products detail first
+            Solution:  Must close all opened products detail first
+
+Case #2:    "CaseIn.vue" be aware with loading button, during this loading user can do multiple click it will mess you up
+            Cause: button still able to click or perform action during loading
+            Solution: add css style to it "pointer-events: none;"
+
+

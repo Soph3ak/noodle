@@ -173,6 +173,7 @@ export default {
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
                 cancelButtonColor: '#3085d6',
+                allowOutsideClick: false,
                 cancelButtonText:'Cancel',
                 confirmButtonText: 'បាទ/ចាស៎'/*Yes, delete it!*/
             }).then((result) => {
@@ -180,10 +181,15 @@ export default {
                     this.form.delete('api/seat/'+id)
                         .then(response => {
                             this.getResults(this.currentPage);
-                            Swal.fire(
-                                'Deleted!',
-                                "តុឈ្មោះ <strong>" + name  +" </strong>ត្រូវបានលុបដោយជោគជ័យ!",
-                                'success'
+                            Swal.fire({
+                                title: 'Deleted!',
+                                html: "តុឈ្មោះ <strong>" + name  +" </strong>ត្រូវបានលុបដោយជោគជ័យ!",
+                                icon: 'success',
+                                allowOutsideClick: false,
+                            }
+
+
+
                             )
                         })
                         .catch(err => console.log(err))

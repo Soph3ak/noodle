@@ -413,17 +413,19 @@ export default {
                 confirmButtonColor: '#d33',
                 cancelButtonColor: '#3085d6',
                 cancelButtonText:'Cancel',
+                allowOutsideClick: false,
                 confirmButtonText: '<i class="far fa-trash-alt mr-2"></i>បាទ/ចាស៎'/*Yes, delete it!*/
             }).then((result) => {
                 if (result.isConfirmed) {
                     this.form.delete('api/customer/'+id)
                         .then(response => {
                             this.retrieveCustomers(this.currentPage);
-                            Swal.fire(
-                                'Deleted!',
-                                "អតិថិជនឈ្មោះ <strong>" + name  +" </strong>ត្រូវបានលុបដោយជោគជ័យ!",
-                                'success'
-                            )
+                            Swal.fire({
+                                title: 'Deleted!',
+                                html: "អតិថិជនឈ្មោះ <strong>" + name  +" </strong>ត្រូវបានលុបដោយជោគជ័យ!",
+                                icon: 'success',
+                                allowOutsideClick: false,
+                            })
                         })
                         .catch(err => console.log(err))
                         .finally(() => this.loading = false)

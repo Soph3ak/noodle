@@ -502,8 +502,8 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                 this.form.post('api/save-order')
                     .then(response => {
                         if(this.paymentID===1){
-                            this.hideModal()
                             this.$refs.cashIn.alertSuccess()
+                            this.hideModal()
                             this.closeSeat()
                         }
                         else if (this.paymentID===2)
@@ -571,7 +571,8 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
                         cancelButtonText:'ទេ',
-                        confirmButtonText: 'បាទ/ចាស៎'/*Yes, delete it!*/
+                        confirmButtonText: 'បាទ/ចាស៎',/*Yes, delete it!*/
+                        allowOutsideClick: false,
                     }).then((result) => {
                         if (result.isConfirmed) {
                             this.clear()
@@ -595,6 +596,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                         icon: 'error',
                         title: 'Empty Order',
                         text: 'We don\'t have any order currently !',
+                        allowOutsideClick: false,
                     })
                 }
             },
@@ -615,6 +617,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                         icon: 'error',
                         title: 'Empty Order',
                         text: 'We don\'t have any order currently !',
+                        allowOutsideClick: false,
                     })
                 }
             },
