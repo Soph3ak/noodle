@@ -34,6 +34,14 @@ class Order extends Model
             'product_id')->withPivot('quantity');
     }
 
+    public function promotions(){
+        return $this->belongsToMany(
+            Promotion::class,
+            'order_promotion',
+            'order_id',
+            'product_id');
+    }
+
 
 
     public function table(){
@@ -55,4 +63,6 @@ class Order extends Model
     public function customer(){
         return $this->belongsTo(Customer::class);
     }
+
+
 }

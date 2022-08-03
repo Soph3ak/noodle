@@ -16,4 +16,15 @@ Ctrl+Alt+T: To rrap a code block in useful constructs(if, for, while, function..
 
 
 
+Telegram fix small Khmer font:Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes
+Ang DaunTep
+
+
+
+
+
+
+
+
+
 

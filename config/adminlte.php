@@ -264,6 +264,13 @@ return [
             /*'label_color' => 'success',*/
         ],
         [
+            'text'        => 'Promotions',
+            'url'         => 'promotion',
+            'icon'        => 'fas fa-percent mr-1',
+            /*'label'       => 4,*/
+            /*'label_color' => 'success',*/
+        ],
+        [
             'text'        => 'អំពីហាង',
             'url'         => 'shop',
             'icon'        => 'fas fa-store-alt mr-1',

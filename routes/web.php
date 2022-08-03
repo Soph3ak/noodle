@@ -35,6 +35,7 @@ Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 Route::get('/tables',[TableController::class,'index']);
 Route::get('/customer',[CustomerController::class,'index']);
 Route::get('/product',[ProductController::class,'index']);
+Route::get('/promotion',[PromotionController::class,'index']);
 
 
 
