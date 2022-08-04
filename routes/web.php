@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageUploadController;
+use App\Http\Controllers\PromotionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\ProductController;

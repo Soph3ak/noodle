@@ -62,7 +62,7 @@ class CustomerController extends Controller
             ->orderBy('created_at','desc')
             ->get();
 
-        $collector = collect();
+        $collector = collect(); //use collection to use ->take($request->limit)
         foreach ($orders as $order){
             $collector->push($order);
         }

@@ -74,6 +74,10 @@ class OrderController extends Controller
             $data[] = $nest;
         }
         $order->products()->sync($data);
+
+        //Purpose to create invoice
+        // (NOT YET FINISH or FIND OTHER WAY TO DO(maybe get data back from orders table by $order->id))
+        // check telegram for របៀបបន្ថែម columns ចូលក្នុង respond មុនពេល sent to Vue
         $invoice = collect($order)->merge($data);
         return $invoice->all();
 

@@ -264,7 +264,7 @@ return [
             /*'label_color' => 'success',*/
         ],
         [
-            'text'        => 'Promotions',
+            'text'        => 'ប្រូម៉ូសិន',
             'url'         => 'promotion',
             'icon'        => 'fas fa-percent mr-1',
             /*'label'       => 4,*/

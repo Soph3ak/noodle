@@ -51,6 +51,7 @@ Vue.component('shop', require('./components/Shop').default);
 Vue.component('customer', require('./components/Customer.vue').default);
 Vue.component('report', require('./components/Report').default);
 Vue.component('product', require('./components/Product').default);
+Vue.component('promotion', require('./components/Promotion').default);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('sell', require('./components/Sell.vue').default);
 

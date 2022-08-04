@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -25,6 +26,47 @@ class ProductController extends Controller
         return $products = Product::with('category:id,name_kh') /*category is function's name in Product modal*/
             ->orderBy('id', 'desc')
             ->paginate(10);
+    }
+
+    public function getTopSellingProducts(){
+         $top_sales = DB::table('products')
+            ->leftJoin('order_product','products.id','=','order_product.product_id')
+            ->selectRaw('products.id, COALESCE(SUM(order_product.quantity),0) total')
+            ->groupBy('products.id')
+            ->orderBy('total','desc')
+            ->take(5)
+            ->get();
+        //[
+        //    {
+        //        "id": 9,
+        //        "total": "106"
+        //    },
+        //    {
+        //        "id": 12,
+        //        "total": "64"
+        //    },
+        //    {
+        //        "id": 4,
+        //        "total": "64"
+        //    },
+        //    {
+        //        "id": 10,
+        //        "total": "59"
+        //    },
+        //    {
+        //        "id": 2,
+        //        "total": "48"
+        //    }
+        //]
+
+        $topSellingProducts = [];
+        foreach ($top_sales as $ts){
+            $p = Product::findOrFail($ts->id);
+            $p->totalSold = $ts->total;
+
+            $topSellingProducts[] = $p;
+        }
+        return $topSellingProducts;
     }
 
     protected function validator(array $data)
