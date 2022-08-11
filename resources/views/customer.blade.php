@@ -21,7 +21,7 @@
 @stop
 
 @section('css')
-
+    <link rel="stylesheet" href="{{ asset('css/gg-icon.css') }}" />
 @stop
 
 @section('js')

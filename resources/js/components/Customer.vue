@@ -22,11 +22,36 @@
                         <table class="table table-head-fixed text-nowrap customer-reports">
                             <thead>
                             <tr>
-                                <th>លេខរៀង</th>
-                                <th>ឈ្មោះអតិថិជន</th>
-                                <th>ភេទ</th>
-                                <th>លេខទូរសព័្ទ</th>
-                                <th>អាសយដ្ធាន</th>
+                                <th>
+                                    <span class="gg pointer"  @click="sortBy('id')" id="column_id">
+                                        លេខរៀង
+                                        <span class="sort sort-default ml-1"></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class="gg pointer"  @click="sortBy('name')" id="column_name">
+                                        ឈ្មោះអតិថិជន
+                                        <span class="sort sort-default ml-1"></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class="gg pointer"  @click="sortBy('gender')" id="column_gender">
+                                        ភេទ
+                                        <span class="sort sort-default ml-1"></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class="gg pointer"  @click="sortBy('phone')" id="column_phone">
+                                        លេខទូរសព័្ទ
+                                        <span class="sort sort-default ml-1"></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class="gg pointer"  @click="sortBy('address')" id="column_address">
+                                        អាសយដ្ធាន
+                                        <span class="sort sort-default ml-1"></span>
+                                    </span>
+                                </th>
                                 <th>Last order</th>
                                 <th class="text-center">កែប្រែ | EDIT</th>
                                 <th class="text-center">លុប | DELETE</th>
@@ -299,7 +324,7 @@ export default {
             height: 70,
             width: 70,
 
-            orderBy: ['id', 'desc'],    // For sort in server
+            orderBy: ['id', 'desc'],    // For sort in server // default sort
             sort_by_column: '',         // Help in condition
             sort_direction: 'asc',      //Help in condition
 
@@ -601,6 +626,28 @@ export default {
                 sort.addClass('sort-asc active')
             else if (direction === 'desc')
                 sort.addClass('sort-desc active')
+        },
+
+        sortBy(byColumn){
+            this.page = 1
+            this.showingBtnResetTable = true
+            if(this.sort_direction === 'asc' || this.sort_by_column !== byColumn){
+                this.sort_direction = 'desc'
+                this.switchSortIcon(byColumn, 'desc')
+            }
+            else
+            {
+                this.sort_direction = 'asc'
+                this.switchSortIcon(byColumn,'asc')
+            }
+
+            this.sort_by_column = byColumn
+
+            this.orderBy=[]
+            this.orderBy[0] = byColumn
+            this.orderBy[1] = this.sort_direction
+            this.retrieveCustomers();
+
         },
 
         formatDate(value){

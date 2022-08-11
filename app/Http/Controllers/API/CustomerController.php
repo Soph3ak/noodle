@@ -46,6 +46,18 @@ class CustomerController extends Controller
                     $customers = $customers->orderBy('name', $direction);
                     break;
 
+                case 'gender':
+                    $customers = $customers->orderBy('gender', $direction);
+                    break;
+
+                case 'phone':
+                    $customers = $customers->orderBy('phone', $direction);
+                    break;
+
+                case 'address':
+                    $customers = $customers->orderBy('address', $direction);
+                    break;
+
                 default:
                     $customers = $customers->orderBy('id', 'desc');
             }

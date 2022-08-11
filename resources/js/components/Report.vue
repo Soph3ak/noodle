@@ -1114,6 +1114,7 @@ export default {
         },
 
         sortBy(byColumn){
+            this.page = 1
             this.showingBtnResetTable = true
             if(this.sort_direction === 'asc' || this.sort_by_column !== byColumn){
                 this.sort_direction = 'desc'

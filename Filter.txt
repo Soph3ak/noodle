@@ -21,11 +21,13 @@ Ang DaunTep
 
 * Customer.vue 
 	- table sortable
-	- order by customer name
-	- only customer has orders can views all ordered histories
+	- search customer
+	- order by customer id
 
 * Product dropzone file type validation 
 * Soft delete
+
+S0ph3qk1994
 
 
 
