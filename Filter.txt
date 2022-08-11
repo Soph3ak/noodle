@@ -19,6 +19,14 @@ Ctrl+Alt+T: To rrap a code block in useful constructs(if, for, while, function..
 Telegram fix small Khmer font:Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes
 Ang DaunTep
 
+* Customer.vue 
+	- table sortable
+	- order by customer name
+	- only customer has orders can views all ordered histories
+
+* Product dropzone file type validation 
+* Soft delete
+
 
 
 

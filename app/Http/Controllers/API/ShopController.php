@@ -30,7 +30,7 @@ class ShopController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
@@ -73,7 +73,7 @@ class ShopController extends Controller
     }
 
 
-    /**
+    /**ta
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

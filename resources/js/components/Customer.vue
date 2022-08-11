@@ -40,7 +40,7 @@
                             </tr>
                             </thead>
                             <tbody v-for="customer in customers.data" :key="customer.id" :id="'customer'+customer.id">
-                            <tr class="tr-show-sub" @click="toggleSlideTable(customer.id); showDetail(customer.id)">
+                            <tr class="tr-show-sub" @click="customer.latest_order !== null ? toggleSlideTable(customer.id) : ''">
                                 <td>{{ customer.id }}</td>
                                 <td>{{ customer.name }}</td>
                                 <td v-if="customer.gender === 0">ស្រី</td>
@@ -58,7 +58,6 @@
                                 <td class="text-right toggle-detail">
                                     <span v-show="customer.latest_order !== null">
                                         <a type="button" class="btn btn-detail">
-                                            <!--<i class="ion-code-working text-cyan"></i>-->
                                             <i class="ion-chevron-down text-cyan"></i>
                                         </a>
                                     </span>
@@ -155,7 +154,7 @@
                                                             </a>
 
                                                             <a class="text-primary pointer"
-                                                               @click="showAllDetailProduct(customer.id ,customer.orders[customer.orders.length-1])"
+                                                               @click="showAllOrders(customer.id ,customer.orders[customer.orders.length-1])"
                                                                v-else-if="customer.orders[customer.orders.length-1] > customer.orders.length-1">
                                                                 Show all {{customer.orders[customer.orders.length-1]}} orders
                                                             </a>
@@ -474,6 +473,8 @@ export default {
             selector.toggleClass('shadowed')
             let btn_detail = selector.parent('tbody').find('a.btn-detail')
             btn_detail.toggleClass('rotate_up')
+
+            this.showDetail(rowID)
         },
 
         showDetail(cusID, limit){
@@ -513,7 +514,7 @@ export default {
             }
         },
 
-        showAllDetailProduct(orderID, limit){
+        showAllOrders(orderID, limit){
             if (limit) {
                 this.detailLimit = limit
             }

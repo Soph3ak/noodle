@@ -119,8 +119,7 @@ class ReportController extends Controller
                 }
             }
         }
-        else
-            $reports = $reports->where('payment_id','');
+
         /*END Payment FILTER*/
 
 
@@ -141,8 +140,7 @@ class ReportController extends Controller
                 }
             }
         }
-        else
-            $reports = $reports->where('table_id','');
+
         /*END TABLE FILTER*/
 
         /*SELLER FILTER*/
@@ -156,8 +154,7 @@ class ReportController extends Controller
                 }
             }
         }
-        else
-            $reports = $reports->where('user_id','');
+
         /*END SELLER FILTER*/
 
         /*CUSTOMER FILER*/
@@ -171,8 +168,7 @@ class ReportController extends Controller
                 }
             }
         }
-        else
-            $reports = $reports->where('customer_id','');
+
         /*END SELLER FILTER*/
 
 
