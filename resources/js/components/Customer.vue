@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-3 customer">
+    <div class="mt-1 customer">
         <div class="search-block d-flex">
             <div class="form-group">
                 <input type="text" class="form-control search" id="search" placeholder="Search customer's name here ..." v-model="searchTitle" @keyup.enter="page = 1; retrieveCustomers()">

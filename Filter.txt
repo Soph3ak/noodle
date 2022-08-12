@@ -20,9 +20,8 @@ Telegram fix small Khmer font:Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Win
 Ang DaunTep
 
 * Customer.vue 
-	- table sortable
 	- search customer
-	- order by customer id
+
 
 * Product dropzone file type validation 
 * Soft delete
