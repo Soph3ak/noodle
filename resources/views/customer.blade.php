@@ -1,11 +1,12 @@
 @extends('adminlte::page')
 
 @section('title', 'ព័ត៌មានអតិថិជន')
+@section('page-header', 'ព័ត៌មានអតិថិជន')
 
 @section('content_header')
-    <div class="d-flex">
-        <div class=""><h1></h1></div>
-        <div class="ml-3">
+    <div class="d-flex justify-content-between">
+        <div class=""><h1>ព័ត៌មានអតិថិជន</h1></div>
+        <div class="ml-auto">
             <button data-v-e1ea323e="" type="button" id="new-customer" class="btn btn-primary add__more" data-toggle="modal" data-target="#modal-customer">
                 <span data-v-e1ea323e="" class="d-flex justify-content-center align-items-center">
                     <i data-v-e1ea323e="" class="gg-add mr-2"></i>

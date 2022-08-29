@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 
 @section('title', 'ព័ត៌មានតុ')
+@section('page-header', 'ព័ត៌មានតុ')
 
 @section('content_header')
     <div class="row">

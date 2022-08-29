@@ -1,9 +1,7 @@
 <template>
     <div class="mt-1 customer">
         <div class="search-block d-flex">
-            <div class="form-group">
-                <input type="text" class="form-control search" id="search" placeholder="Search customer's name here ..." v-model="searchTitle" @keyup.enter="page = 1; retrieveCustomers()">
-            </div>
+            <input type="text" class="form-control search" id="search" placeholder="Search customer's name here ..." v-model="searchTitle" @keyup.enter="page = 1; retrieveCustomers()">
         </div>
         <div class="row">
             <div class="col-12">
@@ -65,141 +63,157 @@
                             </tr>
                             </thead>
                             <tbody v-for="customer in customers.data" :key="customer.id" :id="'customer'+customer.id">
-                            <tr class="tr-show-sub" @click="customer.latest_order !== null ? toggleSlideTable(customer.id) : ''">
-                                <td>{{ customer.id }}</td>
-                                <td>{{ customer.name }}</td>
-                                <td v-if="customer.gender === 0">ស្រី</td>
-                                <td v-else>ប្រុស</td>
-                                <td>{{ customer.phone }}</td>
-                                <td>{{ customer.address }}</td>
-                                <td v-if="customer.latest_order !== null">{{convertToCurrency(customer.latest_order.total)}}៛ <br> <small class="text-success">{{ getLatestOrder(customer.latest_order.created_at) }}</small></td>
-                                <td v-else></td>
-                                <td class="text-center">
-                                    <button class="btn btn-primary" @click="editModal(customer); $event.stopPropagation();"><i class="fas fa-pencil-alt"></i></button>
-                                </td>
-                                <td class="text-center">
-                                    <button class="btn btn-danger" @click="deleteCustomer(customer.name, customer.id); $event.stopPropagation();"><i class="far fa-trash-alt"></i></button>
-                                </td>
-                                <td class="text-right toggle-detail">
-                                    <span v-show="customer.latest_order !== null">
-                                        <a type="button" class="btn btn-detail">
-                                            <i class="ion-chevron-down text-cyan"></i>
-                                        </a>
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr class="tr-sub" :id="'detail'+customer.id">
-                                <td colspan="11" class="abc">
-                                    <div class="row div-sub">
-                                        <div class="col-md-12">
-                                            <!-- The time line -->
-                                            <div class="timeline">
-                                                <div>
-                                                    <i class="fas fa-shopping-cart bg-green"></i>
-                                                    <div class="timeline-item">
-                                                        <h3 v-if="customer.latest_order !== null" class="timeline-header"><a href="#">Last {{customer.orders.length-1}} orders</a></h3>
-                                                        <h3 v-else class="timeline-header"><a href="#">Don't has any orders yet</a></h3>
-                                                        <!--<span class="text-xs ml-2 text-success">Showing 5 of 9 orders</span>-->
-                                                        <table class="table table-hover table-borderless table-valign-middle">
-                                                            <tbody v-if="loadingOrders === true && customer.orders.length<=0" class="skeleton">
-                                                            <tr v-for="i in 3">
-                                                                <td>
-                                                                    <span class="mask-squircle mr-2 placeholder avatar mr-2"> </span>
-                                                                    <span class="placeholder line"></span>
-                                                                </td>
+                                <tr class="tr-show-sub" @click="customer.latest_order !== null ? toggleSlideTable(customer.id) : ''">
+                                    <td>{{ customer.id }}</td>
+                                    <td>{{ customer.name }}</td>
+                                    <td v-if="customer.gender === 0">ស្រី</td>
+                                    <td v-else>ប្រុស</td>
+                                    <td>{{ customer.phone }}</td>
+                                    <td>{{ customer.address }}</td>
+                                    <td v-if="customer.latest_order !== null">{{convertToCurrency(customer.latest_order.total)}}៛ <br> <small class="text-success">{{ getLatestOrder(customer.latest_order.created_at) }}</small></td>
+                                    <td v-else></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-primary" @click="editModal(customer); $event.stopPropagation();"><i class="fas fa-pencil-alt"></i></button>
+                                    </td>
+                                    <td class="text-center">
+                                        <button class="btn btn-danger" @click="deleteCustomer(customer.name, customer.id); $event.stopPropagation();"><i class="far fa-trash-alt"></i></button>
+                                    </td>
+                                    <td class="text-right toggle-detail">
+                                        <span v-show="customer.latest_order !== null">
+                                            <a type="button" class="btn btn-detail">
+                                                <i class="ion-chevron-down text-cyan"></i>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="tr-sub" :id="'detail'+customer.id">
+                                    <td colspan="11" class="abc">
+                                        <div class="row div-sub">
+                                            <div class="col-md-12">
+                                                <!-- The time line -->
+                                                <div class="timeline">
+                                                    <div>
+                                                        <i class="fas fa-shopping-cart bg-green"></i>
+                                                        <div class="timeline-item">
+                                                            <h3 v-if="customer.latest_order !== null" class="timeline-header"><a href="#">Last {{customer.orders.length-1}} orders</a></h3>
+                                                            <h3 v-else class="timeline-header"><a href="#">Don't has any orders yet</a></h3>
+                                                            <!--<span class="text-xs ml-2 text-success">Showing 5 of 9 orders</span>-->
+                                                            <table class="table table-hover table-borderless table-valign-middle">
+                                                                <tbody v-if="loadingOrders === true && customer.orders.length<=0" class="skeleton">
+                                                                <tr v-for="i in 3">
+                                                                    <td>
+                                                                        <span class="mask-squircle mr-2 placeholder avatar mr-2"> </span>
+                                                                        <span class="placeholder line"></span>
+                                                                    </td>
 
-                                                                <td v-for="j in 4">
-                                                                    <span class="placeholder line"></span>
-                                                                </td>
-                                                            </tr>
+                                                                    <td v-for="j in 4">
+                                                                        <span class="placeholder line"></span>
+                                                                    </td>
+                                                                </tr>
 
 
-                                                            </tbody>
+                                                                </tbody>
 
-                                                            <tr v-for="(order,index) in customer.orders" :key="order.id" v-if="index < customer.orders.length-1" class="fade-in">
+                                                                <tr v-for="(order,index) in customer.orders" :key="order.id" v-if="index < customer.orders.length-1" class="fade-in">
 
-                                                                <td class="text-gray">
-                                                                    Order#{{order.id}}
-                                                                </td>
+                                                                    <td class="text-gray">
+                                                                        Order#{{order.id}}
+                                                                    </td>
 
-                                                                <td>
-                                                                    <span class="text-success mr-1 text-xs">
-                                                                        Date
-                                                                    </span>
-                                                                    {{formatDate(order.created_at)}}
-                                                                </td>
-
-                                                                <td>
-                                                                    <span class="text-success mr-1 text-xs">
-                                                                        Table
-                                                                    </span>
-                                                                    {{order.table.name}}
-                                                                </td>
-                                                                <td>
-                                                                    <!--<div class="position-relative p-0">
-                                                                        <img :src="getImgUrl(order.user.photo)" alt="Staff Image" class="img-circle staff-image">
-                                                                    </div>-->
-                                                                    <span class="text-success mr-1 text-xs">
-                                                                        Seller
-                                                                    </span>
-                                                                    {{order.user.name_kh}}
-                                                                </td>
-                                                                <td>
-                                                                    <span class="badge badge-new-primary" v-if="order.payment.payment === 'UNPAID'">UNPAID</span>
-                                                                    <span class="badge badge-new-success" v-else-if="order.payment.payment === 'PAID'">PAID</span>
-                                                                    <span class="badge badge-new-danger" v-else>VOID</span>
-                                                                </td>
-                                                                <td>
-                                                                    <span class="text-success mr-1 text-xs">
-                                                                        Subtotal
-                                                                    </span>
-                                                                    {{convertToCurrency(order.subtotal)}}<span class="kh-currency"><span class="kh-currency">៛</span></span>
-                                                                </td>
-                                                                <td>
-                                                                    <span class="text-success mr-1 text-xs">
-                                                                        Discount
-                                                                    </span>
-                                                                    <span class="text-danger">
-                                                                            -{{convertToCurrency(order.discount)}}<span class="kh-currency">៛</span>
+                                                                    <td>
+                                                                        <span class="text-success mr-1 text-xs">
+                                                                            Date
                                                                         </span>
-                                                                </td>
-                                                                <td>
-                                                                    <span class="text-success mr-1 text-xs">
-                                                                        Total
-                                                                    </span>
-                                                                    {{convertToCurrency(order.total)}}<span class="kh-currency"><span class="kh-currency">៛</span></span>
-                                                                </td>
-                                                            </tr>
+                                                                        {{formatDate(order.created_at)}}
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <span class="text-success mr-1 text-xs">
+                                                                            Table
+                                                                        </span>
+                                                                        {{order.table.name}}
+                                                                    </td>
+                                                                    <td>
+                                                                        <!--<div class="position-relative p-0">
+                                                                            <img :src="getImgUrl(order.user.photo)" alt="Staff Image" class="img-circle staff-image">
+                                                                        </div>-->
+                                                                        <span class="text-success mr-1 text-xs">
+                                                                            Seller
+                                                                        </span>
+                                                                        {{order.user.name_kh}}
+                                                                    </td>
+                                                                    <td>
+                                                                        <span class="badge badge-new-primary" v-if="order.payment.payment === 'UNPAID'">UNPAID</span>
+                                                                        <span class="badge badge-new-success" v-else-if="order.payment.payment === 'PAID'">PAID</span>
+                                                                        <span class="badge badge-new-danger" v-else>VOID</span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span class="text-success mr-1 text-xs">
+                                                                            Subtotal
+                                                                        </span>
+                                                                        {{convertToCurrency(order.subtotal)}}<span class="kh-currency"><span class="kh-currency">៛</span></span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span class="text-success mr-1 text-xs">
+                                                                            Discount
+                                                                        </span>
+                                                                        <span class="text-danger">
+                                                                                -{{convertToCurrency(order.discount)}}<span class="kh-currency">៛</span>
+                                                                            </span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span class="text-success mr-1 text-xs">
+                                                                            Total
+                                                                        </span>
+                                                                        {{convertToCurrency(order.total)}}<span class="kh-currency"><span class="kh-currency">៛</span></span>
+                                                                    </td>
+                                                                </tr>
 
 
-                                                        </table>
-                                                        <div class="timeline-footer ml-2">
-                                                            <a class="text-primary pointer" v-if="loadingButton === true && customer.id === cusID">
-                                                                <i class="fas fa-spinner mr-2 fa-spin"></i> Loading
-                                                            </a>
+                                                            </table>
+                                                            <div class="timeline-footer ml-2">
+                                                                <a class="text-primary pointer" v-if="loadingButton === true && customer.id === cusID">
+                                                                    <i class="fas fa-spinner mr-2 fa-spin"></i> Loading
+                                                                </a>
 
-                                                            <a class="text-primary pointer"
-                                                               @click="showAllOrders(customer.id ,customer.orders[customer.orders.length-1])"
-                                                               v-else-if="customer.orders[customer.orders.length-1] > customer.orders.length-1">
-                                                                Show all {{customer.orders[customer.orders.length-1]}} orders
-                                                            </a>
+                                                                <a class="text-primary pointer"
+                                                                   @click="showAllOrders(customer.id ,customer.orders[customer.orders.length-1])"
+                                                                   v-else-if="customer.orders[customer.orders.length-1] > customer.orders.length-1">
+                                                                    Show all {{customer.orders[customer.orders.length-1]}} orders
+                                                                </a>
 
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <!-- END timeline item -->
+                                                    <!-- END timeline item -->
 
-                                                <div>
-                                                    <i class="fas fa-ban bg-gray" v-if="customer.orders[customer.orders.length-1] <= 5 || customer.orders.length-1 > 5"></i>
-                                                    <i class="fas fa-angle-double-down bg-gray animated-down" :id="'ban'+customer.id" v-else></i>
-                                                    <span class="text-xs ml-5 pl-3 text-lightgray">
-                                                        Showing {{customer.orders.length-1}} of {{customer.orders[customer.orders.length-1]}}
-                                                        {{customer.orders[customer.orders.length-1]>1 ? 'orders':'order'}}
-                                                    </span>
+                                                    <div>
+                                                        <i class="fas fa-ban bg-gray" v-if="customer.orders[customer.orders.length-1] <= 5 || customer.orders.length-1 > 5"></i>
+                                                        <i class="fas fa-angle-double-down bg-gray animated-down" :id="'ban'+customer.id" v-else></i>
+                                                        <span class="text-xs ml-5 pl-3 text-lightgray">
+                                                            Showing {{customer.orders.length-1}} of {{customer.orders[customer.orders.length-1]}}
+                                                            {{customer.orders[customer.orders.length-1]>1 ? 'orders':'order'}}
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <!-- /.col -->
                                         </div>
-                                        <!-- /.col -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody v-show="customerCount === 0">
+                            <tr class="bg-white">
+                                <td class="" colspan="10">
+                                    <div class="sc-5kpu8c-5 dcdHhK">
+                                        <div class="sc-5kpu8c-6 fbNBuP mb-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" height="24px" width="24px" viewBox="0 0 24 24" class="sc-16r8icm-0 jZwKai">
+                                                <path d="M16.4153 16.4153L20 20M18.5455 11.2727C18.5455 15.2893 15.2894 18.5454 11.2728 18.5454C7.25612 18.5454 4 15.2893 4 11.2727C4 7.2561 7.25612 4 11.2728 4C15.2894 4 18.5455 7.2561 18.5455 11.2727Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </div>
+                                        <h3 font-size="16px" font-weight="500" color="text" class="sc-1eb5slv-0 ddqQcN" style="text-align: center;">No results found</h3>
+                                        <p color="text2" font-size="1" class="sc-1eb5slv-0 bSDVZJ">We couldn't find anything matching your search.</p>
+                                        <p color="text2" font-size="1" class="sc-1eb5slv-0 bSDVZJ">Try again with a different term.</p>
                                     </div>
                                 </td>
                             </tr>
@@ -387,6 +401,7 @@ export default {
         newModal(){
             this.editMode=false
             this.resetForm()
+            console.log('open')
         },
 
         editModal(customer){

@@ -34,6 +34,9 @@ class CustomerController extends Controller
                 $query->where('id',0);
             });
 
+        if($searchTitle != '')
+            $customers = $customers->where('name','like','%'.$searchTitle.'%');
+
         if($orderBy != ''){
             $sort_by = $orderBy[0];
             $direction = $orderBy[1];
