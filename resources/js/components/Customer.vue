@@ -323,7 +323,7 @@ export default {
             customerCount:1,
             totalRecords: 0,
 
-            cusID : 0, //let row click can retrieve orders again
+            cusID : 0, // let row click can retrieve orders again
             detailLimit: 5,
 
             isLoading: false,
@@ -340,7 +340,7 @@ export default {
 
             orderBy: ['id', 'desc'],    // For sort in server // default sort
             sort_by_column: '',         // Help in condition
-            sort_direction: 'asc',      //Help in condition
+            sort_direction: 'asc',      // Help in condition
 
             showingBtnResetTable: false,
             btnResetTableLoading: false,

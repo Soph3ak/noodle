@@ -12,7 +12,7 @@
 
 
 Ctr+Alt+U: Show class diagram
-Ctrl+Alt+T: To rrap a code block in useful constructs(if, for, while, function...)
+Ctrl+Alt+T: To wrap a code block in useful constructs(if, for, while, function...)
 
 
 
