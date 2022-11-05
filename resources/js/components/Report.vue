@@ -584,17 +584,17 @@ export default {
 
         },
 
-        handlePageSizeChange(event) {
+        /*handlePageSizeChange(event) {
             this.pageSize = event.target.value;
             this.page = 1;
             this.retrieveReports();
-        },
+        },*/
 
-        handlePaymentChange(event){
+        /*handlePaymentChange(event){
             this.paymentType = event.target.value;
             this.page = 1;
             this.retrieveReports();
-        },
+        },*/
 
         handleTableChange(event){
             this.table = event.target.value;
