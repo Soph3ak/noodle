@@ -184,7 +184,6 @@ export default {
 
     methods:{
         retrieveReport() {
-
                     let report = this.inv[0];
 
                     this.shop_name_kh = report[0].shop.name_kh;
