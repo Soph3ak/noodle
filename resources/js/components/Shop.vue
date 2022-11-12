@@ -2,7 +2,9 @@
     <div>
         <div class="row px-5">
             <div class="col-6">
-                <h1 class="text-blue">{{name}}</h1><br/>
+                <h1 class="text-blue">{{name_kh}}</h1>
+                <h6 class="text-blue mt-3">{{name}}</h6>
+                <br>
 
                 <p class="label text-gray">Email</p>
                 <h4>{{email}}</h4><br/>
@@ -12,8 +14,10 @@
                     <h4 v-for="(n,index) in num" :key="n.id">{{num[index]}}</h4><br>
                 </div>
 
+                <p class="label text-gray">អាសយដ្ធាន(ខ្មែរ)</p>
+                <h4>{{address_kh}}</h4><br/><br/>
                 <p class="label text-gray">អាសយដ្ធាន</p>
-                <h4>{{address}}</h4><br/><br/>
+                <h5>{{address}}</h5><br/><br/>
 
                 <a href="#" class="text-info font-weight-bolder" data-toggle="modal" data-target="#modal-shop" @click="resetForm() ;editModal()" v-if="shop.length>0">Edit Info</a>
                 <a href="#" class="text-info font-weight-bolder" data-toggle="modal" data-target="#modal-shop" @click="newModal(); resetForm()" v-else>Create New Shop</a>
@@ -26,7 +30,7 @@
         <!-- modal SeatTable -->
         <div class="modal fade" id="modal-shop" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog">
-                    <form @submit.prevent="editMode ? updateShop(form.id):saveShop()">
+                    <form @submit.prevent="editMode ? updateShop(form.id): saveShop()">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title" v-if="editMode"><span><i class="fas fa-store mr-2"></i></span>កែប្រែព័ត៌មានអំពីហាង</h4>
@@ -37,7 +41,12 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="name">ឈ្មោះហាង</label>
+                                    <label for="name">ឈ្មោះហាង(ខ្មែរ)</label>
+                                    <input type="text" class="form-control" id="name_kh" name="name-kh" placeholder="ឈ្មោះហាង(ខ្មែរ)" v-model="form.name_kh" :class="{ 'is-invalid': form.errors.has('name_kh') }">
+                                    <has-error :form="form" field="name_kh"></has-error>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">ឈ្មោះហាង(EN)</label>
                                     <input type="text" class="form-control" id="name" name="name" placeholder="ឈ្មោះហាង" v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }">
                                     <has-error :form="form" field="name"></has-error>
                                 </div>
@@ -65,8 +74,13 @@
                                     </div>-->
                                 </div>
                                 <div class="form-group">
-                                    <label for="address">អាសយដ្ធាន</label>
-                                    <input type="text" class="form-control" id="address" name="description" placeholder="អាសយដ្ធាន" v-model="form.address" :class="{ 'is-invalid': form.errors.has('address') }">
+                                    <label for="address_kh">អាសយដ្ធាន(ខ្មែរ)</label>
+                                    <input type="text" class="form-control" id="address_kh" name="description" placeholder="អាសយដ្ធាន(ខ្មែរ)" v-model="form.address_kh" :class="{ 'is-invalid': form.errors.has('address_kh') }">
+                                    <has-error :form="form" field="address_kh"></has-error>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">អាសយដ្ធាន(En)</label>
+                                    <input type="text" class="form-control" id="address" name="description" placeholder="អាសយដ្ធាន(EN)" v-model="form.address" :class="{ 'is-invalid': form.errors.has('address') }">
                                     <has-error :form="form" field="address"></has-error>
                                 </div>
                             </div>
@@ -102,9 +116,11 @@ export default {
 
             id:"",
             name: "",
+            name_kh: "",
             email: "",
             phone_number: "",
             address:"",
+            address_kh:"",
 
             form_phone: new Form({
                 f_phones:[],
@@ -114,8 +130,10 @@ export default {
             form: new Form({
                 id:"",
                 name: "",
+                name_kh:"",
                 email: "",
                 address:"",
+                address_kh:"",
                 _token: this.token.value
             })
 
@@ -133,8 +151,10 @@ export default {
             this.editMode=true
             this.form.id = this.id
             this.form.name = this.name
+            this.form.name_kh = this.name_kh
             this.form.email = this.email
             this.form.address = this.address
+            this.form.address_kh = this.address_kh
 
             this.getPhones()
 
@@ -162,8 +182,10 @@ export default {
                     this.shop.push(response.data);
                     this.id = this.shop[0].id;
                     this.name = this.shop[0].name
+                    this.name_kh = this.shop[0].name_kh
                     this.email = this.shop[0].email
                     this.address = this.shop[0].address
+                    this.address_kh = this.shop[0].address_kh
                     this.getPhones()
 
                 });
@@ -219,6 +241,10 @@ export default {
                 .catch(err => console.log(err))
                 .finally(() => this.loading = false)
 
+        },
+
+        saveShop(){
+          alert('Save shop have nothing')
         },
 
         addMoreNumber(){

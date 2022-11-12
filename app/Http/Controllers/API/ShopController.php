@@ -16,6 +16,7 @@ class ShopController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email'],
             'address' => ['required',],
+            'address_kh' => ['required',],
         ]);
     }
 

@@ -489,7 +489,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                 this.form = new Form({
                     id:"",
                     user_id: this.userID,
-                    customer_id: "53",
+                    customer_id: "67",
                     table_id: this.seatID,
                     shop_id: "1",
                     payment_id: this.paymentID,

@@ -285,6 +285,12 @@ return [
             'icon' => 'fas fa-chart-bar mr-1',
         ],
 
+        [
+            'text' => 'Print Test',
+            'url'  => 'print',
+            'icon' => 'fas fa-print mr-1',
+        ],
+
         ['header' => 'ADMINISTRATOR'],
         [
             'text' => 'Users Management',

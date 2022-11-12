@@ -312,7 +312,7 @@ export default {
         },
 
         removeFileIfNotSave(){
-            var photo = this.form.photo
+            let photo = this.form.photo
             if (photo !=='' && photo!=='No IMAGE.jpg'){
                 this.$refs.myVueDropzone.fileRemovedWithoutSave(photo)
             }

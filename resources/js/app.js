@@ -54,6 +54,7 @@ Vue.component('product', require('./components/Product').default);
 Vue.component('promotion', require('./components/Promotion').default);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('sell', require('./components/Sell.vue').default);
+Vue.component('invoice1', require('./components/Invoice1').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

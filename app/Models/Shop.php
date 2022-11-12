@@ -11,8 +11,10 @@ class Shop extends Model
 
     protected $fillable = [
         'name',
+        'name_kh',
         'email',
         'address',
+        'address_kh'
     ];
 
     public function orders(){

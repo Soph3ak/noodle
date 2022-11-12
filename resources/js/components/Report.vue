@@ -249,7 +249,7 @@
                                 <td><a href="#">{{ report.id }}</a></td>
                                 <td>{{ formatDate(report.created_at) }}</td>
                                 <td>{{ report.customer.name }}</td>
-                                <td>{{ report.shop.name }}</td>
+                                <td>{{ report.shop.name_kh }}</td>
                                 <td>
                                     <div class="position-relative p-0">
                                         <img :src="getImgUrl(report.user.photo)" alt="Staff Image" class="img-circle staff-image">
@@ -336,16 +336,23 @@
 
 
                                                         </table>
-                                                        <div class="timeline-footer ml-2">
-                                                            <a class="text-primary pointer" v-if="loadingButton === true && report.id === ordID">
-                                                                <i class="fas fa-spinner mr-2 fa-spin"></i> Loading
-                                                            </a>
+                                                        <div class="timeline-footer ml-2 d-flex justify-content-between">
+                                                           <div>
+                                                               <a class="text-primary pointer" v-if="loadingButton === true && report.id === ordID">
+                                                                   <i class="fas fa-spinner mr-2 fa-spin"></i> Loading
+                                                               </a>
 
-                                                            <a class="text-primary pointer"
-                                                               @click="showAllDetailProduct(report.id ,report.products[report.products.length-1])"
-                                                               v-else-if="report.products[report.products.length-1] > report.products.length-1">
-                                                                Show all {{report.products[report.products.length-1]}} products
-                                                            </a>
+                                                               <a class="text-primary pointer"
+                                                                  @click="showAllDetailProduct(report.id ,report.products[report.products.length-1])"
+                                                                  v-else-if="report.products[report.products.length-1] > report.products.length-1">
+                                                                   Show all {{report.products[report.products.length-1]}} products
+                                                               </a>
+                                                           </div>
+
+                                                            <div>
+                                                                <a :href="'/print/'+report.id" target="_blank" class="btn btn-sm btn-outline-primary border-0">Print</a>
+                                                                <button class="btn btn-sm btn-outline-primary border-0" @click="toggleSlideTable(report.id)">Hide</button>
+                                                            </div>
 
                                                         </div>
                                                     </div>
@@ -584,11 +591,11 @@ export default {
 
         },
 
-        /*handlePageSizeChange(event) {
+        handlePageSizeChange(event) {
             this.pageSize = event.target.value;
             this.page = 1;
             this.retrieveReports();
-        },*/
+        },
 
         /*handlePaymentChange(event){
             this.paymentType = event.target.value;
@@ -1164,6 +1171,10 @@ export default {
             },250)
 
         },
+
+        print(id){
+
+        }
 
     },
     computed:{

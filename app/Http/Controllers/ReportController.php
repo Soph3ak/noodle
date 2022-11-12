@@ -53,10 +53,10 @@ class ReportController extends Controller
             ->with('user:id,name_kh,photo')
             ->with('customer:id,name')
             ->with('table:id,name')
-            ->with('shop:id,name') /*(user, customer, table, shop) is function's name in their modal*/
+            ->with('shop:id,name_kh') /*(user, customer, table, shop) is function's name in their modal*/
             ->with('payment:id,payment')
             ->with('products' , function($query){
-                //To select nothing, We need only empty products[] in reports to push data in later
+                //To select nothing, We need only empty products[] in reports to push data in later when we view detail
                 $query->where('id',0);
 
             });

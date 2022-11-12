@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageUploadController;
+use App\Http\Controllers\PrintController;
 use App\Http\Controllers\PromotionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CustomerController;
@@ -27,6 +28,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/print/{id}',[PrintController::class,'print']);
+Route::get('/loadReport/{id}',[PrintController::class,'loadInvoice']);
+
 
 Route::get('/test',[ProductController::class, 'test']);
 
@@ -37,6 +41,8 @@ Route::get('/tables',[TableController::class,'index']);
 Route::get('/customer',[CustomerController::class,'index']);
 Route::get('/product',[ProductController::class,'index']);
 Route::get('/promotion',[PromotionController::class,'index']);
+
+
 
 
 

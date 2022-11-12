@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\CustomerController;
+use App\Http\Controllers\API\InvoiceController;
 use App\Http\Controllers\API\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -64,6 +65,12 @@ Route::post('/save-order', [OrderController::class,'saveOrder']);
 Route::apiResource('seat',TableController::class);
 Route::get('/loadSeats',[TableController::class,'loadSeats']); //Seat.vue , Report.vue
 Route::get('/getSeatTable',[TableController::class,'getSeatTable']); //SeatTable.vue
+
+
+
+
+
+
 
 
 
