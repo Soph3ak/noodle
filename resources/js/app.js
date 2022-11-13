@@ -45,6 +45,7 @@ Vue.component('pagination', require('laravel-vue-pagination'))
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 
+Vue.component('dashboard', require('./components/Dashboard').default);
 Vue.component('category', require('./components/Category.vue').default);
 Vue.component('seat-table', require('./components/SeatTable.vue').default);
 Vue.component('shop', require('./components/Shop').default);
