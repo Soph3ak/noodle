@@ -4,6 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+import Dashboard from "./components/Dashboard";
+
 require('./bootstrap');
 
 window.Vue = require('vue').default;
@@ -51,11 +53,30 @@ Vue.component('seat-table', require('./components/SeatTable.vue').default);
 Vue.component('shop', require('./components/Shop').default);
 Vue.component('customer', require('./components/Customer.vue').default);
 Vue.component('report', require('./components/Report').default);
-Vue.component('product', require('./components/Product').default);
+Vue.component('product', require('./components/Product.vue').default);
 Vue.component('promotion', require('./components/Promotion').default);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('sell', require('./components/Sell.vue').default);
 Vue.component('invoice1', require('./components/Invoice1').default);
+
+import VueRouter from 'vue-router';
+Vue.use(VueRouter)
+let routes = [
+    { path: '/dashboard', component: Dashboard },
+    { path: '/seat-table', component: require('./components/SeatTable.vue').default },
+    { path: '/shop', component: require('./components/Shop.vue').default },
+    { path: '/customer', component: require('./components/Customer.vue').default },
+    { path: '/reports', component: require('./components/Report').default },
+    { path: '/product', component: require('./components/Product.vue').default },
+    { path: '/promotion', component: require('./components/Promotion').default },
+    { path: '/example-component', component: require('./components/ExampleComponent').default },
+    { path: '/sell', component: require('./components/Seat').default },
+    { path: '/invoice1', component: require('./components/Invoice1').default },
+]
+const router = new VueRouter({
+    //mode: 'history',
+    routes
+})
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -63,7 +84,28 @@ Vue.component('invoice1', require('./components/Invoice1').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.filter('formatDate_date_time',function (date){
+    /*Vue filter*/
+    return moment(date).format('LLL');
+})
+
+Vue.filter('convertToCurrency1',function (price){
+    /*https://flaviocopes.com/how-to-format-number-as-currency-javascript/*/
+    let converted
+    const formatter = new Intl.NumberFormat('en-US', {
+        /*style: 'currency',
+        currency: 'USD',*/
+        minimumFractionDigits: 0
+    })
+    if(price > 0){
+        return converted = formatter.format(price)
+    }
+    else return converted = '0.00'
+})
+
+
 
 const app = new Vue({
     el: '#app',
+    router,
 });

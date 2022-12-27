@@ -43,7 +43,7 @@
                                 </tr>
                                 <tr>
                                     <td>កាលបរិច្ឆេត / Date:</td>
-                                    <td class="pl-3">{{dateTime}}</td>
+                                    <td class="pl-3">{{dateTime | formatDate_date_time}}</td>
                                 </tr>
                                 <tr>
                                     <td>អ្នកលក់ / Seller:</td>
@@ -84,9 +84,9 @@
                                 <td>{{index+1}}</td>
                                 <td>{{product.name}}</td>
                                 <td class="text-center">{{product.pivot.quantity}}</td>
-                                <td class="text-center">{{convertToCurrency(product.price)}} <span class="h5">៛</span></td>
-                                <td class="text-center">{{convertToCurrency(product.pro_discount * product.pivot.quantity)}} <span class="h5">៛</span></td>
-                                <td class="text-right">{{ convertToCurrency((product.price * product.pivot.quantity))}} <span class="h5">៛</span></td>
+                                <td class="text-center">{{(product.price) | convertToCurrency1}} <span class="h5">៛</span></td>
+                                <td class="text-center">{{(product.pro_discount * product.pivot.quantity) | convertToCurrency1}} <span class="h5">៛</span></td>
+                                <td class="text-right">{{ (product.price * product.pivot.quantity) | convertToCurrency1}} <span class="h5">៛</span></td>
                             </tr>
 
 
@@ -103,11 +103,11 @@
                             <table class="w-100 text-bold">
                                 <tr>
                                     <td>សរុបបឋម / Sub.(R):</td>
-                                    <td class="pl-3" align="right">{{convertToCurrency(subtotal)}} <span class="h4">៛</span></td>
+                                    <td class="pl-3" align="right">{{subtotal | convertToCurrency1}} <span class="h4">៛</span></td>
                                 </tr>
                                 <tr>
                                     <td>បញ្ចុះតម្លៃ / Dis.(R):</td>
-                                    <td class="pl-3" align="right">{{convertToCurrency(discount)}} <span class="h4">៛</span></td>
+                                    <td class="pl-3" align="right">{{discount | convertToCurrency1}} <span class="h4">៛</span></td>
                                 </tr>
                             </table>
 
@@ -116,11 +116,11 @@
                             <table class="w-100 text-bold">
                                 <tr>
                                     <td>សរុប / Total(R):</td>
-                                    <td class="pl-3" align="right">{{convertToCurrency(total)}} <span class="h4">៛</span></td>
+                                    <td class="pl-3" align="right">{{total | convertToCurrency1}} <span class="h4">៛</span></td>
                                 </tr>
                                 <tr>
                                     <td>សរុប / Total($):</td>
-                                    <td class="pl-3" align="right">{{convertToCurrency(total / 4100)}} $</td>
+                                    <td class="pl-3" align="right">{{(total / 4100) | convertToCurrency1}} $</td>
                                 </tr>
 
                             </table>
@@ -199,7 +199,7 @@ export default {
                     this.table = report[0].table.name
 
                     this.invoiceNo = report[0].id
-                    this.dateTime = this.formatDate(report[0].created_at)
+                    this.dateTime = report[0].created_at
                     this.seller = report[0].user.name_kh
 
                     this.products = report[0].products
@@ -213,16 +213,16 @@ export default {
 
         },
 
-        formatDate(value){
+        /*formatDate(value){
             return moment(value).format('LLL');
         },
 
         convertToCurrency(price){
-            /*https://flaviocopes.com/how-to-format-number-as-currency-javascript/*/
+            /!*https://flaviocopes.com/how-to-format-number-as-currency-javascript/!*!/
             let converted
             const formatter = new Intl.NumberFormat('en-US', {
-                /*style: 'currency',
-                currency: 'USD',*/
+                /!*style: 'currency',
+                currency: 'USD',*!/
                 minimumFractionDigits: 0
             })
             if(price > 0){
@@ -230,7 +230,7 @@ export default {
             }
             else return converted = '0.00'
 
-        },
+        },*/
 
     },
 

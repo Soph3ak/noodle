@@ -108,7 +108,7 @@ export default {
                 name: "",
                 available: "1",
                 description: "",
-                _token: this.token.value
+                /*_token: this.token.value*/
             })
         }
     },

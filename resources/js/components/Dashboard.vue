@@ -71,111 +71,12 @@ export default {
     props: ['token'],
     data () {
         return {
-            currentPage:'1',
-            seatTables:{},
-            editMode : false,
-            form: new Form({
-                id:"",
-                name: "",
-                available: "1",
-                description: "",
-                _token: this.token.value
-            })
+
         }
     },
     methods:{
 
-        newModal(){
-            this.editMode=false
-            this.resetForm()
-        },
 
-        editModal(seatTable){
-            this.form.clear()
-            this.editMode=true
-            this.form.fill(seatTable)
-        },
-
-        resetForm(){
-            this.form.reset()
-            this.form.clear()
-        },
-
-        hideModal(){
-            $('#modal-seatTable').modal('hide')
-            this.form.reset()
-        },
-
-        getResults(page = 1) {
-            axios.get('api/getSeatTable?page=' + page)
-                .then(response => {
-                    this.seatTables = response.data;
-                    this.currentPage = page;
-                });
-        },
-
-        saveSeatTable(name){
-            this.form.post('api/seat')
-            .then(response => {
-                this.getResults(this.currentPage)
-                this.alertSuccess(name,'saved successfully');
-                this.hideModal();
-            })
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)
-        },
-
-        updateSeatTable(name,id){
-             this.form.put('api/seat/'+id)
-                .then(response => {
-                    this.getResults(this.currentPage)
-                    this.alertSuccess(name,'updated successfully');
-                    this.hideModal();
-                })
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)
-        },
-
-        deleteSeatTable(name,id){
-            Swal.fire({
-                title: 'Are you sure?',
-                html: "តើអ្នកចង់លុបតុឈ្មោះ <strong>" + name +" </strong>មែនទេ?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                allowOutsideClick: false,
-                cancelButtonText:'Cancel',
-                confirmButtonText: 'បាទ/ចាស៎'/*Yes, delete it!*/
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.form.delete('api/seat/'+id)
-                        .then(response => {
-                            this.getResults(this.currentPage);
-                            Swal.fire({
-                                title: 'Deleted!',
-                                html: "តុឈ្មោះ <strong>" + name  +" </strong>ត្រូវបានលុបដោយជោគជ័យ!",
-                                icon: 'success',
-                                allowOutsideClick: false,
-                            }
-
-
-
-                            )
-                        })
-                        .catch(err => console.log(err))
-                        .finally(() => this.loading = false)
-                }
-            })
-        },
-
-        alertSuccess(name,str){
-            Toast.fire({
-                icon: 'success',
-                title: name +' '+ str
-            })
-
-        },
 
     },
     computed:{
@@ -183,18 +84,7 @@ export default {
     },
 
     mounted() {
-        this.getResults();
-        const vm = this
 
-        let modal_seatTable = $("#modal-seatTable");
-        modal_seatTable.modal({
-            backdrop: 'static',
-            show: false,
-        })
-
-        $("#new-table").on('click',function (){
-            vm.newModal()
-        })
     },
 }
 </script>

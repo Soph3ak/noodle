@@ -2,20 +2,18 @@
     <div class="cash-in" ref="cashIn">
         <div class="row justify-content-between">
             <div class="col-3 pr-3">
-                <div class="sidebar__display p-3 mb-3 text-right total-to-pay">
-                    <h6 class="mb-3">តម្លៃសរុប</h6>
-                    <h1 class="text-cyan text-bold">៛{{convertToCurrency(toTalToPay)}}</h1>
-                    <h5 class="text-cyan text-bold" v-if="currencyText==='USD'">${{convertToCurrency2Digit(toTalToPay/usdRate)}}</h5>
-                    <h5 class="text-cyan text-bold" v-else-if="currencyText==='THB'">฿{{convertToCurrency2Digit(toTalToPay/thbRate)}}</h5>
-                    <h5 class="text-cyan text-bold" v-else-if="currencyText==='CNY'">¥{{convertToCurrency2Digit(toTalToPay/cnyRate)}}</h5>
-                    <h5 class="text-cyan text-bold" v-else>${{convertToCurrency2Digit(toTalToPay/usdRate)}}</h5>
-                    <!--<h5 class="text-cyan text-bold">${{convertToCurrency2Digit(toTalToPay/usdRate)}}</h5>
-                    <h5 class="text-cyan text-bold">฿{{convertToCurrency2Digit(toTalToPay/thbRate)}}</h5>
-                    <h5 class="text-cyan text-bold">¥{{convertToCurrency2Digit(toTalToPay/cnyRate)}}</h5>-->
+                <div class="sidebar__display p-3 mb-3 text-left total-to-pay position-relative">
+                    <h6 class="">តម្លៃសរុប</h6>
+                    <h1 class="text-bold mb-3">{{convertToCurrency(toTalToPay)}}៛</h1>
+                    <p class="text-bold" v-if="currencyText==='USD'">${{convertToCurrency2Digit(toTalToPay/usdRate)}}</p>
+                    <p class="text-bold" v-else-if="currencyText==='THB'">฿{{convertToCurrency2Digit(toTalToPay/thbRate)}}</p>
+                    <p class="text-bold" v-else-if="currencyText==='CNY'">¥{{convertToCurrency2Digit(toTalToPay/cnyRate)}}</p>
+                    <p class="text-bold" v-else>${{convertToCurrency2Digit(toTalToPay/usdRate)}}</p>
+                    <div class="mask is-reuleaux-triangle"></div>
                 </div>
-                <div class="sidebar__display p-3 mb-3 text-right received-money">
+                <div class="sidebar__display p-3 mb-3 text-left received-money">
                     <div class="mr-1 flag"><img :src="getCurrencyImage()" alt="" width="32px" height="20px" class="mr-2">{{currencyText}}</div>
-                    <h6 class="mb-3">ប្រាក់ទទួល</h6>
+                    <h6 class="">ប្រាក់ទទួល</h6>
                     <h1 class="text-dark text-bold" v-if="currencyText==='USD'">${{convertToCurrency(USD)}}</h1>
                     <h1 class="text-dark text-bold" v-if="currencyText==='THB'">฿{{convertToCurrency(THB)}}</h1>
                     <h1 class="text-dark text-bold" v-if="currencyText==='CNY'">¥{{convertToCurrency(CNY)}}</h1>
@@ -27,11 +25,11 @@
                     <h6 class="mb-3">ប្រាក់ទទួលរៀល</h6>
                     <h1 class="text-dark text-bold">{{ convertToCurrency(KHR) }}៛</h1>
                 </div>-->
-                <div class="sidebar__display p-3 mb-3 text-right change">
+                <div class="sidebar__display p-3 mb-3 text-left change">
                     <h6 class="mb-3">ប្រាក់អាប់</h6>
                     <h1 class="text-dark text-bold">៛{{ convertToCurrency(change) }}</h1>
                 </div>
-                <div class="sidebar__display p-3 mb-3 text-right remain">
+                <div class="sidebar__display p-3 mb-3 text-left remain">
                     <h6 class="mb-3">ប្រាក់នៅខ្វះ</h6>
                     <h1 class="text-danger text-bold">៛{{ convertToCurrency(remain) }}</h1>
                 </div>
@@ -111,7 +109,7 @@
                             </div>
                             PAY
                         </button>
-                        <button type="button" class="equal-sign operator btn btn-warning" disabled v-else>PAY</button>
+                        <button type="button" class="equal-sign operator btn btn-success" disabled v-else>PAY</button>
 
                     </div>
 
@@ -682,8 +680,33 @@ p.usd::after {
 }
 
 .sidebar__display h6{
-    color: #343a40;
-    margin-bottom: 5px !important;
+    margin-bottom: 10px !important;
+}
+
+.sidebar__display p{
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.sidebar__display.total-to-pay{
+    color: white;
+    background: linear-gradient(to bottom, hsla(271, 91%, 65%, 1) 0%, hsla(243, 75%, 59%, 1) 100%);
+    border: none;
+}
+
+
+.mask {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: -10%;
+    right: -12%;
+    background-color: whitesmoke;
+    opacity: 0.1;
+}
+
+.mask.is-reuleaux-triangle {
+    border-radius: 33% 67% 75% 25% / 70% 57% 43% 30%;
 }
 
 .currency__switch{

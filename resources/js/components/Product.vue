@@ -197,7 +197,7 @@ export default {
                 photo: 'NO IMAGE.jpg',
                 description:"",
                 category_id: "",
-                _token: this.token.value,
+                /*_token: this.token.value,*/
 
             }),
 

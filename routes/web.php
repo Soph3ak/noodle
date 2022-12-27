@@ -29,30 +29,17 @@ Route::get('/', function () {
 });
 
 Route::get('/print/{id}',[PrintController::class,'print']);
-Route::get('/loadReport/{id}',[PrintController::class,'loadInvoice']);
-
-
-Route::get('/test',[ProductController::class, 'test']);
 
 Auth::routes();
 
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
-Route::get('/tables',[TableController::class,'index']);
+
+/*Route::get('/tables',[TableController::class,'index']);
 Route::get('/customer',[CustomerController::class,'index']);
 Route::get('/product',[ProductController::class,'index']);
-Route::get('/promotion',[PromotionController::class,'index']);
-
-
-
-
-
-
-
-
-
+Route::get('/promotion',[PromotionController::class,'index']);*/
 
 Route::post('image/upload/store',[ImageUploadController::class, 'fileStore']);
-
 
 Route::get('/sell', [SellController::class, 'index']);
 Route::get('/loadUser', [SellController::class, 'loadUser']);

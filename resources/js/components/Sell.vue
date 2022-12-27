@@ -21,7 +21,8 @@
                                                          :width="width"
                                                          :color="color"
                                                          :loader="loader"
-                                                         :background-color="bgColor"></loading>
+                                                         :background-color="bgColor">
+                                                </loading>
                                             </div>
                                             <div class="cate-text p-lg-4 p-md-2">
                                                 <h4>ទំនិញគ្រប់មុខ</h4>
@@ -39,7 +40,8 @@
                                                          :width="width"
                                                          :color="color"
                                                          :loader="loader"
-                                                         :background-color="bgColor"></loading>
+                                                         :background-color="bgColor">
+                                                </loading>
                                             </div>
                                             <img :src="'/icons/'+category.name+'.jpg'" class="rounded">
                                             <div class="cate-text p-lg-4 p-md-2">
@@ -62,7 +64,7 @@
 
                                         </div>
                                     </div>
-                                    <div v-for="(product,index ) in products" :key="product.id" @click="operation(index, product.id, 'increase', 0)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3 scale-up-center" id="sell-product" v-show="isLoading===false">
+                                    <div v-for="(product,index ) in products" :key="product.id" @click="operation(index, product.id, 'increase', 0)" class="col-xl-4 col-lg-4 col-md-6 mb-lg-4 mb-md-3 fade-in" id="sell-product" v-show="isLoading===false">
                                         <div class="rounded shadow-sm sell-card">
                                             <img :src="'/files/'+product.photo" alt="Product Image" class="rounded" style="width: 100%; height: 100%">
                                             <img v-if="product.pro_discount>0" :src="'/icons/discount.png'" alt="Discount Image" class="rounded dis-img">
@@ -238,6 +240,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                 discount:0,
                 total:0,
                 currentCate:'ទំនិញគ្រប់មុខ',
+                queryTimeout: null,
 
                 date:'',
                 time:'',
@@ -285,8 +288,6 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                     this.products[i].qty = 0
                     this.changeColorQty(i,this.products[i].qty)
                 }
-
-
             },
 
             convertToCurrency(price){
@@ -331,12 +332,13 @@ import 'vue-loading-overlay/dist/vue-loading.css';
             },
 
             loadAllProducts(){
+                clearTimeout(this.queryTimeout)
                 this.currentCate = 'ទំនិញគ្រប់មុខ'
                 this.productsCount = 1 //   prevent bug: if = 0, no result string will show up
-                this.removeDisplayNone(0)
+                this.removeDisplayNone(0) // To show loading overlay
                 this.isLoading = true;
-                setTimeout(() => {
-                    axios.get('api/loadAllProducts')
+                this.queryTimeout = setTimeout(async () => {
+                    await axios.get('api/loadAllProducts')
                         .then((response) => {
                             this.isLoading = false
                             this.products = response.data;
@@ -347,18 +349,20 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                         .catch((e) => {
                             console.log(e);
                         });
-                }, 350)
+                }, 1000)
 
             },
 
-            loadProductsByCategory(cateID, cateName){
+             loadProductsByCategory(cateID, cateName){
                 this.currentCate = cateName
                 if(cateID !== this.tmp){
+                    clearTimeout(this.queryTimeout)
                     this.productsCount = 1 //   prevent bug: if = 0, no result string will show up
-                    this.removeDisplayNone(cateID)
+                    this.removeDisplayNone(cateID) // To show loading overlay
                     this.isLoading = true;
-                    setTimeout(() => {
-                        axios.get('api/loadProductsByCategory/'+cateID)
+                    this.tmp = cateID
+                    this.queryTimeout = setTimeout(async () => {
+                        await axios.get('api/loadProductsByCategory/'+cateID)
                             .then((response) => {
                                 this.isLoading = false
                                 this.products = response.data
@@ -368,8 +372,9 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                             .catch((e) => {
                                 console.log(e);
                             });
-                        this.tmp = cateID
-                    }, 350)
+                        /*this.tmp = cateID*/
+
+                    }, 1000)
                 }
 
             },
@@ -701,6 +706,29 @@ import 'vue-loading-overlay/dist/vue-loading.css';
         right: 0;
         transform: rotate(35deg);
     }
+
+    .fade-in {
+        -webkit-animation: fade-in 0.8s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+        animation: fade-in 0.8s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    }
+
+    @-webkit-keyframes fade-in {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    @keyframes fade-in {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
 
 </style>
 

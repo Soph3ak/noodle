@@ -1,17 +1,118 @@
 <template>
-    <div class="mt-3 report">
-        <div class="search-block d-flex">
-            <div class="form-group">
-                <input type="text" class="form-control search" id="search" placeholder="Search invoice number here ..." v-model="searchTitle" @keyup.enter="page = 1; retrieveReports()">
+    <div class="mt-2 report">
+
+        <div class="search-block" id="search-block">
+            <div class="position-relative">
+                <div class="search pointer d-flex align-items-center">
+                    <i class="ion-search"></i>
+                    <p class="mb-0 ml-2">{{placeholder}}</p>
+                    <span
+                        v-if="placeholder!=='Search invoice number here ...'"
+                        class="pointer ml-auto"
+                        style="font-size: 14px"
+                        @click="clearSearch(); retrieveReports(); $event.stopPropagation();">
+                        <i class="ion-android-cancel"></i>
+                    </span>
+                </div>
+                <!--Search pop-up-->
+                <div id="search-pop-up" class="pop-up search-report p-3 collapse" style="width: 418px">
+                    <!--Search Input-->
+                    <div class="search-input px-2">
+                        <div class="d-flex align-items-center" style="font-size: 14px">
+                            <i class="ion-search" style="font-size: 18px"></i>
+                            <input
+                                type="text"
+                                class="form-control search"
+                                placeholder="Search invoice number here ..."
+                                v-model="searchTitle"
+                                @keyup.enter="handleSearchEnterPressed()"
+                                @input="getSearchResult"
+                            >
+                            <span
+                                class="pointer"
+                                style="font-size: 18px"
+                                @click="clearSearch(); hideSearch() ; $event.stopPropagation();">
+                                <i class="ion-android-cancel"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!--Popular-->
+                    <div class="popular mt-2">
+                        <p class="small px-2 mb-2">Popular <i class="ion-fireball text-orange ml-1"></i></p>
+                        <ul class="list-group">
+                            <li class="list-group-item p-0 border-0">
+                                <a href="" class="active">
+                                    <img src="/files/1617328949.129465.តុំយាំគ្រឿងសមុទ្រ.jpg" alt="" width="25px" height="25px" class="rounded-circle mr-1">
+                                    Cras justo odio
+                                </a>
+                            </li>
+                            <li class="list-group-item p-0 border-0">
+                                <a href="" class="">
+                                    <img src="/files/1617328949.129465.តុំយាំគ្រឿងសមុទ្រ.jpg" alt="" width="25px" height="25px" class="rounded-circle mr-1">
+                                    Cras justo odio
+                                </a>
+                            </li>
+                            <li class="list-group-item p-0 border-0">
+                                <a href="" class="">
+                                    <img src="/files/1617328949.129465.តុំយាំគ្រឿងសមុទ្រ.jpg" alt="" width="25px" height="25px" class="rounded-circle mr-1">
+                                    Cras justo odio
+                                </a>
+                            </li>
+                            <li class="list-group-item p-0 border-0">
+                                <a href="" class="">
+                                    <img src="/files/1617328949.129465.តុំយាំគ្រឿងសមុទ្រ.jpg" alt="" width="25px" height="25px" class="rounded-circle mr-1">
+                                    Cras justo odio
+                                </a>
+                            </li>
+                            <li class="list-group-item p-0 border-0">
+                                <a href="" class="">
+                                    <img src="/files/1617328949.129465.តុំយាំគ្រឿងសមុទ្រ.jpg" alt="" width="25px" height="25px" class="rounded-circle mr-1">
+                                    Cras justo odio
+                                </a>
+                            </li>
+                            <li class="list-group-item p-0 border-0">
+                                <a href="" class="">
+                                    <img src="/files/1617328949.129465.តុំយាំគ្រឿងសមុទ្រ.jpg" alt="" width="25px" height="25px" class="rounded-circle mr-1">
+                                    Cras justo odio
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
             </div>
         </div>
-        <div class="recordShowing text-lightgray" v-show="reportCount>0">
+
+        <!--<div class="recordShowing text-lightgray" v-show="reportCount>0">
             <small>Showing {{ showingFrom() }}-{{ showingTo() }} of {{ totalRecords }} {{ totalRecords > 1 ? 'records':'record' }}</small>
+        </div>-->
+        <div class="d-flex justify-content-between">
+            <h1 class="mb-0">ទំព័រដើម</h1>
+            <div class="d-flex align-items-center ml-3">
+                <span class="badge badge-warning badge-filter text-primary pr-2 animate__animated animate__bounceIn" v-show="selected.filters.length>0">
+                    <i class="fas fa-filter ml-1 mr-1"></i> Filter
+                </span>
+                <span class="badge badge-filter selected-filter ml-1 pointer animate__animated animate__bounceIn" :id="f+'-filter'" v-for="f in selected.filters" :key="f.id">
+                    <span class="text-lowercase" @click="toggleFilter(f+'-filter'); previousSelect(f+'-filter'); closeOtherFilter(f+'-filter');"><i class="fas fa-filter ml-1 mr-1"></i> {{f}}</span>
+                    <button @click="btnRemoveBadgeFilter(f+'-filter'); " type="button" class="btn btn-tool"><i class="fas fa-times"></i></button>
+                </span>
+                <span class="badge badge-filter text-danger pr-2 pointer animate__animated animate__bounceIn" v-show="selected.filters.length>1">
+                    <span @click="btnRemoveBadgeFilter('all')"><i class="fas fa-broom ml-1 mr-1"></i>Clear all filter</span>
+                </span>
+            </div>
+            <div id="reportrange"
+                 class="form-control text-center ml-auto align-self-center"
+                 style="background: #fff; cursor: pointer; border: 1px solid #ccc; width: 296px">
+                <i class="fa fa-calendar text-primary"></i>&nbsp;
+                <span></span> <i class="fa fa-caret-down"></i>
+            </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top: 14px">
             <div class="col-12">
-                <div class="card table-block border-light">
-                    <div class="card-header d-flex align-items-center">
+                <div class="card table-block border-light pt-0">
+                    <!--<div class="card-header d-flex align-items-center">
                         <div class="show-page-calendar">
                             <div class="d-flex" style="width: 1050px;">
                                 <label for="" class="col-form-label" style="width: 115px">Show records:</label>
@@ -53,7 +154,7 @@
                                 <span slot="next-nav" class="p-2">Next</span>
                             </pagination>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="card-body table-responsive p-0" style="max-height: 76vh; min-height: 76vh;">
                         <div class="">
                             <loading :active.sync="isLoading"
@@ -363,8 +464,9 @@
                                                     <i class="fas fa-ban bg-gray" v-if="report.products[report.products.length-1] <= 5 || report.products.length-1 > 5"></i>
                                                     <i class="fas fa-angle-double-down bg-gray animated-down" :id="'ban'+report.id" v-else></i>
                                                     <span class="text-xs ml-5 pl-3 text-lightgray">
-                                                        Showing {{report.products.length-1}} of {{report.products[report.products.length-1]}}
-                                                        {{report.products[report.products.length-1]>1 ? 'products':'product'}}
+                                                        <span v-if="report.products.length<1">Loading products...</span>
+                                                        <span v-else>Showing {{report.products.length-1}} of {{report.products[report.products.length-1]}}
+                                                        {{report.products[report.products.length-1]>1 ? 'products':'product'}}</span>
                                                     </span>
                                                 </div>
                                             </div>
@@ -393,7 +495,37 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
-                    <!--<div class="card-footer bg-white"></div>-->
+                    <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                        <div class="d-flex">
+                            <label for="" class="col-form-label" style="width: 115px"><small>Show records:</small></label>
+                            <div class="">
+                                <select v-model="pageSize" @change="handlePageSizeChange($event)" class="form-control show-per-page" style="width: 75px">
+                                    <option v-for="size in pageSizes" :key="size" :value="size">
+                                        {{ size }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="recordShowing1 text-lightgray ml-2" v-show="reportCount>0">
+                            <small>Showing {{ showingFrom() }}-{{ showingTo() }} of {{ totalRecords }} {{ totalRecords > 1 ? 'records':'record' }}</small>
+                        </div>
+
+                        <div class="ml-auto">
+                            <div class="paginate">
+                                <pagination :data="reports"
+                                            @pagination-change-page="handlePageChange"
+                                            :limit="1"
+                                            :show-disabled="false"
+                                            :total-rows="count"
+                                            :per-page="pageSize"
+                                            align="center">
+                                    <span slot="prev-nav" class="p-2">Prev</span>
+                                    <span slot="next-nav" class="p-2">Next</span>
+                                </pagination>
+                            </div>
+                        </div>
+                    </div>
                     <!-- /.card-footer -->
                 </div>
                 <!-- /.card -->
@@ -405,20 +537,21 @@
 </template>
 
 <script>
+
 /*https://github.com/ankurk91/vue-loading-overlay/tree/v3.x*/
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
-
 export default {
     props: ['token'],
     components:{Loading },
+
     data () {
         return {
             currentPage:'1',
             reports:{},
             reportCount:1,
+            placeholder: 'Search invoice number here ...',
 
-            currentIndex: -1,
             searchTitle: "",
             page: 1,
             count: 0,
@@ -493,6 +626,8 @@ export default {
             showingBtnResetTable: false,
             btnResetTableLoading: false,
 
+            queryTimeout: null,
+
         }
     },
     methods:{
@@ -560,7 +695,7 @@ export default {
             );
             this.isLoading = true;
             setTimeout(() => {
-                this.getAll(params)
+                this. getAll(params)
                     .then((response) => {
                         this.isLoading = false
                         this.reports = response.data
@@ -863,7 +998,6 @@ export default {
                     break;
                 default:
 
-
             }
 
         },
@@ -1083,35 +1217,34 @@ export default {
             if (limit) {
                 this.detailLimit = limit
             }
-
-                this.reports.data.forEach((value1, index1) => {
-                    if (value1.id === orderID) { //CHECK TO PUSH TO CORRECT ORDER ID
-                        this.loadingButton = true
-                        this.ordID = orderID
-                        let params = this.getParamsDetailProduct(
-                            this.ordID,
-                            this.detailLimit,
-                        );
-                        setTimeout(() => {
-                            axios.get("/getOrderProducts", {params})
-                                .then((response) => {
-                                    this.loadingButton = false
-                                    this.changeToBanIcon(orderID)
-                                    let arr = [];
-                                    arr = response.data[0]
-                                    value1.products = []
-                                    arr.forEach((value, index) => {
-                                        value1.products.push(arr[index])
-                                    })
-                                    value1.products.push(response.data['total']);
+            this.reports.data.forEach((value1, index1) => {
+                if (value1.id === orderID) { //CHECK TO PUSH TO CORRECT ORDER ID
+                    this.loadingButton = true
+                    this.ordID = orderID
+                    let params = this.getParamsDetailProduct(
+                        this.ordID,
+                        this.detailLimit,
+                    );
+                    setTimeout(() => {
+                        axios.get("/getOrderProducts", {params})
+                            .then((response) => {
+                                this.loadingButton = false
+                                this.changeToBanIcon(orderID)
+                                let arr = [];
+                                arr = response.data[0]
+                                value1.products = []
+                                arr.forEach((value, index) => {
+                                    value1.products.push(arr[index])
                                 })
-                                .catch((e) => {
-                                    console.log(e);
-                                });
-                        }, 250);
-                    }
+                                value1.products.push(response.data['total']);
+                            })
+                            .catch((e) => {
+                                console.log(e);
+                            });
+                    }, 250);
+                }
 
-                })
+            })
             this.detailLimit = 5; //reset limit
         },
 
@@ -1154,7 +1287,6 @@ export default {
                 sort.addClass('sort-asc active')
             else if (direction === 'desc')
                 sort.addClass('sort-desc active')
-
         },
 
         resetTable(){
@@ -1172,9 +1304,40 @@ export default {
 
         },
 
-        print(id){
+        clearSearch(){
+            if (this.searchTitle !== ''){
+                this.searchTitle=''
+                this.placeholder = 'Search invoice number here ...'
+                this.retrieveReports()
+            }
+        },
 
-        }
+        hideSearch(){
+            let search = $("#search-pop-up")
+            search.addClass('collapse')
+        },
+
+        setSearchTitle(){
+            this.placeholder = this.searchTitle
+        },
+
+        getSearchResult(){
+            clearTimeout(this.queryTimeout)
+            this.queryTimeout = setTimeout(async () => {
+                this.page = 1
+                this.searchTitle !== '' ? this.setSearchTitle() : this.placeholder = 'Search invoice number here ...'
+                await this.retrieveReports()
+
+            },300)
+        },
+
+        handleSearchEnterPressed(){
+            if (!this.searchTitle){
+                this.searchTitle= ''
+                this.placeholder = 'Search invoice number here ...'
+            }
+            this.hideSearch()
+        },
 
     },
     computed:{
@@ -1186,6 +1349,7 @@ export default {
     },
 
     mounted() {
+
         this.retrieveTables()
         this.retrievePaymentType()
         this.retrieveSellers()
@@ -1203,7 +1367,6 @@ export default {
             function cb(start, end) {
                 $('#reportrange span').html(start.format('MMM D, YYYY') + ' - ' + end.format('MMM D, YYYY'));
                 /*vm.getResults(vm.currentPage,(start.format('MMMM D, YYYY')), (end.format('MMMM D, YYYY')));*/
-                console.log(moment().subtract(1, 'year').startOf('year'))
                 vm.start = start.format('MMMM D, YYYY');
                 vm.end = end.format('MMMM D, YYYY');
                 vm.page = 1;
@@ -1233,12 +1396,53 @@ export default {
         });
         /*=========End of Date Time Picker=========*/
 
+
+        /*Click search & pop-up*/
+        let search_pop_up = $("#search-pop-up")
+        $(document).ready(function()
+        {
+            let searchBlock = $("#search-block");
+            searchBlock.click(function (){
+                if (search_pop_up.hasClass('collapse')){
+                    search_pop_up.removeClass('collapse')
+                    search_pop_up.find('input').focus()
+                }
+
+            })
+        });
+
+        /*Click outside search pop-up then pop-up will close*/
+        $(document).mouseup(function(e)
+        {
+            // if the target of the click isn't the container nor a descendant of the container
+            if (!search_pop_up.is(e.target) && search_pop_up.has(e.target).length === 0)
+            {
+                search_pop_up.addClass('collapse')
+            }
+        });
+
+        $(document).ready(function(){
+            $('.card-body').overlayScrollbars({ overflowBehavior : {
+                    x : "hidden",
+                    y : "scroll"
+                }, });
+        });
+
     },
 }
 </script>
+
 <style scoped>
-.card-footer{
-    padding-bottom: 0;
+table{
+    margin-bottom: 0;
 }
 
+.table td, .table th {
+    padding: 0.7rem;
+}
+
+.show-per-page{
+    margin: 4px 0;
+}
 </style>
+

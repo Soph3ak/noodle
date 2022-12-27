@@ -134,7 +134,7 @@ export default {
                 email: "",
                 address:"",
                 address_kh:"",
-                _token: this.token.value
+                /*_token: this.token.value*/
             })
 
         }

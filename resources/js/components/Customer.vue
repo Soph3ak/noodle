@@ -227,7 +227,7 @@
                             <pagination :data="customers"
                                         @pagination-change-page="handlePageChange"
                                         :limit="1"
-                                        :show-disabled="true"
+                                        :show-disabled="false"
                                         :total-rows="count"
                                         :per-page="pageSize"
                                         align="center">
@@ -311,7 +311,7 @@ export default {
                 gender: "0",
                 phone: "",
                 address:"",
-                _token: this.token.value
+               /* _token: this.token.value*/
             }),
 
 
@@ -693,6 +693,13 @@ export default {
         new_cus.on('click',function (){
             vm.newModal()
         })
+
+        $(document).ready(function(){
+            $('.card-body').overlayScrollbars({ overflowBehavior : {
+                    x : "hidden",
+                    y : "scroll"
+                }, });
+        });
     },
 }
 </script>

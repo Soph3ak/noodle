@@ -169,7 +169,6 @@
 
         mounted() {
             this.getResults();
-            console.log('Component mounted.')
 
             $("#category table tbody").on("click","button.editCategory",function (){
                 $("#category .card").removeClass('collapsed-card')

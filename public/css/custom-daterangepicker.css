@@ -1,4 +1,11 @@
-.daterangepicker{
+.daterangepicker, .pop-up{
+    position: absolute;
+    background-color: #fff;
+    color: inherit;
+    max-width: none;
+    margin-top: 7px;
+    z-index: 3001;
+    line-height: 1em;
     font-family: "Inter","sans-serif";
     font-size: 16px;
     border: none;
@@ -129,6 +136,21 @@ td.active::after, td.active.start-date.end-date::after{
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
+}
+
+.daterangepicker.opensright:after {
+    left: 800px;
+}
+
+.daterangepicker:before {
+    right: 39px;
+    border-bottom: none;
+}
+
+#reportrange.form-control, .show-per-page {
+    border-radius: 8px;
+    background-color: #e2e8f0 !important;
+    border: none !important;
 }
 
 

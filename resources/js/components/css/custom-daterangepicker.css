@@ -1,0 +1,137 @@
+.daterangepicker{
+    font-family: "Inter","sans-serif";
+    font-size: 16px;
+    border: none;
+    box-shadow: 0px 8px 16px 2px rgba(97, 97, 97, 0.1), 0px 16px 32px 2px rgba(97, 97, 97, 0.1);
+    border-radius: 12px;
+    padding: 0.5rem;
+}
+
+.daterangepicker.show-calendar .ranges {
+    margin-top: 12px;
+    border-right: 1px solid #ddd;
+}
+
+.daterangepicker .ranges li {
+    font-size: 14px;
+    padding: 11px;
+    margin: 4px 12px;
+}
+
+.daterangepicker .ranges ul {
+    width: 160px;
+}
+
+.daterangepicker .ranges li.active {
+    background-color: #3e33de;
+    border-radius: 6px;
+}
+
+.daterangepicker .ranges li:hover {
+    border-radius: 6px;
+}
+
+.daterangepicker.show-ranges.ltr .drp-calendar.left {
+    border-left: none;
+    padding: 8px;
+}
+
+.daterangepicker.show-calendar .ranges {
+    margin-top: 12px;
+    border-right: 1px solid #ddd;
+}
+
+.daterangepicker td.start-date.active, td.end-date.active{
+    position: relative;
+    isolation: isolate;
+    background-color: white;
+}
+
+td.off{
+    padding-bottom: 2px;
+}
+
+.daterangepicker td.start-date.active:hover, td.end-date.active:hover{
+    background-color: white;
+}
+
+.daterangepicker .calendar-table th, .daterangepicker .calendar-table td {
+    min-width: 45px;
+    width: 45px;
+    height: 47px;
+    line-height: 28px;
+    font-size: 14px;
+    border: none;
+    border-bottom: 2px solid white;
+}
+
+.daterangepicker .calendar-table th{
+    border: none;
+}
+
+
+.daterangepicker .calendar-table td:hover{
+    background-color: whitesmoke;
+    border-bottom: 2px solid white;
+}
+
+.daterangepicker .calendar-table td.active{
+    border-radius: 9999px;
+}
+
+.daterangepicker td.in-range{
+    background-color: #ecebff;
+}
+
+.daterangepicker td.in-range:hover {
+    background-color: #ecebff;
+}
+
+.daterangepicker .drp-calendar {
+    max-width: none;
+}
+
+
+td.active::before, td.active.start-date.end-date::before{
+    content: "";
+    width: 45px;
+    height: 45px;
+    border-radius: 9999px 0 0 9999px;
+    background-color: #ecebff;
+    position: absolute;
+    z-index: -2;
+    top: 0;
+    left: 0;
+}
+
+tbody > tr:first-child td.active::before, td.active.start-date.end-date::before{
+    content: "";
+    width: 45px;
+    height: 46px;
+}
+
+td.active.start-date.end-date::before{
+    border-radius: 9999px;
+}
+
+td.active.end-date::before{
+    border-radius: 0 9999px 9999px 0;
+}
+
+td.active::after, td.active.start-date.end-date::after{
+    content: "";
+    width: 36px;
+    height: 36px;
+    border-radius: 9999px;
+    background-color: #3e33de;
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+
+
+
+
