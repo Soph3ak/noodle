@@ -5,10 +5,10 @@
                 <div class="sidebar__display p-3 mb-3 text-left total-to-pay position-relative">
                     <h6 class="">តម្លៃសរុប</h6>
                     <h1 class="text-bold mb-3">{{convertToCurrency(toTalToPay)}}៛</h1>
-                    <p class="text-bold" v-if="currencyText==='USD'">${{convertToCurrency2Digit(toTalToPay/usdRate)}}</p>
-                    <p class="text-bold" v-else-if="currencyText==='THB'">฿{{convertToCurrency2Digit(toTalToPay/thbRate)}}</p>
-                    <p class="text-bold" v-else-if="currencyText==='CNY'">¥{{convertToCurrency2Digit(toTalToPay/cnyRate)}}</p>
-                    <p class="text-bold" v-else>${{convertToCurrency2Digit(toTalToPay/usdRate)}}</p>
+                    <p class="text-bold" v-if="currencyText==='USD'">= ${{convertToCurrency2Digit(toTalToPay/usdRate)}}</p>
+                    <p class="text-bold" v-else-if="currencyText==='THB'">= ฿{{convertToCurrency2Digit(toTalToPay/thbRate)}}</p>
+                    <p class="text-bold" v-else-if="currencyText==='CNY'">= ¥{{convertToCurrency2Digit(toTalToPay/cnyRate)}}</p>
+                    <p class="text-bold" v-else>= ${{convertToCurrency2Digit(toTalToPay/usdRate)}}</p>
                     <div class="mask is-reuleaux-triangle"></div>
                 </div>
                 <div class="sidebar__display p-3 mb-3 text-left received-money">

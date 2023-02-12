@@ -1,9 +1,118 @@
 <template>
     <div class="mt-1 customer">
-        <div class="search-block d-flex">
+        <!--<div class="search-block d-flex">
             <input type="text" class="form-control search" id="search" placeholder="Search customer's name here ..." v-model="searchTitle" @keyup.enter="page = 1; retrieveCustomers()">
+        </div>-->
+
+        <div class="search-block" id="search-block">
+            <div class="position-relative">
+                <div class="search pointer d-flex align-items-center">
+                    <i class="ion-search"></i>
+                    <p class="mb-0 ml-2">{{placeholder}}</p>
+                    <span
+                        v-if="placeholder!=='Search customer\'s name here ...'"
+                        class="pointer ml-auto"
+                        style="font-size: 14px"
+                        @click="clearSearch(); retrieveCustomers(); $event.stopPropagation();">
+                        <i class="ion-android-cancel"></i>
+                    </span>
+                </div>
+                <!--Search pop-up-->
+                <div id="search-pop-up" class="pop-up search-report p-3 collapse" style="width: 418px">
+                    <!--Search Input-->
+                    <div class="search-input px-2">
+                        <div class="d-flex align-items-center" style="font-size: 14px">
+                            <i class="ion-search" style="font-size: 18px"></i>
+                            <input
+                                type="text"
+                                class="form-control search"
+                                placeholder="Search invoice number here ..."
+                                v-model="searchTitle"
+                                @keyup.enter="handleSearchEnterPressed()"
+                                @input="getSearchResult"
+                            >
+                            <span
+                                class="pointer"
+                                style="font-size: 18px"
+                                @click="clearSearch(); hideSearch() ; $event.stopPropagation();">
+                                <i class="ion-android-cancel"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!--Popular-->
+                    <div class="popular mt-2">
+                        <p class="small px-2 mb-2">Popular <i class="ion-fireball text-orange ml-1"></i></p>
+                        <ul class="list-group">
+                            <li class="list-group-item p-0 border-0">
+                                <a href="" class="active">
+                                    <img src="/files/1617328949.129465.តុំយាំគ្រឿងសមុទ្រ.jpg" alt="" width="25px" height="25px" class="rounded-circle mr-1">
+                                    Cras justo odio
+                                </a>
+                            </li>
+                            <li class="list-group-item p-0 border-0">
+                                <a href="" class="">
+                                    <img src="/files/1617328949.129465.តុំយាំគ្រឿងសមុទ្រ.jpg" alt="" width="25px" height="25px" class="rounded-circle mr-1">
+                                    Cras justo odio
+                                </a>
+                            </li>
+                            <li class="list-group-item p-0 border-0">
+                                <a href="" class="">
+                                    <img src="/files/1617328949.129465.តុំយាំគ្រឿងសមុទ្រ.jpg" alt="" width="25px" height="25px" class="rounded-circle mr-1">
+                                    Cras justo odio
+                                </a>
+                            </li>
+                            <li class="list-group-item p-0 border-0">
+                                <a href="" class="">
+                                    <img src="/files/1617328949.129465.តុំយាំគ្រឿងសមុទ្រ.jpg" alt="" width="25px" height="25px" class="rounded-circle mr-1">
+                                    Cras justo odio
+                                </a>
+                            </li>
+                            <li class="list-group-item p-0 border-0">
+                                <a href="" class="">
+                                    <img src="/files/1617328949.129465.តុំយាំគ្រឿងសមុទ្រ.jpg" alt="" width="25px" height="25px" class="rounded-circle mr-1">
+                                    Cras justo odio
+                                </a>
+                            </li>
+                            <li class="list-group-item p-0 border-0">
+                                <a href="" class="">
+                                    <img src="/files/1617328949.129465.តុំយាំគ្រឿងសមុទ្រ.jpg" alt="" width="25px" height="25px" class="rounded-circle mr-1">
+                                    Cras justo odio
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
         </div>
-        <div class="row">
+
+        <div class="d-flex align-items-center">
+            <h1 class="mb-0">ព័ត៌មានអតិថិជន</h1>
+            <!--<div class="d-flex align-items-center ml-3">
+                <span class="badge badge-warning badge-filter text-primary pr-2 animate__animated animate__bounceIn" v-show="selected.filters.length>0">
+                    <i class="fas fa-filter ml-1 mr-1"></i> Filter
+                </span>
+                <span class="badge badge-filter selected-filter ml-1 pointer animate__animated animate__bounceIn" :id="f+'-filter'" v-for="f in selected.filters" :key="f.id">
+                    <span class="text-lowercase" @click="toggleFilter(f+'-filter'); previousSelect(f+'-filter'); closeOtherFilter(f+'-filter');"><i class="fas fa-filter ml-1 mr-1"></i> {{f}}</span>
+                    <button @click="btnRemoveBadgeFilter(f+'-filter'); " type="button" class="btn btn-tool"><i class="fas fa-times"></i></button>
+                </span>
+                <span class="badge badge-filter text-danger pr-2 pointer animate__animated animate__bounceIn" v-show="selected.filters.length>1">
+                    <span @click="btnRemoveBadgeFilter('all')"><i class="fas fa-broom ml-1 mr-1"></i>Clear all filter</span>
+                </span>
+            </div>-->
+            <div class="ml-auto">
+                <button data-v-e1ea323e="" type="button" id="new-customer" class="btn btn-primary add__more" data-toggle="modal" data-target="#modal-customer">
+                <span data-v-e1ea323e="" class="d-flex justify-content-center align-items-center">
+                    <i data-v-e1ea323e="" class="gg-add mr-2"></i>
+                    បង្កើតអតិថិជនថ្មី
+                </span>
+                </button>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 14px">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body table-responsive p-0" style="max-height: 76vh; min-height: 76vh;">
@@ -95,7 +204,12 @@
                                                     <div>
                                                         <i class="fas fa-shopping-cart bg-green"></i>
                                                         <div class="timeline-item">
-                                                            <h3 v-if="customer.latest_order !== null" class="timeline-header"><a href="#">Last {{customer.orders.length-1}} orders</a></h3>
+                                                            <h3 v-if="customer.latest_order !== null" class="timeline-header">
+                                                                <a href="#" v-if="customer.orders.length > 0">Last {{customer.orders.length-1}} orders</a>
+                                                                <a class="text-primary pointer" v-else>
+                                                                    <i class="fas fa-spinner mr-2 fa-spin"></i> Loading
+                                                                </a>
+                                                            </h3>
                                                             <h3 v-else class="timeline-header"><a href="#">Don't has any orders yet</a></h3>
                                                             <!--<span class="text-xs ml-2 text-success">Showing 5 of 9 orders</span>-->
                                                             <table class="table table-hover table-borderless table-valign-middle">
@@ -190,9 +304,12 @@
                                                     <div>
                                                         <i class="fas fa-ban bg-gray" v-if="customer.orders[customer.orders.length-1] <= 5 || customer.orders.length-1 > 5"></i>
                                                         <i class="fas fa-angle-double-down bg-gray animated-down" :id="'ban'+customer.id" v-else></i>
-                                                        <span class="text-xs ml-5 pl-3 text-lightgray">
+                                                        <span class="text-xs ml-5 pl-3 text-lightgray" v-if="customer.orders.length > 0">
                                                             Showing {{customer.orders.length-1}} of {{customer.orders[customer.orders.length-1]}}
                                                             {{customer.orders[customer.orders.length-1]>1 ? 'orders':'order'}}
+                                                        </span>
+                                                        <span class="text-xs ml-5 pl-3 text-lightgray" v-else>
+                                                            <i class="fas fa-spinner mr-2 fa-spin"></i> Loading
                                                         </span>
                                                     </div>
                                                 </div>
@@ -222,7 +339,7 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
-                    <div class="card-footer">
+                    <!--<div class="card-footer">
                         <div class="paginate ml-auto">
                             <pagination :data="customers"
                                         @pagination-change-page="handlePageChange"
@@ -234,6 +351,37 @@
                                 <span slot="prev-nav" class="p-2">Previous</span>
                                 <span slot="next-nav" class="p-2">Next</span>
                             </pagination>
+                        </div>
+                    </div>-->
+                    <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                        <div class="d-flex">
+                            <label for="" class="col-form-label" style="width: 115px"><small>Show records:</small></label>
+                            <div class="">
+                                <select v-model="pageSize" @change="handlePageSizeChange($event)" class="form-control show-per-page" style="width: 75px">
+                                    <option v-for="size in pageSizes" :key="size" :value="size">
+                                        {{ size }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="recordShowing1 text-lightgray ml-2" v-show="customerCount>0">
+                            <small>Showing {{ showingFrom() }}-{{ showingTo() }} of {{ totalRecords }} {{ totalRecords > 1 ? 'records':'record' }}</small>
+                        </div>
+
+                        <div class="ml-auto">
+                            <div class="paginate">
+                                <pagination :data="customers"
+                                            @pagination-change-page="handlePageChange"
+                                            :limit="1"
+                                            :show-disabled="false"
+                                            :total-rows="count"
+                                            :per-page="pageSize"
+                                            align="center">
+                                    <span slot="prev-nav" class="p-2">Previous</span>
+                                    <span slot="next-nav" class="p-2">Next</span>
+                                </pagination>
+                            </div>
                         </div>
                     </div>
                     <!-- /.card-footer -->
@@ -305,6 +453,7 @@ export default {
             currentPage:'1',
             customers:{},
             editMode : false,
+            placeholder: 'Search customer\'s name here ...',
             form: new Form({
                 id:"",
                 name: "",
@@ -313,7 +462,6 @@ export default {
                 address:"",
                /* _token: this.token.value*/
             }),
-
 
             searchTitle: "",
             page : 1,
@@ -344,6 +492,8 @@ export default {
 
             showingBtnResetTable: false,
             btnResetTableLoading: false,
+
+            queryTimeout: null,
 
         }
     },
@@ -504,6 +654,21 @@ export default {
                 this.page = value;
                 this.retrieveCustomers();
             }
+        },
+
+        handlePageSizeChange(event) {
+            this.pageSize = event.target.value;
+            this.page = 1;
+            this.retrieveCustomers();
+        },
+
+        showingFrom(){
+            return this.pageSize*(this.page-1)+1;
+        },
+
+        showingTo(){
+            let showUntil = this.pageSize*this.page;
+            return (showUntil < this.totalRecords ? showUntil:this.totalRecords);
         },
 
         toggleSlideTable(rowID){
@@ -673,6 +838,41 @@ export default {
             return '/files/' + img
         },
 
+        clearSearch(){
+            if (this.searchTitle !== ''){
+                this.searchTitle=''
+                this.placeholder = 'Search customer\'s name here ...'
+                this.retrieveCustomers()
+            }
+        },
+
+        handleSearchEnterPressed(){
+            if (!this.searchTitle){
+                this.searchTitle= ''
+                this.placeholder = 'Search customer\'s name here ...'
+            }
+            this.hideSearch()
+        },
+
+        hideSearch(){
+            let search = $("#search-pop-up")
+            search.addClass('collapse')
+        },
+
+        getSearchResult(){
+            clearTimeout(this.queryTimeout)
+            this.queryTimeout = setTimeout(async () => {
+                this.page = 1
+                this.searchTitle !== '' ? this.setSearchTitle() : this.placeholder = 'Search customer\'s name here ...'
+                await this.retrieveCustomers()
+
+            },300)
+        },
+
+        setSearchTitle(){
+            this.placeholder = this.searchTitle
+        },
+
 
     },
     computed:{
@@ -700,11 +900,35 @@ export default {
                     y : "scroll"
                 }, });
         });
+
+        /*Click search & pop-up*/
+        let search_pop_up = $("#search-pop-up")
+        $(document).ready(function()
+        {
+            let searchBlock = $("#search-block");
+            searchBlock.click(function (){
+                if (search_pop_up.hasClass('collapse')){
+                    search_pop_up.removeClass('collapse')
+                    search_pop_up.find('input').focus()
+                }
+
+            })
+        });
+
+        /*Click outside search pop-up then pop-up will close*/
+        $(document).mouseup(function(e)
+        {
+            // if the target of the click isn't the container nor a descendant of the container
+            if (!search_pop_up.is(e.target) && search_pop_up.has(e.target).length === 0)
+            {
+                search_pop_up.addClass('collapse')
+            }
+        });
     },
 }
 </script>
 <style scoped>
-.card-footer{
-    padding-bottom: 0;
+.form-control.search{
+    font-family: "Inter", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Hanuman";
 }
 </style>
