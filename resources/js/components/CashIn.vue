@@ -281,8 +281,8 @@ export default {
 
         },
 
+        // Fixed Error Case #2: User can save multiple time during Pay button loading
         clickablePay(){
-            // Fixed Error Case #2: User can save multiple time during Pay button loading
             let pay = $("#cash-in-pay")
             if (this.isLoading === true)
                 pay.addClass('not-clickable')
@@ -298,12 +298,7 @@ export default {
                 html: "ទូរទាត់បានដោយជោគជ័យ!<br>សូមអរគុណ!",
                 icon: 'success',
                 allowOutsideClick: false,
-            }
-
-
-
-
-            )
+            })
             this.reset()
             this.clear()
         },
@@ -389,7 +384,6 @@ export default {
                         digit = '0'
                     }
                     calculator.displayValue = digit
-
                 }
                 else {
                     calculator.displayValue = displayValue + digit
@@ -465,7 +459,6 @@ export default {
             const display = document.querySelector('.display');
             display.innerHTML = convertToCurrency(calculator.displayValue);
             vm.receivedMoney = calculator.displayValue
-
         }
 
         function convertToCurrency(price){

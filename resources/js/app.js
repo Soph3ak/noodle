@@ -89,8 +89,8 @@ Vue.filter('formatDate_date_time',function (date){
     return moment(date).format('LLL');
 })
 
+/*https://flaviocopes.com/how-to-format-number-as-currency-javascript/*/
 Vue.filter('convertToCurrency1',function (price){
-    /*https://flaviocopes.com/how-to-format-number-as-currency-javascript/*/
     let converted
     const formatter = new Intl.NumberFormat('en-US', {
         /*style: 'currency',
@@ -102,8 +102,6 @@ Vue.filter('convertToCurrency1',function (price){
     }
     else return converted = '0.00'
 })
-
-
 
 const app = new Vue({
     el: '#app',

@@ -339,20 +339,7 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
-                    <!--<div class="card-footer">
-                        <div class="paginate ml-auto">
-                            <pagination :data="customers"
-                                        @pagination-change-page="handlePageChange"
-                                        :limit="1"
-                                        :show-disabled="false"
-                                        :total-rows="count"
-                                        :per-page="pageSize"
-                                        align="center">
-                                <span slot="prev-nav" class="p-2">Previous</span>
-                                <span slot="next-nav" class="p-2">Next</span>
-                            </pagination>
-                        </div>
-                    </div>-->
+
                     <div class="card-footer bg-white d-flex justify-content-between align-items-center">
                         <div class="d-flex">
                             <label for="" class="col-form-label" style="width: 115px"><small>Show records:</small></label>
@@ -378,7 +365,7 @@
                                             :total-rows="count"
                                             :per-page="pageSize"
                                             align="center">
-                                    <span slot="prev-nav" class="p-2">Previous</span>
+                                    <span slot="prev-nav" class="p-2">Prev</span>
                                     <span slot="next-nav" class="p-2">Next</span>
                                 </pagination>
                             </div>

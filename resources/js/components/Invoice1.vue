@@ -212,26 +212,6 @@ export default {
                     setTimeout(() => window.print(), 0.1); /*COZ DATA LOAD TO PAGE WAS DELAY LATE THEN CODE*/
 
         },
-
-        /*formatDate(value){
-            return moment(value).format('LLL');
-        },
-
-        convertToCurrency(price){
-            /!*https://flaviocopes.com/how-to-format-number-as-currency-javascript/!*!/
-            let converted
-            const formatter = new Intl.NumberFormat('en-US', {
-                /!*style: 'currency',
-                currency: 'USD',*!/
-                minimumFractionDigits: 0
-            })
-            if(price > 0){
-                return converted = formatter.format(price)
-            }
-            else return converted = '0.00'
-
-        },*/
-
     },
 
     mounted() {

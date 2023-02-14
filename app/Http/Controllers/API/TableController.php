@@ -109,6 +109,6 @@ class TableController extends Controller
      */
     public function destroy(Table $seatTable, $id)
     {
-        $seatTable->findOrFail($id)->delete();
+        //$seatTable->findOrFail($id)->delete();
     }
 }

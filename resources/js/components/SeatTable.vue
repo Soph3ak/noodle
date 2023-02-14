@@ -1,6 +1,18 @@
 <template>
     <div>
-        <div class="row">
+        <div class="d-flex align-items-center">
+            <h1 class="mb-0">ព័ត៌មានតុ</h1>
+            <div class="ml-auto">
+                <button data-v-e1ea323e="" type="button" id="new-seatTable" class="btn btn-primary add__more" data-toggle="modal" data-target="#modal-seatTable">
+                <span data-v-e1ea323e="" class="d-flex justify-content-center align-items-center">
+                    <i data-v-e1ea323e="" class="gg-add mr-2"></i>
+                    បង្កើតតុថ្មី
+                </span>
+                </button>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 14px">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body table-responsive p-0" style="">
