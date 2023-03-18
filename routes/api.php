@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\API\CustomerController;
-use App\Http\Controllers\API\InvoiceController;
 use App\Http\Controllers\API\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +8,7 @@ use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\TableController;
+use App\Http\Controllers\API\ShopController;
 
 use App\Http\Controllers\SellController;
 /*
@@ -26,26 +26,27 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//-------------/ CategoryController /----------------//
+//==========/ CategoryController /==========//
 Route::apiResource('category',CategoryController::class); //Category.vue
 Route::get('/getCategoriesSelect2',[CategoryController::class,'getCategoriesSelect2'])->name('category.getCategoriesSelect2'); //Product.vue
 
-//-------------/ CustomerController /----------------//
+
+//==========/ CustomerController /==========//
 Route::apiResource('customer',CustomerController::class); //Customer.vue
 Route::get('/getCustomers',[CustomerController::class,'getCustomers'])->name('customer.getCustomer'); //Customer.vue
 Route::get('/getCustomerOrders',[CustomerController::class,'getCustomerOrders']); //Customer.vue
 
 
-//-------------/ OrderController /----------------//
-/*Route::post('/invoice', [OrderController::class, 'invoice']);
-Route::get('/invoice', [OrderController::class, 'invoice']);*/
-
-//-------------/ ProductController /----------------//
+//==========/ ProductController /==========//
 Route::apiResource('product',ProductController::class);
 Route::get('/getProduct',[ProductController::class,'getProduct'])->name('product.getProduct');
 
-
-
+//==========/ ShopController /==========//
+Route::apiResource('shop',ShopController::class);
+Route::get('/getShop',[ShopController::class, 'getShop']);
+Route::get('/getPhones',[ShopController::class, 'getPhones']);
+Route::put('/phones',[ShopController::class, 'test']);
+Route::delete('/phones',[ShopController::class, 'destroy_phone']);
 
 
 

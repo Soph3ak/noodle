@@ -176,7 +176,7 @@ export default {
         },
 
         getShop() {
-            axios.get('getShop')
+            axios.get('api/getShop')
                 .then(response => {
                     this.shop = []
                     this.shop.push(response.data);
@@ -192,7 +192,7 @@ export default {
         },
 
         getPhones() {
-            axios.get('getPhones')
+            axios.get('api/getPhones')
                 .then(response => {
                     this.phones = response.data;
                     this.form_phone.f_phones = this.phones
@@ -205,7 +205,7 @@ export default {
         },
 
         updateShop(id){
-            this.form.put('shop/'+id)
+            this.form.put('api/shop/'+id)
                 .then(response => {
                     this.updatePhone()
                 })
@@ -229,7 +229,7 @@ export default {
         },
 
         updatePhone(){
-            this.form_phone.put('phones')
+            this.form_phone.put('api/phones')
                 .then(response => {
                     if(this.isHasNum2Delete === true){
                         this.deleteNumber()
@@ -248,7 +248,13 @@ export default {
         },
 
         addMoreNumber(){
-            this.form_phone.f_phones.push({"id":"","phone_number":"","shop_id":1,"created_at":"","updated_at":""})
+            this.form_phone.f_phones.push({
+                "id":"",
+                "phone_number":"",
+                "shop_id":1,
+                "created_at":"",
+                "updated_at":""
+            })
         },
         removeNumber(index,num_id) {
             this.form_phone.d_phones.push(this.form_phone.f_phones[index])
@@ -257,7 +263,7 @@ export default {
         },
 
         deleteNumber(){
-            this.form_phone.delete('phones')
+            this.form_phone.delete('api/phones')
                 .then(response => {
                     /*this.getShop();
                     this.alertSuccess('Updated successfully');
