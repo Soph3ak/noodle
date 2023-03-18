@@ -24,28 +24,15 @@ use App\Http\Controllers\ReportController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/print/{id}',[PrintController::class,'print']);
 
 Auth::routes();
 
-Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
-
-/*Route::get('/tables',[TableController::class,'index']);
-Route::get('/customer',[CustomerController::class,'index']);
-Route::get('/product',[ProductController::class,'index']);
-Route::get('/promotion',[PromotionController::class,'index']);*/
+Route::get('/print/{id}',[PrintController::class,'print']);
 
 Route::post('image/upload/store',[ImageUploadController::class, 'fileStore']);
-
 Route::get('/sell', [SellController::class, 'index']);
 Route::get('/loadUser', [SellController::class, 'loadUser']);
-
-Route::post('/invoice', [OrderController::class, 'invoice']);
-Route::get('/invoice', [OrderController::class, 'invoice']);
 
 //=======
 
@@ -56,12 +43,18 @@ Route::put('/phones',[ShopController::class, 'test']);
 Route::delete('/phones',[ShopController::class, 'destroy_phone']);
 
 
-Route::get('/reports',[ReportController::class,'index'])->name('report.index');
+//Route::get('/reports',[ReportController::class,'index'])->name('report.index');
 Route::get('/getReport',[ReportController::class,'getReport'])->name('report.getReport');
 Route::get('/getPaymentType',[ReportController::class,'getPaymentType']);
 Route::get('/getSellers',[ReportController::class,'getSellers']);
 Route::get('/getCustomers',[ReportController::class,'getCustomers']);
 Route::get('/getOrderProducts',[ReportController::class,'getOrderProducts']);
+
+
+//======= Prevent error when user refresh page, or let VueRouter handle the routes =====
+Route::get('/{any}', function () {
+    return view('dashboard');
+})->where('any', '.*');
 
 
 

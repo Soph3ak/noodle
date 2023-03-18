@@ -4,8 +4,6 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-import Dashboard from "./components/Dashboard";
-
 require('./bootstrap');
 
 window.Vue = require('vue').default;
@@ -47,7 +45,7 @@ Vue.component('pagination', require('laravel-vue-pagination'))
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 
-Vue.component('dashboard', require('./components/Dashboard').default);
+/*Vue.component('dashboard', require('./components/Dashboard').default);
 Vue.component('category', require('./components/Category.vue').default);
 Vue.component('seat-table', require('./components/SeatTable.vue').default);
 Vue.component('shop', require('./components/Shop').default);
@@ -57,24 +55,27 @@ Vue.component('product', require('./components/Product.vue').default);
 Vue.component('promotion', require('./components/Promotion').default);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('sell', require('./components/Sell.vue').default);
+Vue.component('invoice1', require('./components/Invoice1').default);*/
 Vue.component('invoice1', require('./components/Invoice1').default);
+Vue.component('sell', require('./components/Sell.vue').default);
 
 import VueRouter from 'vue-router';
+import Dashboard from "./components/Dashboard";
+import Report from "./components/Report";
 Vue.use(VueRouter)
 let routes = [
     { path: '/dashboard', component: Dashboard },
     { path: '/seat-table', component: require('./components/SeatTable.vue').default },
     { path: '/shop', component: require('./components/Shop.vue').default },
     { path: '/customer', component: require('./components/Customer.vue').default },
-    { path: '/reports', component: require('./components/Report').default },
+    { path: '/reports', component: Report },
     { path: '/product', component: require('./components/Product.vue').default },
     { path: '/promotion', component: require('./components/Promotion').default },
     { path: '/example-component', component: require('./components/ExampleComponent').default },
-    { path: '/sell', component: require('./components/Seat').default },
-    { path: '/invoice1', component: require('./components/Invoice1').default },
+    { path: '*', component: require('./components/404').default },
 ]
 const router = new VueRouter({
-    //mode: 'history',
+    mode: 'history',
     routes
 })
 

@@ -13,6 +13,11 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ReportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(){
         return view('report');
     }

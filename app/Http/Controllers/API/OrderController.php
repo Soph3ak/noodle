@@ -26,7 +26,7 @@ class OrderController extends Controller
         ]);
     }
 
-    public function invoice(Request $request){
+    /*public function invoice(Request $request){
         //return response()->json($request);
         $customer = new Buyer([
             'name'          => 'John Doe',
@@ -55,7 +55,7 @@ class OrderController extends Controller
             ->addItems($items);
         return $invoice->stream();
 
-    }
+    }*/
 
     public function saveOrder(Request $request){
         /*return $request;*/
