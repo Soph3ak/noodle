@@ -351,11 +351,12 @@
                                 </select>
                             </div>
                         </div>
-
-                        <div class="recordShowing1 text-lightgray ml-2" v-show="customerCount>0">
+                        <div class="recordShowing1 text-lightgray ml-2" v-if="isLoading">
+                            <small><i class="fas fa-spinner mr-2 fa-spin"></i> Loading</small>
+                        </div>
+                        <div class="recordShowing1 text-lightgray ml-2" v-else v-show="customerCount>0">
                             <small>Showing {{ showingFrom() }}-{{ showingTo() }} of {{ totalRecords }} {{ totalRecords > 1 ? 'records':'record' }}</small>
                         </div>
-
                         <div class="ml-auto">
                             <div class="paginate">
                                 <pagination :data="customers"
@@ -455,7 +456,7 @@ export default {
             pageSize: 10,
             pageSizes: [10, 25, 50, 100],
             count: 0,
-            customerCount:1,
+            customerCount: 1, //set 1 Coz if set 0, when first loading page will show "No Data Found"
             totalRecords: 0,
 
             cusID : 0, // let row click can retrieve orders again

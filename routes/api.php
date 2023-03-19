@@ -71,7 +71,7 @@ Route::get('/getSeatTable',[TableController::class,'getSeatTable']); //SeatTable
 Route::get('/getReport',[ReportController::class,'getReport'])->name('report.getReport');
 Route::get('/getPaymentType',[ReportController::class,'getPaymentType']);
 Route::get('/getSellers',[ReportController::class,'getSellers']);
-Route::get('/getCustomersHasOrders',[ReportController::class,'getCustomers']);
+Route::get('/getCustomersHasOrders',[ReportController::class,'getCustomersHasOrders']);
 Route::get('/getOrderProducts',[ReportController::class,'getOrderProducts']);
 
 

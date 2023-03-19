@@ -506,8 +506,10 @@
                                 </select>
                             </div>
                         </div>
-
-                        <div class="recordShowing1 text-lightgray ml-2" v-show="reportCount>0">
+                        <div class="recordShowing1 text-lightgray ml-2" v-if="isLoading">
+                            <small><i class="fas fa-spinner mr-2 fa-spin"></i> Loading</small>
+                        </div>
+                        <div class="recordShowing1 text-lightgray ml-2" v-else v-show="reportCount>0">
                             <small>Showing {{ showingFrom() }}-{{ showingTo() }} of {{ totalRecords }} {{ totalRecords > 1 ? 'records':'record' }}</small>
                         </div>
 

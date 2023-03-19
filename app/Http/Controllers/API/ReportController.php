@@ -13,10 +13,10 @@ use App\Http\Controllers\Controller;
 
 class ReportController extends Controller
 {
-    public function __construct()
+    /*public function __construct()
     {
-        $this->middleware('api');
-    }
+        $this->middleware('auth:api');
+    }*/
 
     public function index(){
         return view('report');
