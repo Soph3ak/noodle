@@ -635,7 +635,7 @@ export default {
         /*=========Axios with filter: https://www.bezkoder.com/vue-pagination-axios/========*/
 
         getAll(params) {
-            return axios.get("/getReport", {params});
+            return axios.get("api/getReport", {params});
         },
 
         getRequestParams(searchTitle, page, pageSize, start, end, paymentTypes, tables, sellers, customers, orderBy) {
@@ -1104,7 +1104,7 @@ export default {
         },
 
         retrievePaymentType(){
-            axios.get("getPaymentType")
+            axios.get("api/getPaymentType")
                 .then((response) => {
                     this.paymentTypes = response.data;
                     this.paymentCount = this.paymentTypes.length
@@ -1117,7 +1117,7 @@ export default {
         },
 
         retrieveSellers(){
-            axios.get("getSellers")
+            axios.get("api/getSellers")
                 .then((response) => {
                     this.sellers = response.data;
                     this.sellersCount = this.sellers.length
@@ -1130,7 +1130,7 @@ export default {
         },
 
         retrieveCustomers(){
-            axios.get("getCustomers")
+            axios.get("api/getCustomersHasOrders")
                 .then((response) => {
                     this.customers = response.data;
                     this.customersCount = this.customers.length
@@ -1179,7 +1179,7 @@ export default {
                                 this.detailLimit,
                             );
                             setTimeout(() => {
-                                axios.get("/getOrderProducts", {params})
+                                axios.get("api/getOrderProducts", {params})
                                     .then((response) => {
                                         this.loadingProducts = false
                                         let arr = [];

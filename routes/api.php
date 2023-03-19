@@ -9,8 +9,8 @@ use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\TableController;
 use App\Http\Controllers\API\ShopController;
-
 use App\Http\Controllers\SellController;
+use App\Http\Controllers\API\ReportController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -66,6 +66,13 @@ Route::post('/save-order', [OrderController::class,'saveOrder']);
 Route::apiResource('seat',TableController::class);
 Route::get('/loadSeats',[TableController::class,'loadSeats']); //Seat.vue , Report.vue
 Route::get('/getSeatTable',[TableController::class,'getSeatTable']); //SeatTable.vue
+
+//==========/ ReportController /==========//
+Route::get('/getReport',[ReportController::class,'getReport'])->name('report.getReport');
+Route::get('/getPaymentType',[ReportController::class,'getPaymentType']);
+Route::get('/getSellers',[ReportController::class,'getSellers']);
+Route::get('/getCustomersHasOrders',[ReportController::class,'getCustomers']);
+Route::get('/getOrderProducts',[ReportController::class,'getOrderProducts']);
 
 
 

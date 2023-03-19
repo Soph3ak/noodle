@@ -4,10 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
-use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use phpDocumentor\Reflection\Utils;
 
 class CustomerController extends Controller
 {
@@ -25,7 +23,7 @@ class CustomerController extends Controller
     public function getCustomers(Request $request)
     {
         $searchTitle = $request->title;
-        $limit = $request->limit;
+        $limit = $request->size;
         $orderBy = $request->orderBy;
 
         $customers = Customer::with('latestOrder')
@@ -65,7 +63,7 @@ class CustomerController extends Controller
                     $customers = $customers->orderBy('id', 'desc');
             }
         }
-        return $customers->paginate($request->size);
+        return $customers->paginate($limit);
     }
 
     protected function getCustomerOrders(Request $request)

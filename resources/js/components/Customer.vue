@@ -525,7 +525,7 @@ export default {
                 this.getAll(params)
                     .then((response) => {
                         this.isLoading = false
-                        this.customers = response.data;
+                        this.customers = response.data
                         this.customerCount = (this.customers.data).length
                         this.totalRecords = this.customers.total
                     })
@@ -866,7 +866,7 @@ export default {
 
     },
 
-    mounted() {
+    created() {
         this.retrieveCustomers();
         const vm = this
 

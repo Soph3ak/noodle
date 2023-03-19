@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Models\Customer;
 use App\Models\Order;
@@ -9,13 +9,13 @@ use App\Models\Table;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Builder;
+use App\Http\Controllers\Controller;
 
 class ReportController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('api');
     }
 
     public function index(){
@@ -32,7 +32,7 @@ class ReportController extends Controller
             ->get();
     }
 
-    public function getCustomers(){
+    public function getCustomersHasOrders(){
         //Get only customers has orders
         return $customers = Customer::select('id','name')
             ->has('orders')
@@ -42,10 +42,6 @@ class ReportController extends Controller
 
 
     public function getReport(Request $request){
-
-        /*return $result = Order::crossJoin('products')
-            ->get();*/
-
         $payments = $request->paymentTypes;
         $searchTitle = $request->title;
         $tables = $request->tables;
