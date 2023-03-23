@@ -11,6 +11,7 @@ use App\Http\Controllers\API\TableController;
 use App\Http\Controllers\API\ShopController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\API\ReportController;
+use App\Http\Controllers\API\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -73,6 +74,9 @@ Route::get('/getPaymentType',[ReportController::class,'getPaymentType']);
 Route::get('/getSellers',[ReportController::class,'getSellers']);
 Route::get('/getCustomersHasOrders',[ReportController::class,'getCustomersHasOrders']);
 Route::get('/getOrderProducts',[ReportController::class,'getOrderProducts']);
+
+
+
 
 
 

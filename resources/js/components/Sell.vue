@@ -221,7 +221,7 @@ import Seat from "./Seat";
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
     export default {
-        props: ['token'],
+        props: ['token', 'user_prop'],
         components:{CashIn, Clock, Seat, Loading},
         data () {
             return{
@@ -659,12 +659,14 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                 this.seatName = var2
             },
             loadUser(){
-                axios.get('loadUser')
+                this.user = JSON.parse(this.user_prop)
+                this.userName = this.user[0].name
+                /*axios.get('loadUser')
                     .then(response => {
                         this.user.push(response.data)
                         this.userID = this.user[0].id
                         this.userName = this.user[0].name
-                    });
+                    });*/
             },
 
         },
@@ -690,7 +692,6 @@ import 'vue-loading-overlay/dist/vue-loading.css';
             this.loadUser()
             this.loadCategoriesSell()
             this.loadAllProducts()
-
             $('#modal-cashIn').modal({
                 backdrop: 'static',
                 show: false,

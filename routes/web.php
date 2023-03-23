@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\PrintController;
 use Illuminate\Support\Facades\Route;
@@ -20,11 +21,10 @@ use App\Http\Controllers\SellController;
 
 Auth::routes();
 
-Route::get('/print/{id}',[PrintController::class,'print']);
-
-Route::post('image/upload/store',[ImageUploadController::class, 'fileStore']);
+Route::get('/dashboard', [HomeController::class, 'index']);
 Route::get('/sell', [SellController::class, 'index']);
-Route::get('/loadUser', [SellController::class, 'loadUser']);
+Route::get('/print/{id}',[PrintController::class,'print']);
+Route::post('image/upload/store',[ImageUploadController::class, 'fileStore']);
 
 
 //======= Prevent error when user refresh page, or let VueRouter handle the routes =====

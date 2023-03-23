@@ -89,7 +89,7 @@
             <small>Showing {{ showingFrom() }}-{{ showingTo() }} of {{ totalRecords }} {{ totalRecords > 1 ? 'records':'record' }}</small>
         </div>-->
         <div class="d-flex justify-content-between">
-            <h1 class="mb-0">ទំព័រដើម</h1>
+            <h1 class="mb-0">របាយការណ៏លក់</h1>
             <div class="d-flex align-items-center ml-3">
                 <span class="badge badge-warning badge-filter text-primary pr-2 animate__animated animate__bounceIn" v-show="selected.filters.length>0">
                     <i class="fas fa-filter ml-1 mr-1"></i> Filter
@@ -215,7 +215,7 @@
                                         </div>
                                     </div>
                                 </th>
-                                <th>Location</th>
+                                <th>Shop</th>
                                 <th>
                                     <div class="d-flex align-items-center">
                                         <span class="gg pointer" @click="sortBy('seller')" id="column_seller">
@@ -464,7 +464,9 @@
                                                     <i class="fas fa-ban bg-gray" v-if="report.products[report.products.length-1] <= 5 || report.products.length-1 > 5"></i>
                                                     <i class="fas fa-angle-double-down bg-gray animated-down" :id="'ban'+report.id" v-else></i>
                                                     <span class="text-xs ml-5 pl-3 text-lightgray">
-                                                        <span v-if="report.products.length<1">Loading products...</span>
+                                                        <span v-if="report.products.length<1">
+                                                            <i class="fas fa-spinner mr-2 fa-spin"></i> Loading product
+                                                        </span>
                                                         <span v-else>Showing {{report.products.length-1}} of {{report.products[report.products.length-1]}}
                                                         {{report.products[report.products.length-1]>1 ? 'products':'product'}}</span>
                                                     </span>

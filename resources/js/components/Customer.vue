@@ -867,7 +867,7 @@ export default {
 
     },
 
-    created() {
+    mounted() {
         this.retrieveCustomers();
         const vm = this
 
@@ -891,15 +891,15 @@ export default {
 
         /*Click search & pop-up*/
         let search_pop_up = $("#search-pop-up")
+        let searchBlock = $("#search-block");
         $(document).ready(function()
         {
-            let searchBlock = $("#search-block");
             searchBlock.click(function (){
                 if (search_pop_up.hasClass('collapse')){
                     search_pop_up.removeClass('collapse')
                     search_pop_up.find('input').focus()
-                }
 
+                }
             })
         });
 

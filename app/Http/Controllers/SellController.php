@@ -15,14 +15,10 @@ class SellController extends Controller
     }
 
     public function index(){
-       $user = Auth::user();
-       return view('sell');
+        $user = Auth::user();
+        return view('sell', ['user'=>array($user)]);
     }
 
-
-    public function loadUser(){
-        return $user = Auth::user();
-    }
 
     public function loadCategoriesSell(){
         return $categories = Category::all();
