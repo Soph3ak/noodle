@@ -151,10 +151,10 @@
 <script>
 
 export default {
-    props: ['invoice',],
+    props: ['order',],
     data () {
         return{
-            inv: JSON.parse(this.invoice),
+            inv: JSON.parse(this.order),
             shop_name_kh: '',
             shop_name_en: '',
             shop_address: '',

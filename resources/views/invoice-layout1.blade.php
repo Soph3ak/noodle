@@ -13,7 +13,7 @@
 </head>
 <body>
 <div id="app">
-    <invoice1 invoice="{{json_encode($array)}}"></invoice1>
+    <invoice1 order="{{json_encode($order)}}"></invoice1>
 </div>
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

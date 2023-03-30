@@ -403,7 +403,7 @@ body {
 }
 
 .btn-pay {
-  background: linear-gradient(90deg, hsl(192deg, 95%, 50%) 0%, hsl(225deg, 89%, 47%) 100%);
+  background: linear-gradient(90deg, hsl(192, 95%, 50%) 0%, hsl(225, 89%, 47%) 100%);
 }
 
 .not-clickable {
