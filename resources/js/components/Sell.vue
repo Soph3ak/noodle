@@ -199,7 +199,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <CashIn @paySuccess="saveOrder();" @print="print" ref="cashIn" ></CashIn>
+                            <CashIn @paySuccess="saveOrder();" @saveAndPrint="saveAndPrint" ref="cashIn" ></CashIn>
                         </div>
                         <!--<div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal-cashIn" @click="">បោះបង់</button>
@@ -248,7 +248,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                 showSeat: false,
                 seatID: 1,
                 seatName:'Take away',
-                invoice:[],
+                invoiceID: null,
 
                 isLoading: false,
                 loadingProducts: false,
@@ -502,7 +502,6 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                     subtotal: this.subTotal,
                     discount: this.discount,
                     total: this.total,
-
                 })
                 this.form.post('api/save-order')
                     .then(response => {
@@ -514,34 +513,20 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                         else if (this.paymentID===2)
                             this.$refs.seat.alertSuccess()
 
-                        this.invoice=response.data
+                        this.invoiceID = response.data
                         this.clear()
-
                     })
                     .catch(err => console.log(err))
                     .finally(() => this.loading = false)
             },
 
-            print(){
-                this.form = new Form({
-                    id:"",
-                    user_id: this.userID,
-                    customer_id: "53",
-                    table_id: this.seatID,
-                    shop_id: "1",
-                    payment_id: this.paymentID,
-                    order: this.order,
-                    subtotal: this.subTotal,
-                    discount: this.discount,
-                    total: this.total,
+            saveAndPrint(){
+                this.saveOrder()
+                setTimeout(()=>{
+                        if (this.invoiceID)
+                            window.open('/print/'+this.invoiceID)
+                    },1000)
 
-                })
-                this.form.post('invoice')
-                    .then(response => {
-                        this.invoice = response.data
-                    })
-                    .catch(error => console.log(error))
-                    .finally(() => this.loading = false)
             },
 
             removeOrder (index) {

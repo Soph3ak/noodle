@@ -82,8 +82,8 @@
                         <button type="button" value="4" class="btn btn-light waves-effect">4</button>
                         <button type="button" value="5" class="btn btn-light waves-effect">5</button>
                         <button type="button" value="6" class="btn btn-light waves-effect">6</button>
-                        <!--<button type="button" class="pay-and-print operator btn btn-success" @click="pay()"><i class="fas fa-print"></i></button>-->
-                        <button type="button" class="pay-and-print operator btn btn-app" v-if="toTalToPay <= KHR" @click="print()"><i class="ion-printer"></i>PAY & PRINT</button>
+
+                        <button type="button" class="pay-and-print operator btn btn-app" v-if="toTalToPay <= KHR" @click="saveAndPrint()"><i class="ion-printer"></i>PAY & PRINT</button>
                         <button type="button" class="pay-and-print operator btn btn-app" disabled v-else><i class="ion-printer"></i>PAY & PRINT</button>
 
 
@@ -297,6 +297,13 @@ export default {
                 title: 'លុយអាប់: ' + this.convertToCurrency(this.change) +'៛',
                 html: "ទូរទាត់បានដោយជោគជ័យ!<br>សូមអរគុណ!",
                 icon: 'success',
+                showCancelButton: true,
+                cancelButtonText: 'OK',
+                showLoaderOnConfirm: true,
+                confirmButtonText: 'Print',
+                preConfirm: () => {
+                    window.open('/print/'+this.invoiceID)
+                },
                 allowOutsideClick: false,
             })
             this.reset()
@@ -317,9 +324,12 @@ export default {
             }
         },
 
-        print(){
-            this.$emit("print");
-            //sent event to Sell.vue
+        saveAndPrint(){
+            this.isLoading = true
+            this.clickablePay()
+            setTimeout(() => {
+                this.$emit("saveAndPrint");
+            }, 250);
         },
 
     },
@@ -515,6 +525,10 @@ export default {
 
             if (target.classList.contains('equal-sign')) {
                 return; //NO INPUT NEEDED, JUST DO FUNCTION @pay
+            }
+
+            if (target.classList.contains('pay-and-print')) {
+                return; //NO INPUT NEEDED, JUST DO FUNCTION @saveAndPrint
             }
 
             inputDigit(target.value);
