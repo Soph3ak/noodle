@@ -290,7 +290,7 @@ export default {
                  pay.removeClass('not-clickable')
         },
 
-        alertSuccess(){
+        alertSuccess(invoiceID){
             this.isLoading = false
             this.clickablePay()
             Swal.fire({
@@ -302,7 +302,7 @@ export default {
                 showLoaderOnConfirm: true,
                 confirmButtonText: 'Print',
                 preConfirm: () => {
-                    window.open('/print/'+this.invoiceID)
+                    window.open('/print/'+invoiceID)
                 },
                 allowOutsideClick: false,
             })

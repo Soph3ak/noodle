@@ -505,15 +505,16 @@ import 'vue-loading-overlay/dist/vue-loading.css';
                 })
                 this.form.post('api/save-order')
                     .then(response => {
+                        this.invoiceID = response.data
+
                         if(this.paymentID===1){
-                            this.$refs.cashIn.alertSuccess()
+                            this.$refs.cashIn.alertSuccess(this.invoiceID)
                             this.hideModal()
                             this.closeSeat()
                         }
                         else if (this.paymentID===2)
-                            this.$refs.seat.alertSuccess()
+                            this.$refs.seat.alertSuccess(this.invoiceID)
 
-                        this.invoiceID = response.data
                         this.clear()
                     })
                     .catch(err => console.log(err))
@@ -646,6 +647,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
             loadUser(){
                 this.user = JSON.parse(this.user_prop)
                 this.userName = this.user[0].name
+                this.userID = this.user[0].id
                 /*axios.get('loadUser')
                     .then(response => {
                         this.user.push(response.data)

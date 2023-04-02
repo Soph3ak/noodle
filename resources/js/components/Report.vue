@@ -85,9 +85,6 @@
             </div>
         </div>
 
-        <!--<div class="recordShowing text-lightgray" v-show="reportCount>0">
-            <small>Showing {{ showingFrom() }}-{{ showingTo() }} of {{ totalRecords }} {{ totalRecords > 1 ? 'records':'record' }}</small>
-        </div>-->
         <div class="d-flex justify-content-between">
             <h1 class="mb-0">របាយការណ៏លក់</h1>
             <div class="d-flex align-items-center ml-3">
@@ -112,49 +109,6 @@
         <div class="row" style="margin-top: 14px">
             <div class="col-12">
                 <div class="card table-block border-light pt-0">
-                    <!--<div class="card-header d-flex align-items-center">
-                        <div class="show-page-calendar">
-                            <div class="d-flex" style="width: 1050px;">
-                                <label for="" class="col-form-label" style="width: 115px">Show records:</label>
-                                <div class="">
-                                    <select v-model="pageSize" @change="handlePageSizeChange($event)" class="form-control show-per-page" style="width: 75px">
-                                        <option v-for="size in pageSizes" :key="size" :value="size">
-                                            {{ size }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div id="reportrange" style="background: #fff; cursor: pointer; border: 1px solid #ccc; width: 296px" class="form-control text-center ml-2 mr-2">
-                                    <i class="fa fa-calendar text-primary"></i>&nbsp;
-                                    <span></span> <i class="fa fa-caret-down"></i>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <span class="badge badge-warning badge-filter text-primary pr-2 animate__animated animate__bounceIn" v-show="selected.filters.length>0">
-                                        <i class="fas fa-filter ml-1 mr-1"></i> Filter
-                                    </span>
-                                    <span class="badge badge-filter selected-filter ml-1 pointer animate__animated animate__bounceIn" :id="f+'-filter'" v-for="f in selected.filters" :key="f.id">
-                                        <span class="text-lowercase" @click="toggleFilter(f+'-filter'); previousSelect(f+'-filter'); closeOtherFilter(f+'-filter');"><i class="fas fa-filter ml-1 mr-1"></i> {{f}}</span>
-                                        <button @click="btnRemoveBadgeFilter(f+'-filter'); " type="button" class="btn btn-tool"><i class="fas fa-times"></i></button>
-                                    </span>
-                                    <span class="badge badge-filter text-danger pr-2 pointer animate__animated animate__bounceIn" v-show="selected.filters.length>1">
-                                        <span @click="btnRemoveBadgeFilter('all')"><i class="fas fa-broom ml-1 mr-1"></i>Clear all filter</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="paginate ml-auto">
-                            <pagination :data="reports"
-                                        @pagination-change-page="handlePageChange"
-                                        :limit="1"
-                                        :show-disabled="true"
-                                        :total-rows="count"
-                                        :per-page="pageSize"
-                                        align="center">
-                                <span slot="prev-nav" class="p-2">Previous</span>
-                                <span slot="next-nav" class="p-2">Next</span>
-                            </pagination>
-                        </div>
-                    </div>-->
                     <div class="card-body table-responsive p-0" style="max-height: 76vh; min-height: 76vh;">
                         <div class="">
                             <loading :active.sync="isLoading"
@@ -172,14 +126,12 @@
                                 <th>
                                     <span class="gg pointer"  @click="sortBy('id')" id="column_id">
                                         Invoice #
-                                        <!--<span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>-->
                                         <span class="sort sort-default ml-1"></span>
                                     </span>
                                 </th>
                                 <th>
                                     <span class="gg pointer" @click="sortBy('date')" id="column_date">
                                         Date
-                                       <!-- <span class="text-gray ml-2"><i class="gg-swap-vertical"></i></span>-->
                                         <span class="sort sort-default ml-1"></span>
                                     </span>
                                 </th>
@@ -187,7 +139,6 @@
                                     <div class="d-flex align-items-center">
                                         <span class="gg pointer" @click="sortBy('customer')" id="column_customer">
                                             Customer
-                                            <!--<span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>-->
                                             <span class="sort sort-default ml-1"></span>
                                         </span>
                                         <div class="position-relative pointer d-inline-block">
@@ -317,21 +268,18 @@
                                 <th>
                                     <span class="gg pointer" @click="sortBy('subtotal')" id="column_subtotal">
                                         Subtotal
-                                        <!--<span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>-->
                                         <span class="sort sort-default ml-1"></span>
                                     </span>
                                 </th>
                                 <th>
                                     <span class="gg pointer" @click="sortBy('discount')" id="column_discount">
                                         Discount
-                                        <!--<span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>-->
                                         <span class="sort sort-default ml-1"></span>
                                     </span>
                                 </th>
                                 <th>
                                     <span class="gg pointer" @click="sortBy('total')" id="column_total">
                                         Total
-                                        <!--<span class="text-gray ml-1"><i class="gg-swap-vertical"></i></span>-->
                                         <span class="sort sort-default ml-1"></span>
                                     </span>
                                 </th>
