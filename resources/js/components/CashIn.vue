@@ -298,9 +298,12 @@ export default {
                 html: "ទូរទាត់បានដោយជោគជ័យ!<br>សូមអរគុណ!",
                 icon: 'success',
                 showCancelButton: true,
-                cancelButtonText: 'OK',
+                cancelButtonText: '<i class="ion-android-done"></i> OK',
+                cancelButtonColor: '#2778c4',
+                focusCancel: true,
                 showLoaderOnConfirm: true,
-                confirmButtonText: 'Print',
+                confirmButtonText: '<i class="ion-ios-printer-outline"></i> Print',
+                confirmButtonColor: '#30bd79',
                 preConfirm: () => {
                     window.open('/print/'+invoiceID)
                 },
@@ -737,6 +740,8 @@ h6{
     margin-bottom: 0;
     font-size: 1.2rem;
 }
+
+
 
 
 </style>

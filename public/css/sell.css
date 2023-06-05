@@ -233,13 +233,13 @@ body {
 }
 
 #sell .card-footer {
-  /*display: none;*/
   pointer-events: none;
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 100px;
   z-index: 100;
+  border: none;
   background: rgb(0, 0, 0);
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.9136029412) 100%);
 }
@@ -403,7 +403,7 @@ body {
 }
 
 .btn-pay {
-  background: linear-gradient(90deg, hsl(192, 95%, 50%) 0%, hsl(225, 89%, 47%) 100%);
+  background: linear-gradient(90deg, hsl(280, 84%, 41%) 0%, hsl(218, 97%, 56%) 100%);
 }
 
 .not-clickable {

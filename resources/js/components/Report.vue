@@ -1178,7 +1178,7 @@ export default {
                         this.detailLimit,
                     );
                     setTimeout(() => {
-                        axios.get("/getOrderProducts", {params})
+                        axios.get("api/getOrderProducts", {params})
                             .then((response) => {
                                 this.loadingButton = false
                                 this.changeToBanIcon(orderID)
